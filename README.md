@@ -9,4 +9,4 @@ Version 1.0.0-SNAPSHOT:
 In this version events received from the broker are logged using a log4j logger, messages can be viewed using the docker logs.
 
 Version 1.0.1-SNAPSHOT:
-Coming soon
+Coming soon.
