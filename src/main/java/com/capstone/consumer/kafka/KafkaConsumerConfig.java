@@ -17,6 +17,9 @@ import java.util.Properties;
 
 @Configuration
 public class KafkaConsumerConfig {
+
+    //This class is currently unused, could possibly be used in future for parsing through all messages
+    //Instead of being an event listener like KafkaConsumer Class
     private final static String TOPIC_NAME="FlightData";
     private final static String BOOTSTRAP_SERVER="ec2-35-173-74-249.compute-1.amazonaws.com:9092";
     @Bean

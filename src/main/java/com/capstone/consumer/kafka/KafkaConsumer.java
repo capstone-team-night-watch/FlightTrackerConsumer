@@ -9,7 +9,7 @@ import java.util.logging.Logger;
 @Component
 public class KafkaConsumer {
     Logger logger = Logger.getLogger(String.valueOf(KafkaConsumer.class));
-    @KafkaListener(id = "kafkaConsumerExampleId", topics="TutorialTopic")
+    @KafkaListener(id = "kafkaConsumerExampleId", topics="FlightData")
     public void listen(String data) {
         //displayMessageClient.displayMessage(data);
         logger.info("Received data: " + data);
