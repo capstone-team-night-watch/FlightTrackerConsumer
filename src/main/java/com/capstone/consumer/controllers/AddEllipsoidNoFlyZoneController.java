@@ -7,10 +7,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@CrossOrigin
 public class AddEllipsoidNoFlyZoneController {
 
-    @CrossOrigin
+    @CrossOrigin(origins = "http://localhost:4200")
     @RequestMapping(
             produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE,
