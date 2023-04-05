@@ -5,6 +5,7 @@ import com.capstone.consumer.bindings.PolygonNoFlyZone;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+@RestController
 public class AddPolygonNoFlyZoneController {
 
     @CrossOrigin(origins = "http://localhost:4200")
