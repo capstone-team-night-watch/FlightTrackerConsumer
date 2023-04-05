@@ -18,7 +18,7 @@ public class AddEllipsoidNoFlyZoneController {
     )
     @ResponseBody
     public String addEllipsoidNoFlyZone(@RequestBody EllipsoidNoFlyZone ellipsoidNoFlyZone){
-        return "add new no fly zone with name=" + ellipsoidNoFlyZone.name;
+        return "add new no fly zone = " + ellipsoidNoFlyZone.toString();
     }
 
 }

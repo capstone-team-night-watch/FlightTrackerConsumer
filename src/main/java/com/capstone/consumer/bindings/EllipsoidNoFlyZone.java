@@ -9,4 +9,17 @@ public class EllipsoidNoFlyZone {
     public Long longRadius;
     public Long latRadius;
     public Long altRadius;
+
+    @Override
+    public String toString() {
+        return "EllipsoidNoFlyZone{" +
+                "name='" + name + '\'' +
+                ", longitude='" + longitude + '\'' +
+                ", latitude='" + latitude + '\'' +
+                ", altitude=" + altitude +
+                ", longRadius=" + longRadius +
+                ", latRadius=" + latRadius +
+                ", altRadius=" + altRadius +
+                '}';
+    }
 }
