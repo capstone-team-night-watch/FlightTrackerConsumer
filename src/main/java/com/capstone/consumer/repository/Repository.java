@@ -1,5 +1,6 @@
 package com.capstone.consumer.repository;
 
+import com.capstone.consumer.bindings.EllipsoidNoFlyZone;
 import com.capstone.consumer.bindings.FlightLocation;
 import com.capstone.consumer.controllers.GetFlightLocationController;
 import org.slf4j.Logger;
@@ -47,4 +48,16 @@ public class Repository {
 
         return flightLocation;
     }
+
+    public void addEllipsoidNoFlyZone(EllipsoidNoFlyZone noFlyZone){
+
+        namedParameterJdbcTemplate.update(
+                "INSERT INTO ELLIPSOID_NO_FLY_ZONE " +
+                        "(ZONE_NAME, LONGITUDE, LATITUDE, ALTITUDE, LONGRADIUS, LATRADIUS, ALTRADIUS)" +
+                        "VALUES (?, ?, ?, ?, ?, ?, ?)",
+                noFlyZone.name, noFlyZone.longitude, noFlyZone.latitude, noFlyZone.altitude, noFlyZone.longRadius, noFlyZone.latRadius, noFlyZone.altRadius
+        );
+
+    }
+
 }
