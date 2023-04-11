@@ -2,6 +2,8 @@ package com.capstone.consumer.repository;
 
 import com.capstone.consumer.bindings.EllipsoidNoFlyZone;
 import com.capstone.consumer.bindings.FlightLocation;
+import com.capstone.consumer.bindings.PolygonNoFlyZone;
+import com.capstone.consumer.bindings.RectangleNoFlyZone;
 import com.capstone.consumer.controllers.GetFlightLocationController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -56,6 +58,32 @@ public class Repository {
                         "(ZONE_NAME, LONGITUDE, LATITUDE, ALTITUDE, LONGRADIUS, LATRADIUS, ALTRADIUS)" +
                         "VALUES (?, ?, ?, ?, ?, ?, ?)",
                 noFlyZone.name, noFlyZone.longitude, noFlyZone.latitude, noFlyZone.altitude, noFlyZone.longRadius, noFlyZone.latRadius, noFlyZone.altRadius
+        );
+
+    }
+
+    public void addPolygonNoFlyZone(PolygonNoFlyZone noFlyZone){
+
+        namedParameterJdbcTemplate.update(
+                "INSERT INTO POLYGON_NO_FLY_ZONE " +
+                        "(ZONE_NAME, VERTEX1LONG, VERTEX1LAT, VERTEX2LONG, VERTEX2LAT, VERTEX3LONG, VERTEX3LAT, " +
+                        "VERTEX4LONG, VERTEX4LAT, MAXALTITUDE, MINALTITUDE)" +
+                        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                noFlyZone.name, noFlyZone.vertex1Long, noFlyZone.vertex1Lat, noFlyZone.vertex2Long, noFlyZone.vertex2Lat, noFlyZone.vertex3Long,
+                noFlyZone.vertex3Lat, noFlyZone.vertex4Long, noFlyZone.vertex4Lat, noFlyZone.maxAltitude, noFlyZone.minAltitude
+        );
+
+    }
+
+    public void addRectangleNoFlyZone(RectangleNoFlyZone noFlyZone){
+
+        namedParameterJdbcTemplate.update(
+                "INSERT INTO POLYGON_NO_FLY_ZONE " +
+                        "(ZONE_NAME, WESTLONGDEGREE, EASTLONGDEGREE, SOUTHLATDEGREE, NORTHLATDEGREE, " +
+                        "ROTATIONDEGREE, MAXALTITUDE, MINALTITUDE)" +
+                        "VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+                noFlyZone.name, noFlyZone.westLongDegree, noFlyZone.eastLongDegree, noFlyZone.southLatDegree, noFlyZone.northLatDegree,
+                noFlyZone.rotationDegree, noFlyZone.maxAltitude, noFlyZone.minAltitude
         );
 
     }
