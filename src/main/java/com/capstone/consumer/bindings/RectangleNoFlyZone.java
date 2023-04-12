@@ -2,19 +2,31 @@ package com.capstone.consumer.bindings;
 
 public class RectangleNoFlyZone {
 
-    public String name;
-    public String westLongDegree;
-    public String eastLongDegree;
-    public String southLatDegree;
-    public String northLatDegree;
-    public String rotationDegree;
-    public Long maxAltitude;
-    public Long minAltitude;
+    public String zone_name;
+    public float westLongDegree;
+    public float eastLongDegree;
+    public float southLatDegree;
+    public float northLatDegree;
+
+    public RectangleNoFlyZone(String zone_name, float westLongDegree, float eastLongDegree, float southLatDegree, float northLatDegree, float rotationDegree, float maxAltitude, float minAltitude) {
+        this.zone_name = zone_name;
+        this.westLongDegree = westLongDegree;
+        this.eastLongDegree = eastLongDegree;
+        this.southLatDegree = southLatDegree;
+        this.northLatDegree = northLatDegree;
+        this.rotationDegree = rotationDegree;
+        this.maxAltitude = maxAltitude;
+        this.minAltitude = minAltitude;
+    }
+
+    public float rotationDegree;
+    public float maxAltitude;
+    public float minAltitude;
 
     @Override
     public String toString() {
         return "RectangleNoFlyZone{" +
-                "name='" + name + '\'' +
+                "zone_name='" + zone_name + '\'' +
                 ", westLongDegree='" + westLongDegree + '\'' +
                 ", eastLongDegree='" + eastLongDegree + '\'' +
                 ", southLatDegree='" + southLatDegree + '\'' +
