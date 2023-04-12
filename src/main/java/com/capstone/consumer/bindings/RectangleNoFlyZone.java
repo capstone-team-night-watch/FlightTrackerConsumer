@@ -22,14 +22,14 @@ import javax.xml.bind.annotation.XmlRootElement;
 )
 public class RectangleNoFlyZone {
 
-    @JsonProperty("zone_name")
+    @JsonProperty("name")
     @JacksonXmlProperty(
-            localName = "zone_name"
+            localName = "name"
     )
     @XmlElement(
-            name = "zone_name"
+            name = "name"
     )
-    public String zone_name;
+    public String name;
 
     @JsonProperty("westLongDegree")
     @JacksonXmlProperty(
@@ -68,7 +68,7 @@ public class RectangleNoFlyZone {
     public float northLatDegree;
 
     public RectangleNoFlyZone(String zone_name, float westLongDegree, float eastLongDegree, float southLatDegree, float northLatDegree, float rotationDegree, float maxAltitude, float minAltitude) {
-        this.zone_name = zone_name;
+        this.name = zone_name;
         this.westLongDegree = westLongDegree;
         this.eastLongDegree = eastLongDegree;
         this.southLatDegree = southLatDegree;
@@ -85,7 +85,7 @@ public class RectangleNoFlyZone {
     @Override
     public String toString() {
         return "RectangleNoFlyZone{" +
-                "zone_name='" + zone_name + '\'' +
+                "zone_name='" + name + '\'' +
                 ", westLongDegree='" + westLongDegree + '\'' +
                 ", eastLongDegree='" + eastLongDegree + '\'' +
                 ", southLatDegree='" + southLatDegree + '\'' +

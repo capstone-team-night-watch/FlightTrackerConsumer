@@ -130,13 +130,12 @@ public class Repository {
 
         namedParameterJdbcTemplate.update(
                 "INSERT INTO POLYGON_NO_FLY_ZONE " +
-                        "(ZONE_NAME, WESTLONGDEGREE, EASTLONGDEGREE, SOUTHLATDEGREE, NORTHLATDEGREE, " +
-                        "ROTATIONDEGREE, MAXALTITUDE, MINALTITUDE)" +
+                        "(ZONE_NAME, WEST_LONG_DEGREE, EAST_LONG_DEGREE, SOUTH_LAT_DEGREE, NORTH_LAT_DEGREE, " +
+                        "ROTATION_DEGREE, MAX_ALTITUDE, MIN_ALTITUDE)" +
                         "VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
-                noFlyZone.zone_name, noFlyZone.westLongDegree, noFlyZone.eastLongDegree, noFlyZone.southLatDegree, noFlyZone.northLatDegree,
+                noFlyZone.name, noFlyZone.westLongDegree, noFlyZone.eastLongDegree, noFlyZone.southLatDegree, noFlyZone.northLatDegree,
                 noFlyZone.rotationDegree, noFlyZone.maxAltitude, noFlyZone.minAltitude
         );
 
     }
-
 }
