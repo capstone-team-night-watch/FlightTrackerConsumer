@@ -1,11 +1,54 @@
 package com.capstone.consumer.bindings;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 
+
+@XmlRootElement(
+        name = "GetNoFlyZonesResponse"
+)
+@XmlAccessorType(XmlAccessType.FIELD)
+@JacksonXmlRootElement(
+        localName = "GetNoFlyZonesResponse"
+)
+@JsonIgnoreProperties(
+        ignoreUnknown = true
+)
 public class GetNoFlyZonesResponse {
 
+    @JsonProperty("ellipsoidNoFlyZones")
+    @JacksonXmlProperty(
+            localName = "ellipsoidNoFlyZones"
+    )
+    @XmlElement(
+            name = "ellipsoidNoFlyZones"
+    )
     public List<EllipsoidNoFlyZone> ellipsoidNoFlyZones;
+
+    @JsonProperty("rectangleNoFlyZones")
+    @JacksonXmlProperty(
+            localName = "rectangleNoFlyZones"
+    )
+    @XmlElement(
+            name = "rectangleNoFlyZones"
+    )
     public List<RectangleNoFlyZone> rectangleNoFlyZones;
+
+    @JsonProperty("polygonNoFlyZones")
+    @JacksonXmlProperty(
+            localName = "polygonNoFlyZones"
+    )
+    @XmlElement(
+            name = "polygonNoFlyZones"
+    )
     public List<PolygonNoFlyZone> polygonNoFlyZones;
 
     public List<EllipsoidNoFlyZone> getEllipsoidNoFlyZones() {
