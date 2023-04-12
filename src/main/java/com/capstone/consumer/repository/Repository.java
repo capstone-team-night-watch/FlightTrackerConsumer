@@ -5,11 +5,11 @@ import com.capstone.consumer.bindings.FlightLocation;
 import com.capstone.consumer.bindings.PolygonNoFlyZone;
 import com.capstone.consumer.bindings.RectangleNoFlyZone;
 import com.capstone.consumer.controllers.GetFlightLocationController;
+import org.apache.kafka.common.protocol.types.Field;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.ResultSetExtractor;
+import org.springframework.jdbc.core.*;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
@@ -51,6 +51,57 @@ public class Repository {
         return flightLocation;
     }
 
+    public List<RectangleNoFlyZone> getRectangleNoFlyZones(){
+        StringBuilder query = new StringBuilder()
+                .append(" SELECT * FROM RECTANGLE_NO_FLY_ZONE r");
+
+        return namedParameterJdbcTemplate.query(query.toString(), (rs, rowNum) -> new RectangleNoFlyZone(
+                rs.getString("zone_name"),
+                rs.getFloat("WEST_LONG_DEGREE"),
+                rs.getFloat("EAST_LONG_DEGREE"),
+                rs.getFloat("SOUTH_LAT_DEGREE"),
+                rs.getFloat("NORTH_LAT_DEGREE"),
+                rs.getFloat("ROTATION_DEGREE"),
+                rs.getFloat("MAX_ALTITUDE"),
+                rs.getFloat("MIN_ALTITUDE")
+        ));
+    }
+
+    public List<PolygonNoFlyZone> getPolygonNoFlyZones(){
+        StringBuilder query = new StringBuilder()
+                .append(" SELECT * FROM POLYGON_NO_FLY_ZONE r");
+
+        return namedParameterJdbcTemplate.query(query.toString(), (rs, rowNum) -> new PolygonNoFlyZone(
+                rs.getString("zone_name"),
+                rs.getFloat("vertex1Long"),
+                rs.getFloat("vertex1Lat"),
+                rs.getFloat("vertex2Long"),
+                rs.getFloat("vertex2Lat"),
+                rs.getFloat("vertex3Long"),
+                rs.getFloat("vertex3Lat"),
+                rs.getFloat("vertex4Long"),
+                rs.getFloat("vertex4Lat"),
+                rs.getFloat("maxAltitude"),
+                rs.getFloat("minAltitude")
+        ));
+    }
+
+    public List<EllipsoidNoFlyZone> getEllipsoidNoFlyZones(){
+        StringBuilder query = new StringBuilder()
+                .append(" SELECT * FROM ELLIPSOID_NO_FLY_ZONE r");
+
+        List<EllipsoidNoFlyZone> ellipsoidNoFlyZones = namedParameterJdbcTemplate.query(query.toString(), (rs, rowNum) -> new EllipsoidNoFlyZone(
+                rs.getString("zone_name"),
+                rs.getFloat("longitude"),
+                rs.getFloat("latitude"),
+                rs.getFloat("altitude"),
+                rs.getFloat("longradius"),
+                rs.getFloat("latradius"),
+                rs.getFloat("altradius")
+        ));
+        return ellipsoidNoFlyZones;
+    }
+
     public void addEllipsoidNoFlyZone(EllipsoidNoFlyZone noFlyZone){
 
         namedParameterJdbcTemplate.update(
@@ -82,7 +133,7 @@ public class Repository {
                         "(ZONE_NAME, WESTLONGDEGREE, EASTLONGDEGREE, SOUTHLATDEGREE, NORTHLATDEGREE, " +
                         "ROTATIONDEGREE, MAXALTITUDE, MINALTITUDE)" +
                         "VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
-                noFlyZone.name, noFlyZone.westLongDegree, noFlyZone.eastLongDegree, noFlyZone.southLatDegree, noFlyZone.northLatDegree,
+                noFlyZone.zone_name, noFlyZone.westLongDegree, noFlyZone.eastLongDegree, noFlyZone.southLatDegree, noFlyZone.northLatDegree,
                 noFlyZone.rotationDegree, noFlyZone.maxAltitude, noFlyZone.minAltitude
         );
 

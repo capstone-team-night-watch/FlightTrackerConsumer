@@ -3,12 +3,22 @@ package com.capstone.consumer.bindings;
 public class EllipsoidNoFlyZone {
 
     public String name;
-    public String longitude;
-    public String latitude;
-    public Long altitude;
-    public Long longRadius;
-    public Long latRadius;
-    public Long altRadius;
+    public float longitude;
+    public float latitude;
+    public float altitude;
+    public float longRadius;
+    public float latRadius;
+    public float altRadius;
+
+    public EllipsoidNoFlyZone(String name, float longitude, float latitude, float altitude, float longRadius, float latRadius, float altRadius) {
+        this.name = name;
+        this.longitude = longitude;
+        this.latitude = latitude;
+        this.altitude = altitude;
+        this.longRadius = longRadius;
+        this.latRadius = latRadius;
+        this.altRadius = altRadius;
+    }
 
     @Override
     public String toString() {
