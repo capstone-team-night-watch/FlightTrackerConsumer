@@ -25,10 +25,10 @@ public class GetNoFlyZonesController {
     )
     @CrossOrigin(origins = "http://localhost:4200")
     @ResponseBody
-    public TestResponse getNoFlyZones(){
+    public GetNoFlyZonesResponse getNoFlyZones(){
         LOGGER.info("Received Request to get no fly zones");
 
-        return new TestResponse(service.handle().toString());
+        return service.handle();
     }
 
 }
