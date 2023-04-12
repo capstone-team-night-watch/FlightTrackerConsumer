@@ -2,6 +2,7 @@ package com.capstone.consumer.kafka;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Component;
 
 import java.util.logging.Logger;
@@ -10,9 +11,11 @@ import java.util.logging.Logger;
 public class KafkaConsumer {
     Logger logger = Logger.getLogger(String.valueOf(KafkaConsumer.class));
     @KafkaListener(id = "kafkaConsumerExampleId", topics="FlightData")
-    public void listen(String data) {
-        //displayMessageClient.displayMessage(data);
-        logger.info("Received data: " + data);
+    @SendTo("/topic/liveCoords")
+    public String listen(String flightData) {
+        //displayMessageClient.displayMessage(flightData);
+        logger.info("Received flightData: " + flightData);
 
+        return flightData;
     }
 }
