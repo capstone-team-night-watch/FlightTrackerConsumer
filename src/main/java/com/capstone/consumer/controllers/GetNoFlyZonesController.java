@@ -1,6 +1,7 @@
 package com.capstone.consumer.controllers;
 
 import com.capstone.consumer.bindings.GetNoFlyZonesResponse;
+import com.capstone.consumer.bindings.TestResponse;
 import com.capstone.consumer.serviceHandler.GetNoZlyZonesService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,16 +19,16 @@ public class GetNoFlyZonesController {
     private GetNoZlyZonesService service;
 
     @RequestMapping(
-            produces = MediaType.TEXT_HTML_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE,
             method = RequestMethod.GET,
             path = "/get-no-fly-zones"
     )
     @CrossOrigin(origins = "http://localhost:4200")
     @ResponseBody
-    public String getNoFlyZones(){
+    public GetNoFlyZonesResponse getNoFlyZones(){
         LOGGER.info("Received Request to get no fly zones");
 
-        return service.handle().toString();
+        return service.handle();
     }
 
 }

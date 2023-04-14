@@ -73,16 +73,16 @@ public class Repository {
 
         return namedParameterJdbcTemplate.query(query.toString(), (rs, rowNum) -> new PolygonNoFlyZone(
                 rs.getString("zone_name"),
-                rs.getFloat("vertex1Long"),
-                rs.getFloat("vertex1Lat"),
-                rs.getFloat("vertex2Long"),
-                rs.getFloat("vertex2Lat"),
-                rs.getFloat("vertex3Long"),
-                rs.getFloat("vertex3Lat"),
-                rs.getFloat("vertex4Long"),
-                rs.getFloat("vertex4Lat"),
-                rs.getFloat("maxAltitude"),
-                rs.getFloat("minAltitude")
+                rs.getFloat("VERTEX_ONE_LONG"),
+                rs.getFloat("VERTEX_ONE_LAT"),
+                rs.getFloat("VERTEX_TWO_LONG"),
+                rs.getFloat("VERTEX_TWO_LAT"),
+                rs.getFloat("VERTEX_THREE_LONG"),
+                rs.getFloat("VERTEX_THREE_LAT"),
+                rs.getFloat("VERTEX_FOUR_LONG"),
+                rs.getFloat("VERTEX_FOUR_LAT"),
+                rs.getFloat("MAX_ALTITUDE"),
+                rs.getFloat("MIN_ALTITUDE")
         ));
     }
 
@@ -117,8 +117,8 @@ public class Repository {
 
         namedParameterJdbcTemplate.update(
                 "INSERT INTO POLYGON_NO_FLY_ZONE " +
-                        "(ZONE_NAME, VERTEX1LONG, VERTEX1LAT, VERTEX2LONG, VERTEX2LAT, VERTEX3LONG, VERTEX3LAT, " +
-                        "VERTEX4LONG, VERTEX4LAT, MAXALTITUDE, MINALTITUDE)" +
+                        "(ZONE_NAME, VERTEX_ONE_LONG, VERTEX_ONE_LAT, VERTEX_TWO_LONG, VERTEX_TWO_LAT, VERTEX_THREE_LONG, VERTEX_THREE_LAT, " +
+                        "VERTEX_FOUR_LONG, VERTEX_FOUR_LAT, MAX_ALTITUDE, MIN_ALTITUDE)" +
                         "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
                 noFlyZone.name, noFlyZone.vertex1Long, noFlyZone.vertex1Lat, noFlyZone.vertex2Long, noFlyZone.vertex2Lat, noFlyZone.vertex3Long,
                 noFlyZone.vertex3Lat, noFlyZone.vertex4Long, noFlyZone.vertex4Lat, noFlyZone.maxAltitude, noFlyZone.minAltitude
@@ -129,14 +129,13 @@ public class Repository {
     public void addRectangleNoFlyZone(RectangleNoFlyZone noFlyZone){
 
         namedParameterJdbcTemplate.update(
-                "INSERT INTO POLYGON_NO_FLY_ZONE " +
-                        "(ZONE_NAME, WESTLONGDEGREE, EASTLONGDEGREE, SOUTHLATDEGREE, NORTHLATDEGREE, " +
-                        "ROTATIONDEGREE, MAXALTITUDE, MINALTITUDE)" +
+                "INSERT INTO RECTANGLE_NO_FLY_ZONE " +
+                        "(ZONE_NAME, WEST_LONG_DEGREE, EAST_LONG_DEGREE, SOUTH_LAT_DEGREE, NORTH_LAT_DEGREE, " +
+                        "ROTATION_DEGREE, MAX_ALTITUDE, MIN_ALTITUDE)" +
                         "VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
-                noFlyZone.zone_name, noFlyZone.westLongDegree, noFlyZone.eastLongDegree, noFlyZone.southLatDegree, noFlyZone.northLatDegree,
+                noFlyZone.name, noFlyZone.westLongDegree, noFlyZone.eastLongDegree, noFlyZone.southLatDegree, noFlyZone.northLatDegree,
                 noFlyZone.rotationDegree, noFlyZone.maxAltitude, noFlyZone.minAltitude
         );
 
     }
-
 }
