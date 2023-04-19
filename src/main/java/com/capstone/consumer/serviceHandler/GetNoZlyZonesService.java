@@ -20,6 +20,7 @@ public class GetNoZlyZonesService {
         response.setRectangleNoFlyZones(repository.getRectangleNoFlyZones());
         response.setPolygonNoFlyZones(repository.getPolygonNoFlyZones());
         response.setEllipsoidNoFlyZones(repository.getEllipsoidNoFlyZones());
+        response.setMilitaryNoFlyZones(repository.getMilitaryNoFlyZones());
 
         return response;
     }

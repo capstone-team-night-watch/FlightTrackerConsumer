@@ -51,6 +51,15 @@ public class GetNoFlyZonesResponse {
     )
     public List<PolygonNoFlyZone> polygonNoFlyZones;
 
+    @JsonProperty("militaryNoFlyZones")
+    @JacksonXmlProperty(
+            localName = "militaryNoFlyZones"
+    )
+    @XmlElement(
+            name = "militaryNoFlyZones"
+    )
+    public List<MilitaryNoFlyZone> militaryNoFlyZones;
+
     public List<EllipsoidNoFlyZone> getEllipsoidNoFlyZones() {
         return ellipsoidNoFlyZones;
     }
@@ -66,6 +75,15 @@ public class GetNoFlyZonesResponse {
     public void setRectangleNoFlyZones(List<RectangleNoFlyZone> rectangleNoFlyZones) {
         this.rectangleNoFlyZones = rectangleNoFlyZones;
     }
+
+    public List<MilitaryNoFlyZone> getMilitaryNoFlyZones() {
+        return militaryNoFlyZones;
+    }
+
+    public void setMilitaryNoFlyZones(List<MilitaryNoFlyZone> militaryNoFlyZones) {
+        this.militaryNoFlyZones = militaryNoFlyZones;
+    }
+
 
     public List<PolygonNoFlyZone> getPolygonNoFlyZones() {
         return polygonNoFlyZones;

@@ -78,6 +78,8 @@ public class RectangleNoFlyZone {
         this.minAltitude = minAltitude;
     }
 
+    public RectangleNoFlyZone() {}
+
     public float rotationDegree;
     public float maxAltitude;
     public float minAltitude;

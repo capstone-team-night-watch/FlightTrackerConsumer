@@ -1,9 +1,6 @@
 package com.capstone.consumer.repository;
 
-import com.capstone.consumer.bindings.EllipsoidNoFlyZone;
-import com.capstone.consumer.bindings.FlightLocation;
-import com.capstone.consumer.bindings.PolygonNoFlyZone;
-import com.capstone.consumer.bindings.RectangleNoFlyZone;
+import com.capstone.consumer.bindings.*;
 import com.capstone.consumer.controllers.GetFlightLocationController;
 import org.apache.kafka.common.protocol.types.Field;
 import org.slf4j.Logger;
@@ -100,6 +97,17 @@ public class Repository {
                 rs.getFloat("altradius")
         ));
         return ellipsoidNoFlyZones;
+    }
+
+    public List<MilitaryNoFlyZone> getMilitaryNoFlyZones(){
+        StringBuilder query = new StringBuilder()
+                .append(" SELECT * FROM us_military_geojson_8776 r LIMIT 5");
+
+        List<MilitaryNoFlyZone> militaryNoFlyZones = namedParameterJdbcTemplate.query(query.toString(), (rs, rowNum) -> new MilitaryNoFlyZone(
+                String.valueOf(rs.getInt("OBJECTID")),
+                rs.getString("geometry")
+        ));
+        return militaryNoFlyZones;
     }
 
     public void addEllipsoidNoFlyZone(EllipsoidNoFlyZone noFlyZone){
