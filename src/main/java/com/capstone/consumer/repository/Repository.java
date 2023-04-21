@@ -109,7 +109,7 @@ public class Repository {
 
     public List<MilitaryNoFlyZone> getMilitaryNoFlyZones(){
         StringBuilder query = new StringBuilder()
-                .append(" SELECT * FROM us_military_geojson_8776 r LIMIT 25");
+                .append(" SELECT * FROM us_military_geojson_8776 r LIMIT 5");
 
         List<MilitaryNoFlyZone> militaryNoFlyZones = jdbcTemplate.query(query.toString(), (rs, rowNum) -> new MilitaryNoFlyZone(
                 String.valueOf(rs.getString("INSTALLATI")),
