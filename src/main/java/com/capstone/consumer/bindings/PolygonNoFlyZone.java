@@ -135,7 +135,7 @@ public class PolygonNoFlyZone {
         this.minAltitude = minAltitude;
     }
 
-
+    public PolygonNoFlyZone() {}
 
 
     @Override

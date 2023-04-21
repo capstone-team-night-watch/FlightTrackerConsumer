@@ -95,6 +95,8 @@ public class EllipsoidNoFlyZone {
         this.altRadius = altRadius;
     }
 
+    public EllipsoidNoFlyZone() {}
+
     @Override
     public String toString() {
         return "EllipsoidNoFlyZone{" +

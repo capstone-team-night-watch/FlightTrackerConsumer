@@ -107,6 +107,17 @@ public class Repository {
         return ellipsoidNoFlyZones;
     }
 
+    public List<MilitaryNoFlyZone> getMilitaryNoFlyZones(){
+        StringBuilder query = new StringBuilder()
+                .append(" SELECT * FROM us_military_geojson_8776 r LIMIT 5");
+
+        List<MilitaryNoFlyZone> militaryNoFlyZones = jdbcTemplate.query(query.toString(), (rs, rowNum) -> new MilitaryNoFlyZone(
+                String.valueOf(rs.getInt("OBJECTID")),
+                rs.getString("geometry")
+        ));
+        return militaryNoFlyZones;
+    }
+
     public void addEllipsoidNoFlyZone(EllipsoidNoFlyZone noFlyZone){
 
         jdbcTemplate.update(
