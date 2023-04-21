@@ -1,6 +1,7 @@
 package com.capstone.consumer.controllers;
 
 import com.capstone.consumer.bindings.FlightLocation;
+import com.capstone.consumer.bindings.GetNoFlyZoneConflictResponse;
 import com.capstone.consumer.bindings.RectangleNoFlyZone;
 import com.capstone.consumer.serviceHandler.getFlightLocationServiceHandler;
 import org.slf4j.Logger;
@@ -28,5 +29,15 @@ public class GetFlightLocationController {
         LOGGER.warn("LONG:" + longitude);
         String location = serviceHandler.handle(longitude, latitude);
         return "Plane is located over " + location;
+    }
+
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping("/getInNoFlyZone")
+    public GetNoFlyZoneConflictResponse getInNoFlyZone(
+            @RequestParam() String longitude,
+            @RequestParam() String latitude,
+            @RequestParam() String altitude
+    ) {
+        return serviceHandler.handleNoFlyConflict(longitude, latitude, altitude);
     }
 }
