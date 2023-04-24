@@ -4,6 +4,7 @@ import com.capstone.consumer.bindings.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.jdbc.core.*;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -25,7 +26,7 @@ public class Repository {
     @Autowired
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
-    public String getFlightLocation(String longitude, String latitude) {
+    public GetFlightLocationResponse getFlightLocation(String longitude, String latitude) {
         LOGGER.warn("INSIDE REPO LONG:" + Double.valueOf(longitude));
         LOGGER.warn("REPO LAT:" + Double.valueOf(latitude));
         //This does not work, had to make do with string builder was running into weird errors
@@ -40,10 +41,13 @@ public class Repository {
 //        query.append(")'), geom)");
 
 
+        try {
+            String flightLocation = namedParameterJdbcTemplate.queryForObject(GET_FLIGHT_LOCATION, parameterSource, String.class);
+            return new GetFlightLocationResponse(flightLocation);
+        } catch (IncorrectResultSizeDataAccessException e) {
+            return new GetFlightLocationResponse("Unknown");
+        }
 
-        String flightLocation = namedParameterJdbcTemplate.queryForObject(GET_FLIGHT_LOCATION, parameterSource, String.class);
-
-        return flightLocation;
     }
 
     public String getInNoFlyZoneConflict(Double longitude, Double latitude, Double altitude) {
@@ -51,9 +55,13 @@ public class Repository {
                 .addValue("longitude", longitude)
                 .addValue("latitude", latitude)
                 .addValue("altitude", altitude);
+            try {
+                String zoneName = namedParameterJdbcTemplate.queryForObject(FIND_IN_CONFLICT_ZONE, parameterSource, String.class);
+                return zoneName;
+            } catch(IncorrectResultSizeDataAccessException e) {
+                return null;
+            }
 
-            String zoneName = namedParameterJdbcTemplate.queryForObject(FIND_IN_CONFLICT_ZONE, parameterSource, String.class);
-            return zoneName;
     }
 
     public List<RectangleNoFlyZone> getRectangleNoFlyZones(){

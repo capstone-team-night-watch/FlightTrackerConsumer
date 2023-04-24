@@ -1,5 +1,6 @@
 package com.capstone.consumer.serviceHandler;
 
+import com.capstone.consumer.bindings.GetFlightLocationResponse;
 import com.capstone.consumer.bindings.GetNoFlyZoneConflictResponse;
 import com.capstone.consumer.repository.Repository;
 import org.slf4j.Logger;
@@ -16,12 +17,12 @@ public class getFlightLocationServiceHandler {
         this.repository = repository;
     }
 
-    public String handle(final String longitude, final String latitude) {
+    public GetFlightLocationResponse handle(final String longitude, final String latitude) {
         LOGGER.warn("HANDLER LONG: " + longitude);
         return repository.getFlightLocation(longitude, latitude);
     }
 
-    public GetNoFlyZoneConflictResponse handleNoFlyConflict(String longitude, String latitude, String altitude) {
+    public GetNoFlyZoneConflictResponse handleNoFlyConflict(Double longitude, Double latitude, Double altitude) {
         String zone = repository.getInNoFlyZoneConflict(Double.valueOf(longitude), Double.valueOf(latitude), Double.valueOf(altitude));
         GetNoFlyZoneConflictResponse noFlyZoneConflictResponse = null;
 
