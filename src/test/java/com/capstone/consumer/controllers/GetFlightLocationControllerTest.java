@@ -22,10 +22,10 @@ public class GetFlightLocationControllerTest {
 
     @Test
     public void shouldCallService(){
-        when(serviceHandler.handle("long", "lat")).thenReturn("Nebraska");
+        when(serviceHandler.handle("long", "lat")).thenReturn(new GetFlightLocationResponse("Nebraska"));
 
         GetFlightLocationResponse location = getFlightLocationController.getFlightLocation("long", "lat");
 
-        assertEquals("Plane is located over Nebraska", location);
+        assertEquals("Nebraska", location.location);
     }
 }
