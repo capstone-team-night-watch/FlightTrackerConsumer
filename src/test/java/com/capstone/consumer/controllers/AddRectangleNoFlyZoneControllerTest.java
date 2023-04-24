@@ -2,7 +2,7 @@ package com.capstone.consumer.controllers;
 
 import com.capstone.consumer.bindings.RectangleNoFlyZone;
 import com.capstone.consumer.serviceHandler.AddRectangleNoFlyZoneServiceHandler;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
