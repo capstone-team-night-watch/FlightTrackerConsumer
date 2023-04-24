@@ -2,7 +2,7 @@ package com.capstone.consumer.controllers;
 
 import com.capstone.consumer.bindings.EllipsoidNoFlyZone;
 import com.capstone.consumer.serviceHandler.AddEllipsoidNoFlyZoneServiceHandler;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
