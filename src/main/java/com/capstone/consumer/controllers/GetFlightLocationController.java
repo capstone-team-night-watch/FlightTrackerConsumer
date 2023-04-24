@@ -19,7 +19,7 @@ public class GetFlightLocationController {
         this.serviceHandler = serviceHandler;
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "*")
     @GetMapping("/getFlightLocation")
     public GetFlightLocationResponse getFlightLocation(
             @RequestParam() String longitude,

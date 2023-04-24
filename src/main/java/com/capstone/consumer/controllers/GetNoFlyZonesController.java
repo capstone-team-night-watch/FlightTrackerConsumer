@@ -23,7 +23,7 @@ public class GetNoFlyZonesController {
             method = RequestMethod.GET,
             path = "/get-no-fly-zones"
     )
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "*")
     @ResponseBody
     public GetNoFlyZonesResponse getNoFlyZones(){
         LOGGER.info("Received Request to get no fly zones");
