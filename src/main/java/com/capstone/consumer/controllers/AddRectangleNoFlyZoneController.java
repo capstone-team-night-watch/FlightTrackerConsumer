@@ -16,7 +16,7 @@ public class AddRectangleNoFlyZoneController {
         this.serviceHandler = serviceHandler;
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "*")
     @RequestMapping(
             produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE,
