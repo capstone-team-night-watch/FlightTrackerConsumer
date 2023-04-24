@@ -1,5 +1,6 @@
 package com.capstone.consumer.controllers;
 
+import com.capstone.consumer.bindings.GetFlightLocationResponse;
 import com.capstone.consumer.serviceHandler.getFlightLocationServiceHandler;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,7 +24,7 @@ public class GetFlightLocationControllerTest {
     public void shouldCallService(){
         when(serviceHandler.handle("long", "lat")).thenReturn("Nebraska");
 
-        String location = getFlightLocationController.getFlightLocation("long", "lat");
+        GetFlightLocationResponse location = getFlightLocationController.getFlightLocation("long", "lat");
 
         assertEquals("Plane is located over Nebraska", location);
     }

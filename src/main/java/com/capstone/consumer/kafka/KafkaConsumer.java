@@ -18,7 +18,7 @@ public class KafkaConsumer {
     @Autowired
     private SimpMessagingTemplate messagingTemplate;
 
-    @KafkaListener(id = "kafkaConsumerExampleId", topics="FlightData")
+    @KafkaListener(id = "kafkaConsumerExampleId3", topics="FlightData")
     public void listen(String flightData) {
         //displayMessageClient.displayMessage(flightData);
         logger.info("Received flightData: " + flightData);
