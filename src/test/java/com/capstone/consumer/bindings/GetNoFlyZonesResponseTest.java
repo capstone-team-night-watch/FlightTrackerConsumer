@@ -10,7 +10,7 @@ import java.util.Arrays;
 import static org.junit.jupiter.api.Assertions.*;
 
 @RunWith(MockitoJUnitRunner.class)
-class GetNoFlyZonesResponseTest {
+public class GetNoFlyZonesResponseTest {
 
     GetNoFlyZonesResponse getNoFlyZonesResponse;
 

@@ -96,6 +96,7 @@
             <version>2.14.0-rc3</version>
         </dependency>
 
+
         <!--Testing -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -107,6 +108,12 @@
             <artifactId>junit</artifactId>
             <scope>test</scope>
             <version>4.13</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.junit.vintage</groupId>
+            <artifactId>junit-vintage-engine</artifactId>
+            <scope>test</scope>
         </dependency>
 
         <dependency>
