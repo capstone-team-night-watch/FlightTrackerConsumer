@@ -31,7 +31,7 @@ public class GetFlightLocationController {
         return location;
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "*")
     @RequestMapping(
             produces = MediaType.APPLICATION_JSON_VALUE,
             method = RequestMethod.GET,
