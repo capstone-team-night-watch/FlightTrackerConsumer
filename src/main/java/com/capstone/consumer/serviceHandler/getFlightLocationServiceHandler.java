@@ -23,7 +23,7 @@ public class getFlightLocationServiceHandler {
     }
 
     public GetNoFlyZoneConflictResponse handleNoFlyConflict(Double longitude, Double latitude, Double altitude) {
-        String zone = repository.getInNoFlyZoneConflict(Double.valueOf(longitude), Double.valueOf(latitude), Double.valueOf(altitude));
+        String zone = repository.getInNoFlyZoneConflict(longitude, latitude, altitude);
         GetNoFlyZoneConflictResponse noFlyZoneConflictResponse = null;
 
         if(zone != null) {
