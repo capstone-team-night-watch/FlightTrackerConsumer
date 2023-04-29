@@ -5,21 +5,21 @@ import org.apache.kafka.common.serialization.LongDeserializer;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.EnableMBeanExport;
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
-import java.util.Properties;
 
+/**
+ * Configuration class for the Kafka consumer that allows for more complex parsing and such. It is currently unused.
+ * However, could be used instead of this application strictly being an event listener facilitated by the KafkaConsumer Class
+ */
 @Configuration
 public class KafkaConsumerConfig {
 
-    //This class is currently unused, could possibly be used in future for parsing through all messages
-    //Instead of being an event listener like KafkaConsumer Class
+
     private final static String TOPIC_NAME="FlightData";
     private final static String BOOTSTRAP_SERVER="ec2-35-173-74-249.compute-1.amazonaws.com:9092";
     @Bean

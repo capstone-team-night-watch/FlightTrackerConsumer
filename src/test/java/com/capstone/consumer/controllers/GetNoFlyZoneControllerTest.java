@@ -1,6 +1,6 @@
 package com.capstone.consumer.controllers;
 
-import com.capstone.consumer.serviceHandler.GetNoZlyZonesService;
+import com.capstone.consumer.serviceHandler.GetNoFlyZonesServiceHandler;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -13,7 +13,7 @@ import static org.mockito.Mockito.verify;
 public class GetNoFlyZoneControllerTest {
 
     @Mock
-    private GetNoZlyZonesService service;
+    private GetNoFlyZonesServiceHandler service;
 
     @InjectMocks
     private GetNoFlyZonesController controller;

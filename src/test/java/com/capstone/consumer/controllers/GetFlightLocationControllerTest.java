@@ -1,7 +1,7 @@
 package com.capstone.consumer.controllers;
 
 import com.capstone.consumer.bindings.GetFlightLocationResponse;
-import com.capstone.consumer.serviceHandler.getFlightLocationServiceHandler;
+import com.capstone.consumer.serviceHandler.GetFlightLocationServiceHandler;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -15,14 +15,14 @@ import static org.mockito.Mockito.when;
 public class GetFlightLocationControllerTest {
 
     @Mock
-    private getFlightLocationServiceHandler serviceHandler;
+    private GetFlightLocationServiceHandler serviceHandler;
 
     @InjectMocks
     private GetFlightLocationController getFlightLocationController;
 
     @Test
     public void shouldCallService(){
-        when(serviceHandler.handle("long", "lat")).thenReturn(new GetFlightLocationResponse("Nebraska"));
+        when(serviceHandler.handleFlightLocation("long", "lat")).thenReturn(new GetFlightLocationResponse("Nebraska"));
 
         GetFlightLocationResponse location = getFlightLocationController.getFlightLocation("long", "lat");
 

@@ -2,23 +2,36 @@ package com.capstone.consumer.controllers;
 
 import com.capstone.consumer.bindings.GetFlightLocationResponse;
 import com.capstone.consumer.bindings.GetNoFlyZoneConflictResponse;
-import com.capstone.consumer.bindings.RectangleNoFlyZone;
-import com.capstone.consumer.serviceHandler.getFlightLocationServiceHandler;
+import com.capstone.consumer.serviceHandler.GetFlightLocationServiceHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+
+/**
+ * Controller class that handles all endpoints related to getting a flights location
+ */
 @RestController
 public class GetFlightLocationController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(GetFlightLocationController.class);
 
-    private final getFlightLocationServiceHandler serviceHandler;
+    /**
+     * Service Handler Object that facilitates the logic that needs to happen when a request is received
+     */
+    private final GetFlightLocationServiceHandler serviceHandler;
 
-    public GetFlightLocationController(getFlightLocationServiceHandler serviceHandler) {
+    public GetFlightLocationController(GetFlightLocationServiceHandler serviceHandler) {
         this.serviceHandler = serviceHandler;
     }
 
+
+    /**
+     * Sets up the request mapping for getting a flights location (Ex. NEBRASKA)
+     * Cross Origin scripting setup allows requests from any cross-origin script
+     *
+     * @return A Response Object representing the location a flight is above
+     */
     @CrossOrigin(origins = "*")
     @GetMapping("/getFlightLocation")
     public GetFlightLocationResponse getFlightLocation(
@@ -27,10 +40,15 @@ public class GetFlightLocationController {
     ){
         LOGGER.warn(latitude);
         LOGGER.warn("LONG:" + longitude);
-        GetFlightLocationResponse location = serviceHandler.handle(longitude, latitude);
-        return location;
+        return serviceHandler.handleFlightLocation(longitude, latitude);
     }
 
+    /**
+     * Sets up the request mapping for determining if a flight is in a no-fly zone
+     * Cross Origin scripting setup allows requests from any cross-origin script
+     *
+     * @return A Response Object representing the no-fly zone a flight is in
+     */
     @CrossOrigin(origins = "*")
     @RequestMapping(
             produces = MediaType.APPLICATION_JSON_VALUE,
