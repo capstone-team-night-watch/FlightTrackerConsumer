@@ -84,6 +84,11 @@ public class noFlyZoneController {
         return "add new no fly zone = " + rectangleNoFlyZone.toString();
     }
 
+    /**
+     * Sets up request mapping and request params for delete no fly zone service
+     * @param zoneName
+     * @return String of deleted no fly zone
+     */
     @CrossOrigin(origins = "*")
    @GetMapping("/deleteNoFlyZone")
     @ResponseBody
