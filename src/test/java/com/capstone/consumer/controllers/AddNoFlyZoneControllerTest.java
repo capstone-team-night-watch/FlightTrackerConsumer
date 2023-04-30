@@ -3,7 +3,7 @@ package com.capstone.consumer.controllers;
 import com.capstone.consumer.bindings.EllipsoidNoFlyZone;
 import com.capstone.consumer.bindings.PolygonNoFlyZone;
 import com.capstone.consumer.bindings.RectangleNoFlyZone;
-import com.capstone.consumer.serviceHandler.AddNoFlyZoneServiceHandler;
+import com.capstone.consumer.serviceHandler.noFlyZoneServiceHandler;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -13,10 +13,10 @@ import static org.mockito.Mockito.verify;
 
 public class AddNoFlyZoneControllerTest {
     @Mock
-    private AddNoFlyZoneServiceHandler serviceHandler;
+    private noFlyZoneServiceHandler serviceHandler;
 
     @InjectMocks
-    private AddNoFlyZoneController addNoFlyZoneController;
+    private noFlyZoneController addNoFlyZoneController;
 
     @Test
     public void shouldCallServiceEllipsoid() {

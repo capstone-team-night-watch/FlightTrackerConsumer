@@ -3,22 +3,22 @@ package com.capstone.consumer.controllers;
 import com.capstone.consumer.bindings.EllipsoidNoFlyZone;
 import com.capstone.consumer.bindings.PolygonNoFlyZone;
 import com.capstone.consumer.bindings.RectangleNoFlyZone;
-import com.capstone.consumer.serviceHandler.AddNoFlyZoneServiceHandler;
+import com.capstone.consumer.serviceHandler.noFlyZoneServiceHandler;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 /**
- * Controller class that handles all endpoints related to adding no-fly zones
+ * Controller class that handles all endpoints related to adding/deleting no-fly zones
  */
 @RestController
-public class AddNoFlyZoneController {
+public class noFlyZoneController {
 
     /**
      * Service Handler Object that facilitates the logic that needs to happen when a request is received
      */
-    private final AddNoFlyZoneServiceHandler serviceHandler;
+    private final noFlyZoneServiceHandler serviceHandler;
 
-    public AddNoFlyZoneController(AddNoFlyZoneServiceHandler serviceHandler) {
+    public noFlyZoneController(noFlyZoneServiceHandler serviceHandler) {
         this.serviceHandler = serviceHandler;
     }
 
@@ -82,5 +82,12 @@ public class AddNoFlyZoneController {
     public String addRectangleNoFlyZone(@RequestBody RectangleNoFlyZone rectangleNoFlyZone) {
         serviceHandler.handleRectangle(rectangleNoFlyZone);
         return "add new no fly zone = " + rectangleNoFlyZone.toString();
+    }
+
+    @CrossOrigin(origins = "*")
+   @GetMapping("/deleteNoFlyZone")
+    @ResponseBody
+    public String deleteNoFlyZone(@RequestParam String zoneName) {
+        return serviceHandler.deleteNoFlyZone(zoneName);
     }
 }
