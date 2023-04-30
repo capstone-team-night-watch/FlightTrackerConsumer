@@ -10,14 +10,14 @@ import org.springframework.stereotype.Service;
  * Service Handler class that facilitates making Repository calls to add new no-fly zones
  */
 @Service
-public class AddNoFlyZoneServiceHandler {
+public class noFlyZoneServiceHandler {
 
     /**
      * The Repository Object that facilitates the database interaction
      */
     private final Repository repository;
 
-    public AddNoFlyZoneServiceHandler(Repository repository) {
+    public noFlyZoneServiceHandler(Repository repository) {
         this.repository = repository;
     }
 
@@ -46,5 +46,9 @@ public class AddNoFlyZoneServiceHandler {
      */
     public void handleRectangle(RectangleNoFlyZone noFlyZone) {
         repository.addRectangleNoFlyZone(noFlyZone);
+    }
+
+    public String deleteNoFlyZone(String zoneName) {
+        return repository.deleteNoFlyZone(zoneName);
     }
 }

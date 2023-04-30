@@ -22,6 +22,9 @@ public class Repository {
     protected static final String GET_FLIGHT_LOCATION = "SELECT s.\"name\" FROM public.statesgeojson_polygon s WHERE ST_Within(ST_MakePoint(:longitude,:latitude), s.geom)";
     protected static final String FIND_IN_CONFLICT_ZONE = "Select n.zone_name FROM public.noflygeom n WHERE ST_Within(ST_SetSRID(ST_MakePoint(:longitude,:latitude),4326),n.geometry) AND n.max_altitude > :altitude AND n.min_altitude < :altitude";
 
+    protected static final String DELETE_POLY_NO_FLY_ZONE = "DELETE FROM public.polygon_no_fly_zone WHERE zone_name=:zoneName";
+    protected static final String DELETE_ELLIP_NO_FLY_ZONE = "DELETE FROM public.ellipsoid_no_fly_zone WHERE zone_name=:zoneName";
+    protected static final String DELETE_RECTANGLE_NO_FLY_ZONE = "DELETE FROM public.rectangle_no_fly_zone WHERE zone_name=:zoneName";
     /**
      * Template provided by Spring that allows for interaction with the database without allowing for parameters
      */
@@ -210,6 +213,23 @@ public class Repository {
                 noFlyZone.name, noFlyZone.westLongDegree, noFlyZone.eastLongDegree, noFlyZone.southLatDegree, noFlyZone.northLatDegree,
                 noFlyZone.rotationDegree, noFlyZone.maxAltitude, noFlyZone.minAltitude
         );
+
+    }
+
+    /**
+     * Deletes custom no fly zones
+     * @param zoneName
+     * @return String if successfully deleted
+     */
+    public String deleteNoFlyZone(String zoneName) {
+        boolean delete = false;
+        MapSqlParameterSource parameterSource = new MapSqlParameterSource()
+                .addValue("zoneName", zoneName);
+            namedParameterJdbcTemplate.update(DELETE_ELLIP_NO_FLY_ZONE, parameterSource);
+            namedParameterJdbcTemplate.update(DELETE_POLY_NO_FLY_ZONE, parameterSource);
+            namedParameterJdbcTemplate.update(DELETE_RECTANGLE_NO_FLY_ZONE, parameterSource);
+
+            return "Deleted No Fly Zone: " + zoneName;
 
     }
 }
