@@ -11,14 +11,14 @@ import org.springframework.web.bind.annotation.*;
  * Controller class that handles all endpoints related to adding/deleting no-fly zones
  */
 @RestController
-public class noFlyZoneController {
+public class NoFlyZoneController {
 
     /**
      * Service Handler Object that facilitates the logic that needs to happen when a request is received
      */
     private final noFlyZoneServiceHandler serviceHandler;
 
-    public noFlyZoneController(noFlyZoneServiceHandler serviceHandler) {
+    public NoFlyZoneController(noFlyZoneServiceHandler serviceHandler) {
         this.serviceHandler = serviceHandler;
     }
 
@@ -85,12 +85,14 @@ public class noFlyZoneController {
     }
 
     /**
-     * Sets up request mapping and request params for delete no fly zone service
-     * @param zoneName
-     * @return String of deleted no fly zone
+     * Sets up request mapping and request params for delete no-fly zone service
+     * Cross Origin scripting setup allows requests from any cross-origin script
+     *
+     * @param zoneName The name of the zone to be deleted
+     * @return String of deleted no-fly zone
      */
     @CrossOrigin(origins = "*")
-   @GetMapping("/deleteNoFlyZone")
+    @GetMapping("/deleteNoFlyZone")
     @ResponseBody
     public String deleteNoFlyZone(@RequestParam String zoneName) {
         return serviceHandler.deleteNoFlyZone(zoneName);

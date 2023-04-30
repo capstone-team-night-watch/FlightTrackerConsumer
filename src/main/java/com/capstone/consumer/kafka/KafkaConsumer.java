@@ -12,7 +12,7 @@ import java.util.logging.Logger;
  */
 @Component
 public class KafkaConsumer {
-    Logger logger = Logger.getLogger(String.valueOf(KafkaConsumer.class));
+    private static final Logger LOGGER = Logger.getLogger(String.valueOf(KafkaConsumer.class));
 
     /**
      * Template provided by spring to facilitate sending messages to a receiving source. This one is used to send to our web socket endpoint
@@ -22,13 +22,13 @@ public class KafkaConsumer {
 
     /**
      * Kafka listener method. Any message sent on the kafka broker is received here and then can be processed
-     * @param flightData The message being received in Kafka. It is assumed that this message contains flight data
+     * @param message The message being received in Kafka. It is assumed that this message contains flight data
      */
     @KafkaListener(id = "kafkaConsumerExampleId8", topics="FlightData")
-    public void listen(String flightData) {
-        logger.info("Received flightData: " + flightData);
+    public void listen(String message) {
+        LOGGER.info("Received message from Kafka: " + message);
 
-        sendMessage(flightData);
+        sendMessage(message);
     }
 
     /**
@@ -36,6 +36,8 @@ public class KafkaConsumer {
      * @param message Message containing flight information that has been received from the Kafka broker
      */
     public void sendMessage(String message) {
+        LOGGER.info("Sending message to web socket endpoint: /topic/liveCoords");
+
         messagingTemplate.convertAndSend("/topic/liveCoords", message);
     }
 }

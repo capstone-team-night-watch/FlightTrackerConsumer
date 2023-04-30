@@ -12,6 +12,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 
 
+/**
+ * Bindings class used to represent all the no-fly zones existing in the database
+ */
 @XmlRootElement(
         name = "GetNoFlyZonesResponse"
 )

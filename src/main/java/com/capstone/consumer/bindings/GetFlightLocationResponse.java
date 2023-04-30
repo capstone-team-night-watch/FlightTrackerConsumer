@@ -5,6 +5,9 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
 import javax.xml.bind.annotation.XmlElement;
 
+/**
+ * Bindings class used for representing Flight Location (region) data
+ */
 public class GetFlightLocationResponse {
 
     @JsonProperty("location")

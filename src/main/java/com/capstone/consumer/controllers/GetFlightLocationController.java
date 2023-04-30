@@ -25,7 +25,6 @@ public class GetFlightLocationController {
         this.serviceHandler = serviceHandler;
     }
 
-
     /**
      * Sets up the request mapping for getting a flights location (Ex. NEBRASKA)
      * Cross Origin scripting setup allows requests from any cross-origin script
@@ -37,9 +36,10 @@ public class GetFlightLocationController {
     public GetFlightLocationResponse getFlightLocation(
             @RequestParam() String longitude,
             @RequestParam() String latitude
-    ){
-        LOGGER.warn(latitude);
-        LOGGER.warn("LONG:" + longitude);
+    ) {
+        LOGGER.info("Received request to acquire location of flight with the following coordinates - " +
+                "longitude: {}, latitude: {}", longitude, latitude);
+
         return serviceHandler.handleFlightLocation(longitude, latitude);
     }
 
@@ -61,6 +61,10 @@ public class GetFlightLocationController {
             @RequestParam() Double latitude,
             @RequestParam() Double altitude
     ) {
+        LOGGER.info("Received request to determine if flight is in conflict with no-fly zone. " +
+                        "Coords that will be checked against DB are longitude: {}, latitude: {}, and altitude: {}",
+                longitude, latitude, altitude);
+
         return serviceHandler.handleNoFlyConflict(longitude, latitude, altitude);
     }
 }

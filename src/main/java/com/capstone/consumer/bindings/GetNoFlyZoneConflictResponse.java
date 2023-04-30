@@ -10,6 +10,9 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+/**
+ * Bindings class used for representing data relating to Flight no-fly zone conflicts
+ */
 @XmlRootElement(
         name = "GetNoFlyZoneConflictResponse"
 )

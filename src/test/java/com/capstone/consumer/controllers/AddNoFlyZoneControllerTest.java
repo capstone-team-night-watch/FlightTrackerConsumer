@@ -16,7 +16,7 @@ public class AddNoFlyZoneControllerTest {
     private noFlyZoneServiceHandler serviceHandler;
 
     @InjectMocks
-    private noFlyZoneController addNoFlyZoneController;
+    private NoFlyZoneController addNoFlyZoneController;
 
     @Test
     public void shouldCallServiceEllipsoid() {
