@@ -14,6 +14,8 @@ import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
 import java.lang.reflect.Array;
 import java.sql.ResultSet;
@@ -31,6 +33,9 @@ public class RepositoryTest {
 
     @Mock
     private JdbcTemplate jdbcTemplate;
+
+    @Mock
+    private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     @InjectMocks
     private Repository repository;
@@ -97,20 +102,20 @@ public class RepositoryTest {
     public void addEllipsoidNoFlyZoneShouldCallAnJdbcUpdate(){
         repository.addEllipsoidNoFlyZone(ELLIPSOID_NO_FLY_ZONE);
 
-        verify(jdbcTemplate).update(anyString(), anyString(), anyFloat(), anyFloat(), anyFloat(), anyFloat(), anyFloat(), anyFloat());
+        verify(namedParameterJdbcTemplate).update(anyString(),any(MapSqlParameterSource.class));
     }
 
     @Test
     public void addPolygonNoFlyZoneShouldCallAnJdbcUpdate(){
         repository.addPolygonNoFlyZone(POLYGON_NO_FLY_ZONE);
 
-        verify(jdbcTemplate).update(anyString(), anyString(), anyFloat(), anyFloat(), anyFloat(), anyFloat(), anyFloat(), anyFloat(), anyFloat(), anyFloat(), anyFloat(), anyFloat());
+        verify(namedParameterJdbcTemplate).update(anyString(), any(MapSqlParameterSource.class));
     }
 
     @Test
     public void addRectangleNoFlyZoneShouldCallAnJdbcUpdate(){
         repository.addRectangleNoFlyZone(RECTANGLE_NO_FLY_ZONE);
 
-        verify(jdbcTemplate).update(anyString(), anyString(), anyFloat(), anyFloat(), anyFloat(), anyFloat(), anyFloat(), anyFloat(), anyFloat());
+        verify(namedParameterJdbcTemplate).update(anyString(), any(MapSqlParameterSource.class));
     }
 }
