@@ -3,13 +3,12 @@ package com.capstone.consumer.controllers;
 import com.capstone.consumer.bindings.EllipsoidNoFlyZone;
 import com.capstone.consumer.bindings.PolygonNoFlyZone;
 import com.capstone.consumer.bindings.RectangleNoFlyZone;
-import com.capstone.consumer.serviceHandler.noFlyZoneServiceHandler;
+import com.capstone.consumer.serviceHandler.NoFlyZoneServiceHandler;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
@@ -17,7 +16,7 @@ import static org.mockito.Mockito.verify;
 @RunWith(MockitoJUnitRunner.class)
 public class AddNoFlyZoneControllerTest {
     @Mock
-    private noFlyZoneServiceHandler serviceHandler;
+    private NoFlyZoneServiceHandler serviceHandler;
 
     @InjectMocks
     private NoFlyZoneController addNoFlyZoneController;
