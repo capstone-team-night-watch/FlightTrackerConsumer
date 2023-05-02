@@ -10,14 +10,14 @@ import org.springframework.stereotype.Service;
  * Service Handler class that facilitates making Repository calls to add new no-fly zones
  */
 @Service
-public class noFlyZoneServiceHandler {
+public class NoFlyZoneServiceHandler {
 
     /**
      * The Repository Object that facilitates the database interaction
      */
     private final Repository repository;
 
-    public noFlyZoneServiceHandler(Repository repository) {
+    public NoFlyZoneServiceHandler(Repository repository) {
         this.repository = repository;
     }
 

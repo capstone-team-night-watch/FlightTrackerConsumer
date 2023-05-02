@@ -3,7 +3,7 @@ package com.capstone.consumer.controllers;
 import com.capstone.consumer.bindings.EllipsoidNoFlyZone;
 import com.capstone.consumer.bindings.PolygonNoFlyZone;
 import com.capstone.consumer.bindings.RectangleNoFlyZone;
-import com.capstone.consumer.serviceHandler.noFlyZoneServiceHandler;
+import com.capstone.consumer.serviceHandler.NoFlyZoneServiceHandler;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,9 +16,9 @@ public class NoFlyZoneController {
     /**
      * Service Handler Object that facilitates the logic that needs to happen when a request is received
      */
-    private final noFlyZoneServiceHandler serviceHandler;
+    private final NoFlyZoneServiceHandler serviceHandler;
 
-    public NoFlyZoneController(noFlyZoneServiceHandler serviceHandler) {
+    public NoFlyZoneController(NoFlyZoneServiceHandler serviceHandler) {
         this.serviceHandler = serviceHandler;
     }
 
