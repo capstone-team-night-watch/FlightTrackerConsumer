@@ -31,7 +31,8 @@ public class Repository {
     protected static final String GET_RECTANGLE_NO_FLY_ZONES_SQL = "SELECT * FROM RECTANGLE_NO_FLY_ZONE r";
     protected static final String GET_POLYGON_NO_FLY_ZONES_SQL = "SELECT * FROM POLYGON_NO_FLY_ZONE r";
     protected static final String GET_ELLIPSOID_NO_FLY_ZONES_SQL = "SELECT * FROM ELLIPSOID_NO_FLY_ZONE r";
-    protected static final String GET_MILITARY_NO_FLY_ZONES_SQL = "SELECT * FROM us_military_geojson_8776 r LIMIT 5";
+//    protected static final String GET_MILITARY_NO_FLY_ZONES_SQL = "SELECT * FROM us_military_geojson_8776 r LIMIT 5";
+    protected static final String GET_MILITARY_NO_FLY_ZONES_SQL = "SELECT r.\"INSTALLATI\", ST_AsGeoJson(r.geometry) as geometry FROM us_military_geojson_8776 r LIMIT 5";
 
     // ADD NO-FLY ZONE Statements
     protected static final String ADD_RECTANGLE_NO_FLY_ZONE_SQL = "INSERT INTO RECTANGLE_NO_FLY_ZONE " +
