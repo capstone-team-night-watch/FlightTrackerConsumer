@@ -24,7 +24,7 @@ public class KafkaConsumer {
      * Kafka listener method. Any message sent on the kafka broker is received here and then can be processed
      * @param message The message being received in Kafka. It is assumed that this message contains flight data
      */
-    @KafkaListener(id = "kafkaConsumerExampleId8", topics="FlightData")
+    @KafkaListener(id = "kafkaConsumerExampleId7", topics="FlightData")
     public void listen(String message) {
         LOGGER.info("Received message from Kafka: " + message);
 
