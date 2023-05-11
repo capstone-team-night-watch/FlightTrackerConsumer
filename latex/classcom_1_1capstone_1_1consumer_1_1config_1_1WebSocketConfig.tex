@@ -1,0 +1,48 @@
+\hypertarget{classcom_1_1capstone_1_1consumer_1_1config_1_1WebSocketConfig}{}\doxysection{com.\+capstone.\+consumer.\+config.\+Web\+Socket\+Config Class Reference}
+\label{classcom_1_1capstone_1_1consumer_1_1config_1_1WebSocketConfig}\index{com.capstone.consumer.config.WebSocketConfig@{com.capstone.consumer.config.WebSocketConfig}}
+Inheritance diagram for com.\+capstone.\+consumer.\+config.\+Web\+Socket\+Config\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classcom_1_1capstone_1_1consumer_1_1config_1_1WebSocketConfig}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{classcom_1_1capstone_1_1consumer_1_1config_1_1WebSocketConfig_a280c03ea222bd7552ca13023f1026aac}{configure\+Message\+Broker}} (Message\+Broker\+Registry config)
+\item 
+void \mbox{\hyperlink{classcom_1_1capstone_1_1consumer_1_1config_1_1WebSocketConfig_a8fb590c26722d11aca8cd16b128507fc}{register\+Stomp\+Endpoints}} (Stomp\+Endpoint\+Registry registry)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+This is a Configuration class that sets up the Web\+Socket broker and endpoints. Most of the setup is really handled by Spring. Only a few things are needed to be specified 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classcom_1_1capstone_1_1consumer_1_1config_1_1WebSocketConfig_a280c03ea222bd7552ca13023f1026aac}\label{classcom_1_1capstone_1_1consumer_1_1config_1_1WebSocketConfig_a280c03ea222bd7552ca13023f1026aac}} 
+\index{com.capstone.consumer.config.WebSocketConfig@{com.capstone.consumer.config.WebSocketConfig}!configureMessageBroker@{configureMessageBroker}}
+\index{configureMessageBroker@{configureMessageBroker}!com.capstone.consumer.config.WebSocketConfig@{com.capstone.consumer.config.WebSocketConfig}}
+\doxysubsubsection{\texorpdfstring{configureMessageBroker()}{configureMessageBroker()}}
+{\footnotesize\ttfamily void com.\+capstone.\+consumer.\+config.\+Web\+Socket\+Config.\+configure\+Message\+Broker (\begin{DoxyParamCaption}\item[{Message\+Broker\+Registry}]{config }\end{DoxyParamCaption})}
+
+Configures the message broker that allows the Web\+Socket configuration to function 
+\begin{DoxyParams}{Parameters}
+{\em config} & The config that is being configured. Handled by Spring \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classcom_1_1capstone_1_1consumer_1_1config_1_1WebSocketConfig_a8fb590c26722d11aca8cd16b128507fc}\label{classcom_1_1capstone_1_1consumer_1_1config_1_1WebSocketConfig_a8fb590c26722d11aca8cd16b128507fc}} 
+\index{com.capstone.consumer.config.WebSocketConfig@{com.capstone.consumer.config.WebSocketConfig}!registerStompEndpoints@{registerStompEndpoints}}
+\index{registerStompEndpoints@{registerStompEndpoints}!com.capstone.consumer.config.WebSocketConfig@{com.capstone.consumer.config.WebSocketConfig}}
+\doxysubsubsection{\texorpdfstring{registerStompEndpoints()}{registerStompEndpoints()}}
+{\footnotesize\ttfamily void com.\+capstone.\+consumer.\+config.\+Web\+Socket\+Config.\+register\+Stomp\+Endpoints (\begin{DoxyParamCaption}\item[{Stomp\+Endpoint\+Registry}]{registry }\end{DoxyParamCaption})}
+
+This method registers the endpoints that the front-\/end application connects to 
+\begin{DoxyParams}{Parameters}
+{\em registry} & The registry where the endpoint gets added to. Spring handles this \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/main/java/com/capstone/consumer/config/Web\+Socket\+Config.\+java\end{DoxyCompactItemize}

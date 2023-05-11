@@ -1,0 +1,45 @@
+\hypertarget{classcom_1_1capstone_1_1consumer_1_1controllers_1_1GetFlightLocationController}{}\doxysection{com.\+capstone.\+consumer.\+controllers.\+Get\+Flight\+Location\+Controller Class Reference}
+\label{classcom_1_1capstone_1_1consumer_1_1controllers_1_1GetFlightLocationController}\index{com.capstone.consumer.controllers.GetFlightLocationController@{com.capstone.consumer.controllers.GetFlightLocationController}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classcom_1_1capstone_1_1consumer_1_1controllers_1_1GetFlightLocationController_a69cd15e3d97c1890835ceb5c32f3649c}\label{classcom_1_1capstone_1_1consumer_1_1controllers_1_1GetFlightLocationController_a69cd15e3d97c1890835ceb5c32f3649c}} 
+{\bfseries Get\+Flight\+Location\+Controller} (\mbox{\hyperlink{classcom_1_1capstone_1_1consumer_1_1serviceHandler_1_1GetFlightLocationServiceHandler}{Get\+Flight\+Location\+Service\+Handler}} service\+Handler)
+\item 
+\mbox{\hyperlink{classcom_1_1capstone_1_1consumer_1_1bindings_1_1GetFlightLocationResponse}{Get\+Flight\+Location\+Response}} \mbox{\hyperlink{classcom_1_1capstone_1_1consumer_1_1controllers_1_1GetFlightLocationController_a0beb4bb8b9bfb2d8554bc14c3b39a50f}{get\+Flight\+Location}} ( @Request\+Param() String longitude, @Request\+Param() String latitude)
+\item 
+\mbox{\hyperlink{classcom_1_1capstone_1_1consumer_1_1bindings_1_1GetNoFlyZoneConflictResponse}{Get\+No\+Fly\+Zone\+Conflict\+Response}} \mbox{\hyperlink{classcom_1_1capstone_1_1consumer_1_1controllers_1_1GetFlightLocationController_a5e0ea0791bbc731eeb689aa42b5a69db}{get\+In\+No\+Fly\+Zone}} ( @Request\+Param() Double longitude, @Request\+Param() Double latitude, @Request\+Param() Double altitude)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Controller class that handles all endpoints related to getting a flights location 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classcom_1_1capstone_1_1consumer_1_1controllers_1_1GetFlightLocationController_a0beb4bb8b9bfb2d8554bc14c3b39a50f}\label{classcom_1_1capstone_1_1consumer_1_1controllers_1_1GetFlightLocationController_a0beb4bb8b9bfb2d8554bc14c3b39a50f}} 
+\index{com.capstone.consumer.controllers.GetFlightLocationController@{com.capstone.consumer.controllers.GetFlightLocationController}!getFlightLocation@{getFlightLocation}}
+\index{getFlightLocation@{getFlightLocation}!com.capstone.consumer.controllers.GetFlightLocationController@{com.capstone.consumer.controllers.GetFlightLocationController}}
+\doxysubsubsection{\texorpdfstring{getFlightLocation()}{getFlightLocation()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classcom_1_1capstone_1_1consumer_1_1bindings_1_1GetFlightLocationResponse}{Get\+Flight\+Location\+Response}} com.\+capstone.\+consumer.\+controllers.\+Get\+Flight\+Location\+Controller.\+get\+Flight\+Location (\begin{DoxyParamCaption}\item[{@Request\+Param() String}]{longitude,  }\item[{@Request\+Param() String}]{latitude }\end{DoxyParamCaption})}
+
+Sets up the request mapping for getting a flights location (Ex. NEBRASKA) Cross Origin scripting setup allows requests from any cross-\/origin script
+
+\begin{DoxyReturn}{Returns}
+A Response Object representing the location a flight is above 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classcom_1_1capstone_1_1consumer_1_1controllers_1_1GetFlightLocationController_a5e0ea0791bbc731eeb689aa42b5a69db}\label{classcom_1_1capstone_1_1consumer_1_1controllers_1_1GetFlightLocationController_a5e0ea0791bbc731eeb689aa42b5a69db}} 
+\index{com.capstone.consumer.controllers.GetFlightLocationController@{com.capstone.consumer.controllers.GetFlightLocationController}!getInNoFlyZone@{getInNoFlyZone}}
+\index{getInNoFlyZone@{getInNoFlyZone}!com.capstone.consumer.controllers.GetFlightLocationController@{com.capstone.consumer.controllers.GetFlightLocationController}}
+\doxysubsubsection{\texorpdfstring{getInNoFlyZone()}{getInNoFlyZone()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classcom_1_1capstone_1_1consumer_1_1bindings_1_1GetNoFlyZoneConflictResponse}{Get\+No\+Fly\+Zone\+Conflict\+Response}} com.\+capstone.\+consumer.\+controllers.\+Get\+Flight\+Location\+Controller.\+get\+In\+No\+Fly\+Zone (\begin{DoxyParamCaption}\item[{@Request\+Param() Double}]{longitude,  }\item[{@Request\+Param() Double}]{latitude,  }\item[{@Request\+Param() Double}]{altitude }\end{DoxyParamCaption})}
+
+Sets up the request mapping for determining if a flight is in a no-\/fly zone Cross Origin scripting setup allows requests from any cross-\/origin script
+
+\begin{DoxyReturn}{Returns}
+A Response Object representing the no-\/fly zone a flight is in 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/main/java/com/capstone/consumer/controllers/Get\+Flight\+Location\+Controller.\+java\end{DoxyCompactItemize}

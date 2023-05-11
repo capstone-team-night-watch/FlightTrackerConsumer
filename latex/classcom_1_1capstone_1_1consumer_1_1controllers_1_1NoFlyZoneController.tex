@@ -1,0 +1,91 @@
+\hypertarget{classcom_1_1capstone_1_1consumer_1_1controllers_1_1NoFlyZoneController}{}\doxysection{com.\+capstone.\+consumer.\+controllers.\+No\+Fly\+Zone\+Controller Class Reference}
+\label{classcom_1_1capstone_1_1consumer_1_1controllers_1_1NoFlyZoneController}\index{com.capstone.consumer.controllers.NoFlyZoneController@{com.capstone.consumer.controllers.NoFlyZoneController}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classcom_1_1capstone_1_1consumer_1_1controllers_1_1NoFlyZoneController_a639be4a7d9fa030ab7e6ba183814e9c1}\label{classcom_1_1capstone_1_1consumer_1_1controllers_1_1NoFlyZoneController_a639be4a7d9fa030ab7e6ba183814e9c1}} 
+{\bfseries No\+Fly\+Zone\+Controller} (\mbox{\hyperlink{classcom_1_1capstone_1_1consumer_1_1serviceHandler_1_1NoFlyZoneServiceHandler}{No\+Fly\+Zone\+Service\+Handler}} service\+Handler)
+\item 
+String \mbox{\hyperlink{classcom_1_1capstone_1_1consumer_1_1controllers_1_1NoFlyZoneController_adb61b5c8e475d39a9389a30b09f28c14}{add\+Ellipsoid\+No\+Fly\+Zone}} (@Request\+Body \mbox{\hyperlink{classcom_1_1capstone_1_1consumer_1_1bindings_1_1EllipsoidNoFlyZone}{Ellipsoid\+No\+Fly\+Zone}} ellipsoid\+No\+Fly\+Zone)
+\item 
+String \mbox{\hyperlink{classcom_1_1capstone_1_1consumer_1_1controllers_1_1NoFlyZoneController_a0accee3de25e2e69b3e5623f537a46ae}{add\+Polygon\+No\+Fly\+Zone}} (@Request\+Body \mbox{\hyperlink{classcom_1_1capstone_1_1consumer_1_1bindings_1_1PolygonNoFlyZone}{Polygon\+No\+Fly\+Zone}} polygon\+No\+Fly\+Zone)
+\item 
+String \mbox{\hyperlink{classcom_1_1capstone_1_1consumer_1_1controllers_1_1NoFlyZoneController_ae807c75f77040eb9696ec0b2a1845b35}{add\+Rectangle\+No\+Fly\+Zone}} (@Request\+Body \mbox{\hyperlink{classcom_1_1capstone_1_1consumer_1_1bindings_1_1RectangleNoFlyZone}{Rectangle\+No\+Fly\+Zone}} rectangle\+No\+Fly\+Zone)
+\item 
+String \mbox{\hyperlink{classcom_1_1capstone_1_1consumer_1_1controllers_1_1NoFlyZoneController_a80c90283678daeccd9664994c12b54ac}{delete\+No\+Fly\+Zone}} (@Request\+Param String zone\+Name)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Controller class that handles all endpoints related to adding/deleting no-\/fly zones 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classcom_1_1capstone_1_1consumer_1_1controllers_1_1NoFlyZoneController_adb61b5c8e475d39a9389a30b09f28c14}\label{classcom_1_1capstone_1_1consumer_1_1controllers_1_1NoFlyZoneController_adb61b5c8e475d39a9389a30b09f28c14}} 
+\index{com.capstone.consumer.controllers.NoFlyZoneController@{com.capstone.consumer.controllers.NoFlyZoneController}!addEllipsoidNoFlyZone@{addEllipsoidNoFlyZone}}
+\index{addEllipsoidNoFlyZone@{addEllipsoidNoFlyZone}!com.capstone.consumer.controllers.NoFlyZoneController@{com.capstone.consumer.controllers.NoFlyZoneController}}
+\doxysubsubsection{\texorpdfstring{addEllipsoidNoFlyZone()}{addEllipsoidNoFlyZone()}}
+{\footnotesize\ttfamily String com.\+capstone.\+consumer.\+controllers.\+No\+Fly\+Zone\+Controller.\+add\+Ellipsoid\+No\+Fly\+Zone (\begin{DoxyParamCaption}\item[{@Request\+Body \mbox{\hyperlink{classcom_1_1capstone_1_1consumer_1_1bindings_1_1EllipsoidNoFlyZone}{Ellipsoid\+No\+Fly\+Zone}}}]{ellipsoid\+No\+Fly\+Zone }\end{DoxyParamCaption})}
+
+Sets up the request mapping for adding an Ellipsoid no-\/fly zone Cross Origin scripting setup allows requests from any cross-\/origin script
+
+
+\begin{DoxyParams}{Parameters}
+{\em ellipsoid\+No\+Fly\+Zone} & The Ellipsoid no-\/fly zone request object \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A string representing the changes that were made to the database when adding the new no-\/fly zone 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classcom_1_1capstone_1_1consumer_1_1controllers_1_1NoFlyZoneController_a0accee3de25e2e69b3e5623f537a46ae}\label{classcom_1_1capstone_1_1consumer_1_1controllers_1_1NoFlyZoneController_a0accee3de25e2e69b3e5623f537a46ae}} 
+\index{com.capstone.consumer.controllers.NoFlyZoneController@{com.capstone.consumer.controllers.NoFlyZoneController}!addPolygonNoFlyZone@{addPolygonNoFlyZone}}
+\index{addPolygonNoFlyZone@{addPolygonNoFlyZone}!com.capstone.consumer.controllers.NoFlyZoneController@{com.capstone.consumer.controllers.NoFlyZoneController}}
+\doxysubsubsection{\texorpdfstring{addPolygonNoFlyZone()}{addPolygonNoFlyZone()}}
+{\footnotesize\ttfamily String com.\+capstone.\+consumer.\+controllers.\+No\+Fly\+Zone\+Controller.\+add\+Polygon\+No\+Fly\+Zone (\begin{DoxyParamCaption}\item[{@Request\+Body \mbox{\hyperlink{classcom_1_1capstone_1_1consumer_1_1bindings_1_1PolygonNoFlyZone}{Polygon\+No\+Fly\+Zone}}}]{polygon\+No\+Fly\+Zone }\end{DoxyParamCaption})}
+
+Sets up the request mapping for adding a Polygon no-\/fly zone Cross Origin scripting setup allows requests from any cross-\/origin script
+
+
+\begin{DoxyParams}{Parameters}
+{\em polygon\+No\+Fly\+Zone} & The Polygon no-\/fly zone request object \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A string representing the changes that were made to the database when adding the new no-\/fly zone 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classcom_1_1capstone_1_1consumer_1_1controllers_1_1NoFlyZoneController_ae807c75f77040eb9696ec0b2a1845b35}\label{classcom_1_1capstone_1_1consumer_1_1controllers_1_1NoFlyZoneController_ae807c75f77040eb9696ec0b2a1845b35}} 
+\index{com.capstone.consumer.controllers.NoFlyZoneController@{com.capstone.consumer.controllers.NoFlyZoneController}!addRectangleNoFlyZone@{addRectangleNoFlyZone}}
+\index{addRectangleNoFlyZone@{addRectangleNoFlyZone}!com.capstone.consumer.controllers.NoFlyZoneController@{com.capstone.consumer.controllers.NoFlyZoneController}}
+\doxysubsubsection{\texorpdfstring{addRectangleNoFlyZone()}{addRectangleNoFlyZone()}}
+{\footnotesize\ttfamily String com.\+capstone.\+consumer.\+controllers.\+No\+Fly\+Zone\+Controller.\+add\+Rectangle\+No\+Fly\+Zone (\begin{DoxyParamCaption}\item[{@Request\+Body \mbox{\hyperlink{classcom_1_1capstone_1_1consumer_1_1bindings_1_1RectangleNoFlyZone}{Rectangle\+No\+Fly\+Zone}}}]{rectangle\+No\+Fly\+Zone }\end{DoxyParamCaption})}
+
+Sets up the request mapping for adding a Rectangle no-\/fly zone Cross Origin scripting setup allows requests from any cross-\/origin script
+
+
+\begin{DoxyParams}{Parameters}
+{\em rectangle\+No\+Fly\+Zone} & The Polygon no-\/fly zone request object \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A string representing the changes that were made to the database when adding the new no-\/fly zone 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classcom_1_1capstone_1_1consumer_1_1controllers_1_1NoFlyZoneController_a80c90283678daeccd9664994c12b54ac}\label{classcom_1_1capstone_1_1consumer_1_1controllers_1_1NoFlyZoneController_a80c90283678daeccd9664994c12b54ac}} 
+\index{com.capstone.consumer.controllers.NoFlyZoneController@{com.capstone.consumer.controllers.NoFlyZoneController}!deleteNoFlyZone@{deleteNoFlyZone}}
+\index{deleteNoFlyZone@{deleteNoFlyZone}!com.capstone.consumer.controllers.NoFlyZoneController@{com.capstone.consumer.controllers.NoFlyZoneController}}
+\doxysubsubsection{\texorpdfstring{deleteNoFlyZone()}{deleteNoFlyZone()}}
+{\footnotesize\ttfamily String com.\+capstone.\+consumer.\+controllers.\+No\+Fly\+Zone\+Controller.\+delete\+No\+Fly\+Zone (\begin{DoxyParamCaption}\item[{@Request\+Param String}]{zone\+Name }\end{DoxyParamCaption})}
+
+Sets up request mapping and request params for delete no-\/fly zone service Cross Origin scripting setup allows requests from any cross-\/origin script
+
+
+\begin{DoxyParams}{Parameters}
+{\em zone\+Name} & The name of the zone to be deleted \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+String of deleted no-\/fly zone 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/main/java/com/capstone/consumer/controllers/No\+Fly\+Zone\+Controller.\+java\end{DoxyCompactItemize}

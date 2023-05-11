@@ -1,0 +1,42 @@
+\hypertarget{classcom_1_1capstone_1_1consumer_1_1kafka_1_1KafkaConsumer}{}\doxysection{com.\+capstone.\+consumer.\+kafka.\+Kafka\+Consumer Class Reference}
+\label{classcom_1_1capstone_1_1consumer_1_1kafka_1_1KafkaConsumer}\index{com.capstone.consumer.kafka.KafkaConsumer@{com.capstone.consumer.kafka.KafkaConsumer}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{classcom_1_1capstone_1_1consumer_1_1kafka_1_1KafkaConsumer_a9167e2f53971443e31a2111d9b0eba4f}{listen}} (String message)
+\item 
+void \mbox{\hyperlink{classcom_1_1capstone_1_1consumer_1_1kafka_1_1KafkaConsumer_a4530ffe6d209ae798c7d5f05e0da1b1c}{send\+Message}} (String message)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+This is the class where the kafka consumption gets set up. 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classcom_1_1capstone_1_1consumer_1_1kafka_1_1KafkaConsumer_a9167e2f53971443e31a2111d9b0eba4f}\label{classcom_1_1capstone_1_1consumer_1_1kafka_1_1KafkaConsumer_a9167e2f53971443e31a2111d9b0eba4f}} 
+\index{com.capstone.consumer.kafka.KafkaConsumer@{com.capstone.consumer.kafka.KafkaConsumer}!listen@{listen}}
+\index{listen@{listen}!com.capstone.consumer.kafka.KafkaConsumer@{com.capstone.consumer.kafka.KafkaConsumer}}
+\doxysubsubsection{\texorpdfstring{listen()}{listen()}}
+{\footnotesize\ttfamily void com.\+capstone.\+consumer.\+kafka.\+Kafka\+Consumer.\+listen (\begin{DoxyParamCaption}\item[{String}]{message }\end{DoxyParamCaption})}
+
+Kafka listener method. Any message sent on the kafka broker is received here and then can be processed 
+\begin{DoxyParams}{Parameters}
+{\em message} & The message being received in Kafka. It is assumed that this message contains flight data \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classcom_1_1capstone_1_1consumer_1_1kafka_1_1KafkaConsumer_a4530ffe6d209ae798c7d5f05e0da1b1c}\label{classcom_1_1capstone_1_1consumer_1_1kafka_1_1KafkaConsumer_a4530ffe6d209ae798c7d5f05e0da1b1c}} 
+\index{com.capstone.consumer.kafka.KafkaConsumer@{com.capstone.consumer.kafka.KafkaConsumer}!sendMessage@{sendMessage}}
+\index{sendMessage@{sendMessage}!com.capstone.consumer.kafka.KafkaConsumer@{com.capstone.consumer.kafka.KafkaConsumer}}
+\doxysubsubsection{\texorpdfstring{sendMessage()}{sendMessage()}}
+{\footnotesize\ttfamily void com.\+capstone.\+consumer.\+kafka.\+Kafka\+Consumer.\+send\+Message (\begin{DoxyParamCaption}\item[{String}]{message }\end{DoxyParamCaption})}
+
+Simple method to send a message to the connected web socket endpoint. 
+\begin{DoxyParams}{Parameters}
+{\em message} & Message containing flight information that has been received from the Kafka broker \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/main/java/com/capstone/consumer/kafka/Kafka\+Consumer.\+java\end{DoxyCompactItemize}

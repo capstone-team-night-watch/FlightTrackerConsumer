@@ -1,0 +1,275 @@
+\hypertarget{classcom_1_1capstone_1_1consumer_1_1repository_1_1Repository}{}\doxysection{com.\+capstone.\+consumer.\+repository.\+Repository Class Reference}
+\label{classcom_1_1capstone_1_1consumer_1_1repository_1_1Repository}\index{com.capstone.consumer.repository.Repository@{com.capstone.consumer.repository.Repository}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classcom_1_1capstone_1_1consumer_1_1bindings_1_1GetFlightLocationResponse}{Get\+Flight\+Location\+Response}} \mbox{\hyperlink{classcom_1_1capstone_1_1consumer_1_1repository_1_1Repository_a0d3abd3a389ccf27e81970d39c863d13}{get\+Flight\+Location}} (String longitude, String latitude)
+\item 
+String \mbox{\hyperlink{classcom_1_1capstone_1_1consumer_1_1repository_1_1Repository_a56e66c815fe318492d712aaa3427a525}{get\+In\+No\+Fly\+Zone\+Conflict}} (Double longitude, Double latitude, Double altitude)
+\item 
+List$<$ \mbox{\hyperlink{classcom_1_1capstone_1_1consumer_1_1bindings_1_1RectangleNoFlyZone}{Rectangle\+No\+Fly\+Zone}} $>$ \mbox{\hyperlink{classcom_1_1capstone_1_1consumer_1_1repository_1_1Repository_a39035b710650d5bb985e4e003983bac5}{get\+Rectangle\+No\+Fly\+Zones}} ()
+\item 
+List$<$ \mbox{\hyperlink{classcom_1_1capstone_1_1consumer_1_1bindings_1_1PolygonNoFlyZone}{Polygon\+No\+Fly\+Zone}} $>$ \mbox{\hyperlink{classcom_1_1capstone_1_1consumer_1_1repository_1_1Repository_a6441fb206ff4a73990039d268b315ffe}{get\+Polygon\+No\+Fly\+Zones}} ()
+\item 
+List$<$ \mbox{\hyperlink{classcom_1_1capstone_1_1consumer_1_1bindings_1_1EllipsoidNoFlyZone}{Ellipsoid\+No\+Fly\+Zone}} $>$ \mbox{\hyperlink{classcom_1_1capstone_1_1consumer_1_1repository_1_1Repository_a5091f4378140f12bbbe920f737e68c3b}{get\+Ellipsoid\+No\+Fly\+Zones}} ()
+\item 
+List$<$ \mbox{\hyperlink{classcom_1_1capstone_1_1consumer_1_1bindings_1_1MilitaryNoFlyZone}{Military\+No\+Fly\+Zone}} $>$ \mbox{\hyperlink{classcom_1_1capstone_1_1consumer_1_1repository_1_1Repository_a4400b2d6ff3a2c84e6852a2f607810a6}{get\+Military\+No\+Fly\+Zones}} ()
+\item 
+void \mbox{\hyperlink{classcom_1_1capstone_1_1consumer_1_1repository_1_1Repository_aa3563afba58878ed83bf7cd327c545bd}{add\+Ellipsoid\+No\+Fly\+Zone}} (\mbox{\hyperlink{classcom_1_1capstone_1_1consumer_1_1bindings_1_1EllipsoidNoFlyZone}{Ellipsoid\+No\+Fly\+Zone}} no\+Fly\+Zone)
+\item 
+void \mbox{\hyperlink{classcom_1_1capstone_1_1consumer_1_1repository_1_1Repository_a87f932ff4f5148ed4c8d5d3967e8b1c3}{add\+Polygon\+No\+Fly\+Zone}} (\mbox{\hyperlink{classcom_1_1capstone_1_1consumer_1_1bindings_1_1PolygonNoFlyZone}{Polygon\+No\+Fly\+Zone}} no\+Fly\+Zone)
+\item 
+void \mbox{\hyperlink{classcom_1_1capstone_1_1consumer_1_1repository_1_1Repository_a4de153926afd7cfbae732d8e01c58397}{add\+Rectangle\+No\+Fly\+Zone}} (\mbox{\hyperlink{classcom_1_1capstone_1_1consumer_1_1bindings_1_1RectangleNoFlyZone}{Rectangle\+No\+Fly\+Zone}} no\+Fly\+Zone)
+\item 
+String \mbox{\hyperlink{classcom_1_1capstone_1_1consumer_1_1repository_1_1Repository_a453ea8dc6159883b748994a5b67efd4b}{delete\+No\+Fly\+Zone}} (String zone\+Name)
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static final String \mbox{\hyperlink{classcom_1_1capstone_1_1consumer_1_1repository_1_1Repository_a8e7ce3d2905958f4c03c3d025d1e1bda}{GET\+\_\+\+FLIGHT\+\_\+\+LOCATION\+\_\+\+SQL}}
+\item 
+static final String \mbox{\hyperlink{classcom_1_1capstone_1_1consumer_1_1repository_1_1Repository_a58fc2c27a5a6229761ee13b768e0d2a9}{FIND\+\_\+\+IN\+\_\+\+CONFLICT\+\_\+\+ZONE\+\_\+\+SQL}}
+\item 
+\mbox{\Hypertarget{classcom_1_1capstone_1_1consumer_1_1repository_1_1Repository_ac65893c2eb53f395854683dea04d3a7d}\label{classcom_1_1capstone_1_1consumer_1_1repository_1_1Repository_ac65893c2eb53f395854683dea04d3a7d}} 
+static final String {\bfseries GET\+\_\+\+RECTANGLE\+\_\+\+NO\+\_\+\+FLY\+\_\+\+ZONES\+\_\+\+SQL} = \char`\"{}SELECT $\ast$ FROM RECTANGLE\+\_\+\+NO\+\_\+\+FLY\+\_\+\+ZONE r\char`\"{}
+\item 
+\mbox{\Hypertarget{classcom_1_1capstone_1_1consumer_1_1repository_1_1Repository_ad8eb84f732cbd4f63d5cc2865edcef46}\label{classcom_1_1capstone_1_1consumer_1_1repository_1_1Repository_ad8eb84f732cbd4f63d5cc2865edcef46}} 
+static final String {\bfseries GET\+\_\+\+POLYGON\+\_\+\+NO\+\_\+\+FLY\+\_\+\+ZONES\+\_\+\+SQL} = \char`\"{}SELECT $\ast$ FROM POLYGON\+\_\+\+NO\+\_\+\+FLY\+\_\+\+ZONE r\char`\"{}
+\item 
+\mbox{\Hypertarget{classcom_1_1capstone_1_1consumer_1_1repository_1_1Repository_a9e4aa7dcc008ba74b0b44bc872611a02}\label{classcom_1_1capstone_1_1consumer_1_1repository_1_1Repository_a9e4aa7dcc008ba74b0b44bc872611a02}} 
+static final String {\bfseries GET\+\_\+\+ELLIPSOID\+\_\+\+NO\+\_\+\+FLY\+\_\+\+ZONES\+\_\+\+SQL} = \char`\"{}SELECT $\ast$ FROM ELLIPSOID\+\_\+\+NO\+\_\+\+FLY\+\_\+\+ZONE r\char`\"{}
+\item 
+\mbox{\Hypertarget{classcom_1_1capstone_1_1consumer_1_1repository_1_1Repository_a156898def484bea8c25e3389442ec9d8}\label{classcom_1_1capstone_1_1consumer_1_1repository_1_1Repository_a156898def484bea8c25e3389442ec9d8}} 
+static final String {\bfseries GET\+\_\+\+MILITARY\+\_\+\+NO\+\_\+\+FLY\+\_\+\+ZONES\+\_\+\+SQL} = \char`\"{}SELECT r.\textbackslash{}\char`\"{}\+INSTALLATI\textbackslash{}\char`\"{}, ST\+\_\+\+As\+Geo\+Json(r.\+geometry) as geometry FROM us\+\_\+military\+\_\+geojson\+\_\+8776 r\char`\"{}
+\item 
+static final String \mbox{\hyperlink{classcom_1_1capstone_1_1consumer_1_1repository_1_1Repository_a74a62f5394aad5d03171185b7b38c909}{ADD\+\_\+\+RECTANGLE\+\_\+\+NO\+\_\+\+FLY\+\_\+\+ZONE\+\_\+\+SQL}}
+\item 
+static final String \mbox{\hyperlink{classcom_1_1capstone_1_1consumer_1_1repository_1_1Repository_ac36cb87107263ae689ed1781937b9a45}{ADD\+\_\+\+POLYGON\+\_\+\+NO\+\_\+\+FLY\+\_\+\+ZONE\+\_\+\+SQL}}
+\item 
+static final String \mbox{\hyperlink{classcom_1_1capstone_1_1consumer_1_1repository_1_1Repository_ad3e0fbbb18de1a82fa662568b2db1341}{ADD\+\_\+\+ELLIPSOID\+\_\+\+NO\+\_\+\+FLY\+\_\+\+ZONE\+\_\+\+SQL}}
+\item 
+\mbox{\Hypertarget{classcom_1_1capstone_1_1consumer_1_1repository_1_1Repository_aa32dbfae33b990f4c1de40b86a903efe}\label{classcom_1_1capstone_1_1consumer_1_1repository_1_1Repository_aa32dbfae33b990f4c1de40b86a903efe}} 
+static final String {\bfseries DELETE\+\_\+\+POLY\+\_\+\+NO\+\_\+\+FLY\+\_\+\+ZONE} = \char`\"{}DELETE FROM public.\+polygon\+\_\+no\+\_\+fly\+\_\+zone WHERE zone\+\_\+name=\+:zone\+Name\char`\"{}
+\item 
+\mbox{\Hypertarget{classcom_1_1capstone_1_1consumer_1_1repository_1_1Repository_a600e2604ef5d5bb4e81c32769f72b326}\label{classcom_1_1capstone_1_1consumer_1_1repository_1_1Repository_a600e2604ef5d5bb4e81c32769f72b326}} 
+static final String {\bfseries DELETE\+\_\+\+ELLIP\+\_\+\+NO\+\_\+\+FLY\+\_\+\+ZONE} = \char`\"{}DELETE FROM public.\+ellipsoid\+\_\+no\+\_\+fly\+\_\+zone WHERE zone\+\_\+name=\+:zone\+Name\char`\"{}
+\item 
+\mbox{\Hypertarget{classcom_1_1capstone_1_1consumer_1_1repository_1_1Repository_acd0b2a7f7d87e1c0f8a7dccd7a6f0fe4}\label{classcom_1_1capstone_1_1consumer_1_1repository_1_1Repository_acd0b2a7f7d87e1c0f8a7dccd7a6f0fe4}} 
+static final String {\bfseries DELETE\+\_\+\+RECTANGLE\+\_\+\+NO\+\_\+\+FLY\+\_\+\+ZONE} = \char`\"{}DELETE FROM public.\+rectangle\+\_\+no\+\_\+fly\+\_\+zone WHERE zone\+\_\+name=\+:zone\+Name\char`\"{}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+This class facilitates interaction with the Postgres database set up in AWS. 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classcom_1_1capstone_1_1consumer_1_1repository_1_1Repository_aa3563afba58878ed83bf7cd327c545bd}\label{classcom_1_1capstone_1_1consumer_1_1repository_1_1Repository_aa3563afba58878ed83bf7cd327c545bd}} 
+\index{com.capstone.consumer.repository.Repository@{com.capstone.consumer.repository.Repository}!addEllipsoidNoFlyZone@{addEllipsoidNoFlyZone}}
+\index{addEllipsoidNoFlyZone@{addEllipsoidNoFlyZone}!com.capstone.consumer.repository.Repository@{com.capstone.consumer.repository.Repository}}
+\doxysubsubsection{\texorpdfstring{addEllipsoidNoFlyZone()}{addEllipsoidNoFlyZone()}}
+{\footnotesize\ttfamily void com.\+capstone.\+consumer.\+repository.\+Repository.\+add\+Ellipsoid\+No\+Fly\+Zone (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classcom_1_1capstone_1_1consumer_1_1bindings_1_1EllipsoidNoFlyZone}{Ellipsoid\+No\+Fly\+Zone}}}]{no\+Fly\+Zone }\end{DoxyParamCaption})}
+
+Adds a new Ellipsoid type no-\/fly zone
+
+
+\begin{DoxyParams}{Parameters}
+{\em no\+Fly\+Zone} & The Ellipsoid\+No\+Fly\+Zone Object that provides the values that will be inserted into the DB \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classcom_1_1capstone_1_1consumer_1_1repository_1_1Repository_a87f932ff4f5148ed4c8d5d3967e8b1c3}\label{classcom_1_1capstone_1_1consumer_1_1repository_1_1Repository_a87f932ff4f5148ed4c8d5d3967e8b1c3}} 
+\index{com.capstone.consumer.repository.Repository@{com.capstone.consumer.repository.Repository}!addPolygonNoFlyZone@{addPolygonNoFlyZone}}
+\index{addPolygonNoFlyZone@{addPolygonNoFlyZone}!com.capstone.consumer.repository.Repository@{com.capstone.consumer.repository.Repository}}
+\doxysubsubsection{\texorpdfstring{addPolygonNoFlyZone()}{addPolygonNoFlyZone()}}
+{\footnotesize\ttfamily void com.\+capstone.\+consumer.\+repository.\+Repository.\+add\+Polygon\+No\+Fly\+Zone (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classcom_1_1capstone_1_1consumer_1_1bindings_1_1PolygonNoFlyZone}{Polygon\+No\+Fly\+Zone}}}]{no\+Fly\+Zone }\end{DoxyParamCaption})}
+
+Adds a new Polygon type no-\/fly zone
+
+
+\begin{DoxyParams}{Parameters}
+{\em no\+Fly\+Zone} & The Polygon\+No\+Fly\+Zone Object that provides the values that will be inserted into the DB \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classcom_1_1capstone_1_1consumer_1_1repository_1_1Repository_a4de153926afd7cfbae732d8e01c58397}\label{classcom_1_1capstone_1_1consumer_1_1repository_1_1Repository_a4de153926afd7cfbae732d8e01c58397}} 
+\index{com.capstone.consumer.repository.Repository@{com.capstone.consumer.repository.Repository}!addRectangleNoFlyZone@{addRectangleNoFlyZone}}
+\index{addRectangleNoFlyZone@{addRectangleNoFlyZone}!com.capstone.consumer.repository.Repository@{com.capstone.consumer.repository.Repository}}
+\doxysubsubsection{\texorpdfstring{addRectangleNoFlyZone()}{addRectangleNoFlyZone()}}
+{\footnotesize\ttfamily void com.\+capstone.\+consumer.\+repository.\+Repository.\+add\+Rectangle\+No\+Fly\+Zone (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classcom_1_1capstone_1_1consumer_1_1bindings_1_1RectangleNoFlyZone}{Rectangle\+No\+Fly\+Zone}}}]{no\+Fly\+Zone }\end{DoxyParamCaption})}
+
+Adds a new Rectangle type no-\/fly zone
+
+
+\begin{DoxyParams}{Parameters}
+{\em no\+Fly\+Zone} & The Rectangle\+No\+Fly\+Zone Object that provides the values that will be inserted into the DB \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classcom_1_1capstone_1_1consumer_1_1repository_1_1Repository_a453ea8dc6159883b748994a5b67efd4b}\label{classcom_1_1capstone_1_1consumer_1_1repository_1_1Repository_a453ea8dc6159883b748994a5b67efd4b}} 
+\index{com.capstone.consumer.repository.Repository@{com.capstone.consumer.repository.Repository}!deleteNoFlyZone@{deleteNoFlyZone}}
+\index{deleteNoFlyZone@{deleteNoFlyZone}!com.capstone.consumer.repository.Repository@{com.capstone.consumer.repository.Repository}}
+\doxysubsubsection{\texorpdfstring{deleteNoFlyZone()}{deleteNoFlyZone()}}
+{\footnotesize\ttfamily String com.\+capstone.\+consumer.\+repository.\+Repository.\+delete\+No\+Fly\+Zone (\begin{DoxyParamCaption}\item[{String}]{zone\+Name }\end{DoxyParamCaption})}
+
+Deletes a custom no fly zone 
+\begin{DoxyParams}{Parameters}
+{\em zone\+Name} & The name of the zone to be deleted \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+String representing deletion of zone if successfully deleted 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classcom_1_1capstone_1_1consumer_1_1repository_1_1Repository_a5091f4378140f12bbbe920f737e68c3b}\label{classcom_1_1capstone_1_1consumer_1_1repository_1_1Repository_a5091f4378140f12bbbe920f737e68c3b}} 
+\index{com.capstone.consumer.repository.Repository@{com.capstone.consumer.repository.Repository}!getEllipsoidNoFlyZones@{getEllipsoidNoFlyZones}}
+\index{getEllipsoidNoFlyZones@{getEllipsoidNoFlyZones}!com.capstone.consumer.repository.Repository@{com.capstone.consumer.repository.Repository}}
+\doxysubsubsection{\texorpdfstring{getEllipsoidNoFlyZones()}{getEllipsoidNoFlyZones()}}
+{\footnotesize\ttfamily List$<$ \mbox{\hyperlink{classcom_1_1capstone_1_1consumer_1_1bindings_1_1EllipsoidNoFlyZone}{Ellipsoid\+No\+Fly\+Zone}} $>$ com.\+capstone.\+consumer.\+repository.\+Repository.\+get\+Ellipsoid\+No\+Fly\+Zones (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Get the Ellipsoid type no-\/fly zones
+
+\begin{DoxyReturn}{Returns}
+A list of Ellipsoid\+No\+Fly\+Zone Objects if there are values in the db, otherwise an empty list 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classcom_1_1capstone_1_1consumer_1_1repository_1_1Repository_a0d3abd3a389ccf27e81970d39c863d13}\label{classcom_1_1capstone_1_1consumer_1_1repository_1_1Repository_a0d3abd3a389ccf27e81970d39c863d13}} 
+\index{com.capstone.consumer.repository.Repository@{com.capstone.consumer.repository.Repository}!getFlightLocation@{getFlightLocation}}
+\index{getFlightLocation@{getFlightLocation}!com.capstone.consumer.repository.Repository@{com.capstone.consumer.repository.Repository}}
+\doxysubsubsection{\texorpdfstring{getFlightLocation()}{getFlightLocation()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classcom_1_1capstone_1_1consumer_1_1bindings_1_1GetFlightLocationResponse}{Get\+Flight\+Location\+Response}} com.\+capstone.\+consumer.\+repository.\+Repository.\+get\+Flight\+Location (\begin{DoxyParamCaption}\item[{String}]{longitude,  }\item[{String}]{latitude }\end{DoxyParamCaption})}
+
+Determines where a flight is above (Ex. NEBRASKA) given the coordinates
+
+
+\begin{DoxyParams}{Parameters}
+{\em longitude} & The longitude value of flight\textquotesingle{}s current location \\
+\hline
+{\em latitude} & The latitude value of the flight\textquotesingle{}s current location \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The State where a flight is above, or Unknown if the flight\textquotesingle{}s location does not match any in the database 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classcom_1_1capstone_1_1consumer_1_1repository_1_1Repository_a56e66c815fe318492d712aaa3427a525}\label{classcom_1_1capstone_1_1consumer_1_1repository_1_1Repository_a56e66c815fe318492d712aaa3427a525}} 
+\index{com.capstone.consumer.repository.Repository@{com.capstone.consumer.repository.Repository}!getInNoFlyZoneConflict@{getInNoFlyZoneConflict}}
+\index{getInNoFlyZoneConflict@{getInNoFlyZoneConflict}!com.capstone.consumer.repository.Repository@{com.capstone.consumer.repository.Repository}}
+\doxysubsubsection{\texorpdfstring{getInNoFlyZoneConflict()}{getInNoFlyZoneConflict()}}
+{\footnotesize\ttfamily String com.\+capstone.\+consumer.\+repository.\+Repository.\+get\+In\+No\+Fly\+Zone\+Conflict (\begin{DoxyParamCaption}\item[{Double}]{longitude,  }\item[{Double}]{latitude,  }\item[{Double}]{altitude }\end{DoxyParamCaption})}
+
+Determines if a flight is currently in a no-\/fly zone given the coordinates
+
+
+\begin{DoxyParams}{Parameters}
+{\em longitude} & The longitude value of flight\textquotesingle{}s current location \\
+\hline
+{\em latitude} & The latitude value of the flight\textquotesingle{}s current location \\
+\hline
+{\em altitude} & The altitude value of the flight\textquotesingle{}s current location \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+String value representing the no-\/fly zone that the flight is currently in contact with 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classcom_1_1capstone_1_1consumer_1_1repository_1_1Repository_a4400b2d6ff3a2c84e6852a2f607810a6}\label{classcom_1_1capstone_1_1consumer_1_1repository_1_1Repository_a4400b2d6ff3a2c84e6852a2f607810a6}} 
+\index{com.capstone.consumer.repository.Repository@{com.capstone.consumer.repository.Repository}!getMilitaryNoFlyZones@{getMilitaryNoFlyZones}}
+\index{getMilitaryNoFlyZones@{getMilitaryNoFlyZones}!com.capstone.consumer.repository.Repository@{com.capstone.consumer.repository.Repository}}
+\doxysubsubsection{\texorpdfstring{getMilitaryNoFlyZones()}{getMilitaryNoFlyZones()}}
+{\footnotesize\ttfamily List$<$ \mbox{\hyperlink{classcom_1_1capstone_1_1consumer_1_1bindings_1_1MilitaryNoFlyZone}{Military\+No\+Fly\+Zone}} $>$ com.\+capstone.\+consumer.\+repository.\+Repository.\+get\+Military\+No\+Fly\+Zones (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Get the Military type no-\/fly zones
+
+\begin{DoxyReturn}{Returns}
+A list of Military\+No\+Fly\+Zone Objects if there are values in the db, otherwise an empty list 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classcom_1_1capstone_1_1consumer_1_1repository_1_1Repository_a6441fb206ff4a73990039d268b315ffe}\label{classcom_1_1capstone_1_1consumer_1_1repository_1_1Repository_a6441fb206ff4a73990039d268b315ffe}} 
+\index{com.capstone.consumer.repository.Repository@{com.capstone.consumer.repository.Repository}!getPolygonNoFlyZones@{getPolygonNoFlyZones}}
+\index{getPolygonNoFlyZones@{getPolygonNoFlyZones}!com.capstone.consumer.repository.Repository@{com.capstone.consumer.repository.Repository}}
+\doxysubsubsection{\texorpdfstring{getPolygonNoFlyZones()}{getPolygonNoFlyZones()}}
+{\footnotesize\ttfamily List$<$ \mbox{\hyperlink{classcom_1_1capstone_1_1consumer_1_1bindings_1_1PolygonNoFlyZone}{Polygon\+No\+Fly\+Zone}} $>$ com.\+capstone.\+consumer.\+repository.\+Repository.\+get\+Polygon\+No\+Fly\+Zones (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Get the Polygon type no-\/fly zones
+
+\begin{DoxyReturn}{Returns}
+A list of Polygon\+No\+Fly\+Zone Objects if there are values in the db, otherwise an empty list 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classcom_1_1capstone_1_1consumer_1_1repository_1_1Repository_a39035b710650d5bb985e4e003983bac5}\label{classcom_1_1capstone_1_1consumer_1_1repository_1_1Repository_a39035b710650d5bb985e4e003983bac5}} 
+\index{com.capstone.consumer.repository.Repository@{com.capstone.consumer.repository.Repository}!getRectangleNoFlyZones@{getRectangleNoFlyZones}}
+\index{getRectangleNoFlyZones@{getRectangleNoFlyZones}!com.capstone.consumer.repository.Repository@{com.capstone.consumer.repository.Repository}}
+\doxysubsubsection{\texorpdfstring{getRectangleNoFlyZones()}{getRectangleNoFlyZones()}}
+{\footnotesize\ttfamily List$<$ \mbox{\hyperlink{classcom_1_1capstone_1_1consumer_1_1bindings_1_1RectangleNoFlyZone}{Rectangle\+No\+Fly\+Zone}} $>$ com.\+capstone.\+consumer.\+repository.\+Repository.\+get\+Rectangle\+No\+Fly\+Zones (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Get the Rectangle type no-\/fly zones
+
+\begin{DoxyReturn}{Returns}
+A list of Rectangle\+No\+Fly\+Zone Objects if there are values in the db, otherwise an empty list 
+\end{DoxyReturn}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classcom_1_1capstone_1_1consumer_1_1repository_1_1Repository_ad3e0fbbb18de1a82fa662568b2db1341}\label{classcom_1_1capstone_1_1consumer_1_1repository_1_1Repository_ad3e0fbbb18de1a82fa662568b2db1341}} 
+\index{com.capstone.consumer.repository.Repository@{com.capstone.consumer.repository.Repository}!ADD\_ELLIPSOID\_NO\_FLY\_ZONE\_SQL@{ADD\_ELLIPSOID\_NO\_FLY\_ZONE\_SQL}}
+\index{ADD\_ELLIPSOID\_NO\_FLY\_ZONE\_SQL@{ADD\_ELLIPSOID\_NO\_FLY\_ZONE\_SQL}!com.capstone.consumer.repository.Repository@{com.capstone.consumer.repository.Repository}}
+\doxysubsubsection{\texorpdfstring{ADD\_ELLIPSOID\_NO\_FLY\_ZONE\_SQL}{ADD\_ELLIPSOID\_NO\_FLY\_ZONE\_SQL}}
+{\footnotesize\ttfamily final String com.\+capstone.\+consumer.\+repository.\+Repository.\+ADD\+\_\+\+ELLIPSOID\+\_\+\+NO\+\_\+\+FLY\+\_\+\+ZONE\+\_\+\+SQL\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [protected]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=\ \textcolor{stringliteral}{"{}INSERT\ INTO\ ELLIPSOID\_NO\_FLY\_ZONE\ "{}}\ +}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}(ZONE\_NAME,\ LONGITUDE,\ LATITUDE,\ ALTITUDE,\ LONGRADIUS,\ LATRADIUS,\ ALTRADIUS)"{}}\ +}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}VALUES\ (:name,\ :longitude,\ :latitude,\ :altitude,\ :longRadius,\ :latRadius,\ :altRadius)"{}}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{classcom_1_1capstone_1_1consumer_1_1repository_1_1Repository_ac36cb87107263ae689ed1781937b9a45}\label{classcom_1_1capstone_1_1consumer_1_1repository_1_1Repository_ac36cb87107263ae689ed1781937b9a45}} 
+\index{com.capstone.consumer.repository.Repository@{com.capstone.consumer.repository.Repository}!ADD\_POLYGON\_NO\_FLY\_ZONE\_SQL@{ADD\_POLYGON\_NO\_FLY\_ZONE\_SQL}}
+\index{ADD\_POLYGON\_NO\_FLY\_ZONE\_SQL@{ADD\_POLYGON\_NO\_FLY\_ZONE\_SQL}!com.capstone.consumer.repository.Repository@{com.capstone.consumer.repository.Repository}}
+\doxysubsubsection{\texorpdfstring{ADD\_POLYGON\_NO\_FLY\_ZONE\_SQL}{ADD\_POLYGON\_NO\_FLY\_ZONE\_SQL}}
+{\footnotesize\ttfamily final String com.\+capstone.\+consumer.\+repository.\+Repository.\+ADD\+\_\+\+POLYGON\+\_\+\+NO\+\_\+\+FLY\+\_\+\+ZONE\+\_\+\+SQL\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [protected]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=\ \textcolor{stringliteral}{"{}INSERT\ INTO\ POLYGON\_NO\_FLY\_ZONE\ "{}}\ +}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}(ZONE\_NAME,\ VERTEX\_ONE\_LONG,\ VERTEX\_ONE\_LAT,\ VERTEX\_TWO\_LONG,\ VERTEX\_TWO\_LAT,\ VERTEX\_THREE\_LONG,\ VERTEX\_THREE\_LAT,\ "{}}\ +}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}VERTEX\_FOUR\_LONG,\ VERTEX\_FOUR\_LAT,\ MAX\_ALTITUDE,\ MIN\_ALTITUDE)"{}}\ +}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}VALUES\ (:name,\ :vertex1Long,\ :vertex1Lat,\ :vertex2Long,\ :vertex2Lat,\ :vertex3Long,\ :vertex3Lat,\ "{}}\ +}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}:vertex4Long,\ :vertex4Lat,\ :maxAltitude,\ :minAltitude)"{}}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{classcom_1_1capstone_1_1consumer_1_1repository_1_1Repository_a74a62f5394aad5d03171185b7b38c909}\label{classcom_1_1capstone_1_1consumer_1_1repository_1_1Repository_a74a62f5394aad5d03171185b7b38c909}} 
+\index{com.capstone.consumer.repository.Repository@{com.capstone.consumer.repository.Repository}!ADD\_RECTANGLE\_NO\_FLY\_ZONE\_SQL@{ADD\_RECTANGLE\_NO\_FLY\_ZONE\_SQL}}
+\index{ADD\_RECTANGLE\_NO\_FLY\_ZONE\_SQL@{ADD\_RECTANGLE\_NO\_FLY\_ZONE\_SQL}!com.capstone.consumer.repository.Repository@{com.capstone.consumer.repository.Repository}}
+\doxysubsubsection{\texorpdfstring{ADD\_RECTANGLE\_NO\_FLY\_ZONE\_SQL}{ADD\_RECTANGLE\_NO\_FLY\_ZONE\_SQL}}
+{\footnotesize\ttfamily final String com.\+capstone.\+consumer.\+repository.\+Repository.\+ADD\+\_\+\+RECTANGLE\+\_\+\+NO\+\_\+\+FLY\+\_\+\+ZONE\+\_\+\+SQL\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [protected]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=\ \textcolor{stringliteral}{"{}INSERT\ INTO\ RECTANGLE\_NO\_FLY\_ZONE\ "{}}\ +}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}(ZONE\_NAME,\ WEST\_LONG\_DEGREE,\ EAST\_LONG\_DEGREE,\ SOUTH\_LAT\_DEGREE,\ NORTH\_LAT\_DEGREE,\ "{}}\ +}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}ROTATION\_DEGREE,\ MAX\_ALTITUDE,\ MIN\_ALTITUDE)"{}}\ +}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}VALUES\ (:name,\ :westLongDegree,\ :eastLongDegree,\ :southLatDegree,\ :northLatDegree,\ :rotationDegree,\ :maxAltitude,\ :minAltitude)"{}}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{classcom_1_1capstone_1_1consumer_1_1repository_1_1Repository_a58fc2c27a5a6229761ee13b768e0d2a9}\label{classcom_1_1capstone_1_1consumer_1_1repository_1_1Repository_a58fc2c27a5a6229761ee13b768e0d2a9}} 
+\index{com.capstone.consumer.repository.Repository@{com.capstone.consumer.repository.Repository}!FIND\_IN\_CONFLICT\_ZONE\_SQL@{FIND\_IN\_CONFLICT\_ZONE\_SQL}}
+\index{FIND\_IN\_CONFLICT\_ZONE\_SQL@{FIND\_IN\_CONFLICT\_ZONE\_SQL}!com.capstone.consumer.repository.Repository@{com.capstone.consumer.repository.Repository}}
+\doxysubsubsection{\texorpdfstring{FIND\_IN\_CONFLICT\_ZONE\_SQL}{FIND\_IN\_CONFLICT\_ZONE\_SQL}}
+{\footnotesize\ttfamily final String com.\+capstone.\+consumer.\+repository.\+Repository.\+FIND\+\_\+\+IN\+\_\+\+CONFLICT\+\_\+\+ZONE\+\_\+\+SQL\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [protected]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=\ \textcolor{stringliteral}{"{}SELECT\ n.zone\_name\ FROM\ public.noflygeom\ n\ WHERE\ "{}}\ +}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}ST\_Within(ST\_SetSRID(ST\_MakePoint(:longitude,:latitude),4326),n.geometry)\ "{}}\ +}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}AND\ n.max\_altitude\ >\ :altitude\ AND\ n.min\_altitude\ <\ :altitude"{}}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{classcom_1_1capstone_1_1consumer_1_1repository_1_1Repository_a8e7ce3d2905958f4c03c3d025d1e1bda}\label{classcom_1_1capstone_1_1consumer_1_1repository_1_1Repository_a8e7ce3d2905958f4c03c3d025d1e1bda}} 
+\index{com.capstone.consumer.repository.Repository@{com.capstone.consumer.repository.Repository}!GET\_FLIGHT\_LOCATION\_SQL@{GET\_FLIGHT\_LOCATION\_SQL}}
+\index{GET\_FLIGHT\_LOCATION\_SQL@{GET\_FLIGHT\_LOCATION\_SQL}!com.capstone.consumer.repository.Repository@{com.capstone.consumer.repository.Repository}}
+\doxysubsubsection{\texorpdfstring{GET\_FLIGHT\_LOCATION\_SQL}{GET\_FLIGHT\_LOCATION\_SQL}}
+{\footnotesize\ttfamily final String com.\+capstone.\+consumer.\+repository.\+Repository.\+GET\+\_\+\+FLIGHT\+\_\+\+LOCATION\+\_\+\+SQL\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [protected]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=\ \textcolor{stringliteral}{"{}SELECT\ s.\(\backslash\)"{}name\(\backslash\)"{}\ FROM\ public.statesgeojson\_polygon\ s\ "{}}\ +}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}WHERE\ ST\_Within(ST\_MakePoint(:longitude,:latitude),\ s.geom)"{}}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/main/java/com/capstone/consumer/repository/Repository.\+java\end{DoxyCompactItemize}
