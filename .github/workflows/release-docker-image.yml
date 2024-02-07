@@ -35,7 +35,7 @@ jobs:
       - name: Build with Maven
         run: |
           mvn -B package --file pom.xml
-          BUILD_NUMBER=$(mvn --non-recursive help:evaluate -Dexpression=project.version | grep -v '\[.*' | tr -d '\n' )
+          BUILD_NUMBER=$(mvn --non-recursive help:evaluate -Dexpression=project.version | grep -v '\[.*')
           echo $BUILD_NUMBER
           echo "BUILD_NUMBER=${BUILD_NUMBER}" >> $GITHUB_ENV 
 
