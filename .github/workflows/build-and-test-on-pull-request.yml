@@ -38,5 +38,5 @@ jobs:
           sleep 10s
 
       - name: Run Tests 
-        run: mvn -B package --file pom.xml
+        run: mvn --quiet -B package --file pom.xml
 
