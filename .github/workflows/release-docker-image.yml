@@ -49,8 +49,7 @@ jobs:
       - name: Build with Maven
         run: |
           mvn -B package --file pom.xml > void.txt
-          BUILD_NUMBER=2.0.0
-          echo $BUILD_NUMBER
+          BUILD_NUMBER=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
           echo "BUILD_NUMBER=${BUILD_NUMBER}" >> $GITHUB_ENV 
           cat $GITHUB_ENV
 
