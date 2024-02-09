@@ -1,14 +1,10 @@
 package com.capstone.consumer.repository;
 
 import com.capstone.consumer.bindings.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.IncorrectResultSizeDataAccessException;
+import org.springframework.stereotype.Service;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -17,54 +13,14 @@ import java.util.List;
  */
 @Service
 public class Repository {
-    private static final Logger LOGGER = LoggerFactory.getLogger(Repository.class);
+    private final JdbcTemplate jdbcTemplate;
 
-    // SQL Statements
-    // FLIGHT LOCATION RELEVANT SQL Statements
-    protected static final String GET_FLIGHT_LOCATION_SQL = "SELECT s.\"name\" FROM public.statesgeojson_polygon s " +
-            "WHERE ST_Within(ST_MakePoint(:longitude,:latitude), s.geom)";
-    protected static final String FIND_IN_CONFLICT_ZONE_SQL = "SELECT n.zone_name FROM public.noflygeom n WHERE " +
-            "ST_Within(ST_SetSRID(ST_MakePoint(:longitude,:latitude),4326),n.geometry) " +
-            "AND n.max_altitude > :altitude AND n.min_altitude < :altitude";
+    private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
-    // GET NO-FLY ZONE Statements
-    protected static final String GET_RECTANGLE_NO_FLY_ZONES_SQL = "SELECT * FROM RECTANGLE_NO_FLY_ZONE r";
-    protected static final String GET_POLYGON_NO_FLY_ZONES_SQL = "SELECT * FROM POLYGON_NO_FLY_ZONE r";
-    protected static final String GET_ELLIPSOID_NO_FLY_ZONES_SQL = "SELECT * FROM ELLIPSOID_NO_FLY_ZONE r";
-//    protected static final String GET_MILITARY_NO_FLY_ZONES_SQL = "SELECT * FROM us_military_geojson_8776 r LIMIT 5";
-    protected static final String GET_MILITARY_NO_FLY_ZONES_SQL = "SELECT r.\"INSTALLATI\", ST_AsGeoJson(r.geometry) as geometry FROM us_military_geojson_8776 r";
-
-    // ADD NO-FLY ZONE Statements
-    protected static final String ADD_RECTANGLE_NO_FLY_ZONE_SQL = "INSERT INTO RECTANGLE_NO_FLY_ZONE " +
-            "(ZONE_NAME, WEST_LONG_DEGREE, EAST_LONG_DEGREE, SOUTH_LAT_DEGREE, NORTH_LAT_DEGREE, " +
-            "ROTATION_DEGREE, MAX_ALTITUDE, MIN_ALTITUDE)" +
-            "VALUES (:name, :westLongDegree, :eastLongDegree, :southLatDegree, :northLatDegree, :rotationDegree, :maxAltitude, :minAltitude)";
-
-    protected static final String ADD_POLYGON_NO_FLY_ZONE_SQL = "INSERT INTO POLYGON_NO_FLY_ZONE " +
-            "(ZONE_NAME, VERTEX_ONE_LONG, VERTEX_ONE_LAT, VERTEX_TWO_LONG, VERTEX_TWO_LAT, VERTEX_THREE_LONG, VERTEX_THREE_LAT, " +
-            "VERTEX_FOUR_LONG, VERTEX_FOUR_LAT, MAX_ALTITUDE, MIN_ALTITUDE)" +
-            "VALUES (:name, :vertex1Long, :vertex1Lat, :vertex2Long, :vertex2Lat, :vertex3Long, :vertex3Lat, " +
-            ":vertex4Long, :vertex4Lat, :maxAltitude, :minAltitude)";
-
-    protected static final String ADD_ELLIPSOID_NO_FLY_ZONE_SQL = "INSERT INTO ELLIPSOID_NO_FLY_ZONE " +
-            "(ZONE_NAME, LONGITUDE, LATITUDE, ALTITUDE, LONGRADIUS, LATRADIUS, ALTRADIUS)" +
-            "VALUES (:name, :longitude, :latitude, :altitude, :longRadius, :latRadius, :altRadius)";
-
-    // DELETE NO-FLY ZONE SQL Statements
-    protected static final String DELETE_POLY_NO_FLY_ZONE = "DELETE FROM public.polygon_no_fly_zone WHERE zone_name=:zoneName";
-    protected static final String DELETE_ELLIP_NO_FLY_ZONE = "DELETE FROM public.ellipsoid_no_fly_zone WHERE zone_name=:zoneName";
-    protected static final String DELETE_RECTANGLE_NO_FLY_ZONE = "DELETE FROM public.rectangle_no_fly_zone WHERE zone_name=:zoneName";
-    /**
-     * Template provided by Spring that allows for interaction with the database without allowing for parameters
-     */
-    @Autowired
-    private JdbcTemplate jdbcTemplate;
-
-    /**
-     * Template provided by Spring that allows for interaction with the database with included parameters
-     */
-    @Autowired
-    private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+    public Repository(JdbcTemplate jdbcTemplate, NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+        this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
+    }
 
     /**
      * Determines where a flight is above (Ex. NEBRASKA) given the coordinates
@@ -74,20 +30,22 @@ public class Repository {
      * @return The State where a flight is above, or Unknown if the flight's location does not match any in the database
      */
     public GetFlightLocationResponse getFlightLocation(String longitude, String latitude) {
-        LOGGER.warn("INSIDE REPO LONG:" + Double.valueOf(longitude));
-        LOGGER.warn("REPO LAT:" + Double.valueOf(latitude));
+        var query = """
+                    SELECT name FROM public.statesgeojson_polygon
+                    WHERE ST_Within(ST_MakePoint(:longitude,:latitude), geom)
+                """;
 
-        MapSqlParameterSource parameterSource = new MapSqlParameterSource()
+        var parameterSource = new MapSqlParameterSource()
                 .addValue("longitude", Double.valueOf(longitude))
                 .addValue("latitude", Double.valueOf(latitude));
 
-        try {
-            String flightLocation = namedParameterJdbcTemplate.queryForObject(GET_FLIGHT_LOCATION_SQL, parameterSource, String.class);
-            return new GetFlightLocationResponse(flightLocation);
-        } catch (IncorrectResultSizeDataAccessException e) {
-            return new GetFlightLocationResponse("Unknown");
-        }
+        var flightLocation = namedParameterJdbcTemplate.queryForObject(
+                query,
+                parameterSource,
+                String.class
+        );
 
+        return new GetFlightLocationResponse(flightLocation);
     }
 
     /**
@@ -99,16 +57,17 @@ public class Repository {
      * @return String value representing the no-fly zone that the flight is currently in contact with
      */
     public String getInNoFlyZoneConflict(Double longitude, Double latitude, Double altitude) {
-        MapSqlParameterSource parameterSource = new MapSqlParameterSource()
+        var query = """
+                    SELECT n.zone_name FROM public.noflygeom n WHERE
+                    ST_Within(ST_SetSRID(ST_MakePoint(:longitude,:latitude),4326),n.geometry)
+                    AND n.max_altitude > :altitude AND n.min_altitude < :altitude
+                """;
+        var parameterSource = new MapSqlParameterSource()
                 .addValue("longitude", longitude)
                 .addValue("latitude", latitude)
                 .addValue("altitude", altitude);
-        try {
-            return namedParameterJdbcTemplate.queryForObject(FIND_IN_CONFLICT_ZONE_SQL, parameterSource, String.class);
-        } catch (IncorrectResultSizeDataAccessException e) {
-            return null;
-        }
 
+        return namedParameterJdbcTemplate.queryForObject(query, parameterSource, String.class);
     }
 
     /**
@@ -117,16 +76,18 @@ public class Repository {
      * @return A list of RectangleNoFlyZone Objects if there are values in the db, otherwise an empty list
      */
     public List<RectangleNoFlyZone> getRectangleNoFlyZones() {
-        return jdbcTemplate.query(GET_RECTANGLE_NO_FLY_ZONES_SQL, (rs, rowNum) -> new RectangleNoFlyZone(
-                rs.getString("zone_name"),
-                rs.getFloat("WEST_LONG_DEGREE"),
-                rs.getFloat("EAST_LONG_DEGREE"),
-                rs.getFloat("SOUTH_LAT_DEGREE"),
-                rs.getFloat("NORTH_LAT_DEGREE"),
-                rs.getFloat("ROTATION_DEGREE"),
-                rs.getFloat("MAX_ALTITUDE"),
-                rs.getFloat("MIN_ALTITUDE")
-        ));
+        var query = "SELECT * FROM RECTANGLE_NO_FLY_ZONE r";
+
+        return jdbcTemplate.query(query, (rs, rowNum) -> new RectangleNoFlyZone()
+                .name(rs.getString("zone_name"))
+                .westLongDegree(rs.getFloat("west_long_degree"))
+                .eastLongDegree(rs.getFloat("east_long_degree"))
+                .southLatDegree(rs.getFloat("south_lat_degree"))
+                .northLatDegree(rs.getFloat("north_lat_degree"))
+                .rotationDegree(rs.getFloat("rotation_degree"))
+                .maxAltitude(rs.getFloat("max_altitude"))
+                .minAltitude(rs.getFloat("min_altitude"))
+        );
     }
 
     /**
@@ -135,19 +96,21 @@ public class Repository {
      * @return A list of PolygonNoFlyZone Objects if there are values in the db, otherwise an empty list
      */
     public List<PolygonNoFlyZone> getPolygonNoFlyZones() {
-        return jdbcTemplate.query(GET_POLYGON_NO_FLY_ZONES_SQL, (rs, rowNum) -> new PolygonNoFlyZone(
-                rs.getString("zone_name"),
-                rs.getFloat("VERTEX_ONE_LONG"),
-                rs.getFloat("VERTEX_ONE_LAT"),
-                rs.getFloat("VERTEX_TWO_LONG"),
-                rs.getFloat("VERTEX_TWO_LAT"),
-                rs.getFloat("VERTEX_THREE_LONG"),
-                rs.getFloat("VERTEX_THREE_LAT"),
-                rs.getFloat("VERTEX_FOUR_LONG"),
-                rs.getFloat("VERTEX_FOUR_LAT"),
-                rs.getFloat("MAX_ALTITUDE"),
-                rs.getFloat("MIN_ALTITUDE")
-        ));
+        return jdbcTemplate.query("SELECT * FROM POLYGON_NO_FLY_ZONE r",
+                (rs, rowNum) -> new PolygonNoFlyZone()
+                        .name(rs.getString("zone_name"))
+                        .vertex1Long(rs.getFloat("vertex_one_long"))
+                        .vertex1Lat(rs.getFloat("vertex_one_lat"))
+                        .vertex2Long(rs.getFloat("vertex_two_long"))
+                        .vertex2Lat(rs.getFloat("vertex_two_lat"))
+                        .vertex3Lat(rs.getFloat("vertex_three_long"))
+                        .vertex3Lat(rs.getFloat("vertex_three_lat"))
+                        .vertex4Long(rs.getFloat("vertex_four_long"))
+                        .vertex4Lat(rs.getFloat("vertex_four_lat"))
+                        .maxAltitude(rs.getFloat("max_altitude"))
+                        .minAltitude(rs.getFloat("min_altitude")
+                        )
+        );
     }
 
     /**
@@ -156,15 +119,17 @@ public class Repository {
      * @return A list of EllipsoidNoFlyZone Objects if there are values in the db, otherwise an empty list
      */
     public List<EllipsoidNoFlyZone> getEllipsoidNoFlyZones() {
-        return jdbcTemplate.query(GET_ELLIPSOID_NO_FLY_ZONES_SQL, (rs, rowNum) -> new EllipsoidNoFlyZone(
-                rs.getString("zone_name"),
-                rs.getFloat("longitude"),
-                rs.getFloat("latitude"),
-                rs.getFloat("altitude"),
-                rs.getFloat("longradius"),
-                rs.getFloat("latradius"),
-                rs.getFloat("altradius")
-        ));
+        var query = "SELECT * FROM ELLIPSOID_NO_FLY_ZONE r";
+
+        return jdbcTemplate.query(query, (rs, rowNum) -> new EllipsoidNoFlyZone()
+                .name(rs.getString("zone_name"))
+                .longitude(rs.getFloat("longitude"))
+                .latitude(rs.getFloat("latitude"))
+                .altitude(rs.getFloat("altitude"))
+                .longRadius(rs.getFloat("long_radius"))
+                .latRadius(rs.getFloat("latitude_radius"))
+                .altRadius(rs.getFloat("altitude_radius"))
+        );
     }
 
     /**
@@ -173,8 +138,10 @@ public class Repository {
      * @return A list of MilitaryNoFlyZone Objects if there are values in the db, otherwise an empty list
      */
     public List<MilitaryNoFlyZone> getMilitaryNoFlyZones() {
-        return jdbcTemplate.query(GET_MILITARY_NO_FLY_ZONES_SQL, (rs, rowNum) -> new MilitaryNoFlyZone(
-                String.valueOf(rs.getString("INSTALLATI")),
+        var query = "SELECT installation, ST_AsGeoJson(r.geometry) as geometry FROM us_military_geojson";
+
+        return jdbcTemplate.query(query, (rs, rowNum) -> new MilitaryNoFlyZone(
+                rs.getString("installation"),
                 rs.getString("geometry")
         ));
     }
@@ -185,16 +152,22 @@ public class Repository {
      * @param noFlyZone The EllipsoidNoFlyZone Object that provides the values that will be inserted into the DB
      */
     public void addEllipsoidNoFlyZone(EllipsoidNoFlyZone noFlyZone) {
-        MapSqlParameterSource parameterSource = new MapSqlParameterSource()
-                .addValue("name", noFlyZone.name)
-                .addValue("longitude", noFlyZone.longitude)
-                .addValue("latitude", noFlyZone.latitude)
-                .addValue("altitude", noFlyZone.altitude)
-                .addValue("longRadius", noFlyZone.longRadius)
-                .addValue("latRadius", noFlyZone.latRadius)
-                .addValue("altRadius", noFlyZone.altRadius);
+        var parameterSource = new MapSqlParameterSource()
+                .addValue("name", noFlyZone.name())
+                .addValue("longitude", noFlyZone.longitude())
+                .addValue("latitude", noFlyZone.latitude())
+                .addValue("altitude", noFlyZone.altitude())
+                .addValue("longRadius", noFlyZone.longRadius())
+                .addValue("latRadius", noFlyZone.latRadius())
+                .addValue("altRadius", noFlyZone.altRadius());
 
-        namedParameterJdbcTemplate.update(ADD_ELLIPSOID_NO_FLY_ZONE_SQL, parameterSource);
+        var query = """
+                    INSERT INTO ellipsoid_no_fly_zone
+                    (zone_name, longitude, latitude, altitude, longradius, latradius, altradius)
+                    VALUES (:name, :longitude, :latitude, :altitude, :longRadius, :latRadius, :altRadius)
+                """;
+
+        namedParameterJdbcTemplate.update(query, parameterSource);
     }
 
     /**
@@ -203,20 +176,27 @@ public class Repository {
      * @param noFlyZone The PolygonNoFlyZone Object that provides the values that will be inserted into the DB
      */
     public void addPolygonNoFlyZone(PolygonNoFlyZone noFlyZone) {
-        MapSqlParameterSource parameterSource = new MapSqlParameterSource()
-                .addValue("name", noFlyZone.name)
-                .addValue("vertex1Long", noFlyZone.vertex1Long)
-                .addValue("vertex1Lat", noFlyZone.vertex1Lat)
-                .addValue("vertex2Long", noFlyZone.vertex2Long)
-                .addValue("vertex2Lat", noFlyZone.vertex2Lat)
-                .addValue("vertex3Long", noFlyZone.vertex3Long)
-                .addValue("vertex3Lat", noFlyZone.vertex3Lat)
-                .addValue("vertex4Long", noFlyZone.vertex4Long)
-                .addValue("vertex4Lat", noFlyZone.vertex4Lat)
-                .addValue("maxAltitude", noFlyZone.maxAltitude)
-                .addValue("minAltitude", noFlyZone.minAltitude);
 
-        namedParameterJdbcTemplate.update(ADD_POLYGON_NO_FLY_ZONE_SQL, parameterSource);
+        var query = """
+                    INSERT INTO POLYGON_NO_FLY_ZONE
+                    (zone_name, vertex_one_long, vertex_one_lat, vertex_two_long, vertex_two_lat, vertex_three_long, vertex_three_lat, vertex_four_long, vertex_four_lat, max_altitude, min_altitude)
+                    VALUES (:name, :vertex1Long, :vertex1Lat, :vertex2Long, :vertex2Lat, :vertex3Long, :vertex3Lat, :vertex4Long, :vertex4Lat, :maxAltitude, :minAltitude)
+                """;
+
+        MapSqlParameterSource parameterSource = new MapSqlParameterSource()
+                .addValue("name", noFlyZone.name())
+                .addValue("vertex1Long", noFlyZone.vertex1Long())
+                .addValue("vertex1Lat", noFlyZone.vertex1Lat())
+                .addValue("vertex2Long", noFlyZone.vertex2Long())
+                .addValue("vertex2Lat", noFlyZone.vertex2Lat())
+                .addValue("vertex3Long", noFlyZone.vertex3Long())
+                .addValue("vertex3Lat", noFlyZone.vertex3Lat())
+                .addValue("vertex4Long", noFlyZone.vertex4Long())
+                .addValue("vertex4Lat", noFlyZone.vertex4Lat())
+                .addValue("maxAltitude", noFlyZone.maxAltitude())
+                .addValue("minAltitude", noFlyZone.minAltitude());
+
+        namedParameterJdbcTemplate.update(query, parameterSource);
     }
 
     /**
@@ -225,33 +205,47 @@ public class Repository {
      * @param noFlyZone The RectangleNoFlyZone Object that provides the values that will be inserted into the DB
      */
     public void addRectangleNoFlyZone(RectangleNoFlyZone noFlyZone) {
-        MapSqlParameterSource parameterSource = new MapSqlParameterSource()
-                .addValue("name", noFlyZone.name)
-                .addValue("westLongDegree", noFlyZone.westLongDegree)
-                .addValue("eastLongDegree", noFlyZone.eastLongDegree)
-                .addValue("southLatDegree", noFlyZone.southLatDegree)
-                .addValue("northLatDegree", noFlyZone.northLatDegree)
-                .addValue("rotationDegree", noFlyZone.rotationDegree)
-                .addValue("maxAltitude", noFlyZone.rotationDegree)
-                .addValue("minAltitude", noFlyZone.minAltitude);
+        var query = """
+                    INSERT INTO rectangle_no_fly_zone
+                    (zone_name, west_long_degree, east_long_degree, south_lat_degree, north_lat_degree, rotation_degree, max_altitude, min_altitude)
+                    VALUES (:name, :westLongDegree, :eastLongDegree, :southLatDegree, :northLatDegree, :rotationDegree, :maxAltitude, :minAltitude)
+                """;
 
-        namedParameterJdbcTemplate.update(ADD_RECTANGLE_NO_FLY_ZONE_SQL, parameterSource);
+        MapSqlParameterSource parameterSource = new MapSqlParameterSource()
+                .addValue("name", noFlyZone.name())
+                .addValue("westLongDegree", noFlyZone.westLongDegree())
+                .addValue("eastLongDegree", noFlyZone.eastLongDegree())
+                .addValue("southLatDegree", noFlyZone.southLatDegree())
+                .addValue("northLatDegree", noFlyZone.northLatDegree())
+                .addValue("rotationDegree", noFlyZone.rotationDegree())
+                .addValue("maxAltitude", noFlyZone.maxAltitude())
+                .addValue("minAltitude", noFlyZone.minAltitude());
+
+        namedParameterJdbcTemplate.update(query, parameterSource);
     }
 
     /**
      * Deletes a custom no fly zone
+     *
      * @param zoneName The name of the zone to be deleted
-     * @return String representing deletion of zone if successfully deleted
      */
-    public String deleteNoFlyZone(String zoneName) {
-        boolean delete = false;
+    public void deleteNoFlyZone(String zoneName) {
         MapSqlParameterSource parameterSource = new MapSqlParameterSource()
-                .addValue("zoneName", zoneName);
-            namedParameterJdbcTemplate.update(DELETE_ELLIP_NO_FLY_ZONE, parameterSource);
-            namedParameterJdbcTemplate.update(DELETE_POLY_NO_FLY_ZONE, parameterSource);
-            namedParameterJdbcTemplate.update(DELETE_RECTANGLE_NO_FLY_ZONE, parameterSource);
+                .addValue("zone_name", zoneName);
 
-            return "Deleted No Fly Zone: " + zoneName;
+        namedParameterJdbcTemplate.update(
+                "DELETE FROM ellipsoid_no_fly_zone WHERE zone_name=:zone_name",
+                parameterSource
+        );
 
+        namedParameterJdbcTemplate.update(
+                "DELETE FROM polygon_no_fly_zone WHERE zone_name=:zone_name",
+                parameterSource
+        );
+
+        namedParameterJdbcTemplate.update(
+                "DELETE FROM rectangle_no_fly_zone WHERE zone_name=:zone_name",
+                parameterSource
+        );
     }
 }

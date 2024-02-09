@@ -1,6 +1,6 @@
 package com.capstone.consumer.controllers;
 
-import com.capstone.consumer.serviceHandler.GetNoFlyZonesServiceHandler;
+import com.capstone.consumer.servicehandler.GetNoFlyZonesServiceHandler;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;

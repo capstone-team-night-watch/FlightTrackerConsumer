@@ -18,10 +18,8 @@ import java.util.Map;
  */
 @Configuration
 public class KafkaConsumerConfig {
+    private static final String BOOTSTRAP_SERVER="ec2-35-173-74-249.compute-1.amazonaws.com:9092";
 
-
-    private final static String TOPIC_NAME="FlightData";
-    private final static String BOOTSTRAP_SERVER="ec2-35-173-74-249.compute-1.amazonaws.com:9092";
     @Bean
     public ConsumerFactory<Long,String>  consumerFactory() {
         Map<String, Object> properties = new HashMap<>();
