@@ -68,4 +68,14 @@ jobs:
           docker build -t flight-tracker-consumer .
           docker tag flight-tracker-consumer:latest 058264501037.dkr.ecr.us-east-1.amazonaws.com/flight-tracker-consumer:${BUILD_NUMBER}
           docker push 058264501037.dkr.ecr.us-east-1.amazonaws.com/flight-tracker-consumer:${BUILD_NUMBER}
+          docker logout AWS
+
+      - name: Authenticate to dockerhub
+        run : |
+          docker login -u ewagner2802 --password-stdin $DOCKERHUB_PUSH
+
+      - name: Build and Publish Docker Image to dockerhub
+        run : |
+          docker tag flight-tracker-consumer:latest ewagner2802/flighttrackerconsumer:${BUILD_NUMBER}
+          docker push ewagner2802/flighttrackerconsumer:${BUILD_NUMBER}
 
