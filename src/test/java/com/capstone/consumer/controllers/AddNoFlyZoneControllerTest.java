@@ -3,7 +3,7 @@ package com.capstone.consumer.controllers;
 import com.capstone.consumer.bindings.EllipsoidNoFlyZone;
 import com.capstone.consumer.bindings.PolygonNoFlyZone;
 import com.capstone.consumer.bindings.RectangleNoFlyZone;
-import com.capstone.consumer.serviceHandler.NoFlyZoneServiceHandler;
+import com.capstone.consumer.servicehandler.NoFlyZoneServiceHandler;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;

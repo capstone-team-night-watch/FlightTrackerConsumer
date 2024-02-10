@@ -9,7 +9,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.ResultSetExtractor;
@@ -21,6 +20,7 @@ import java.lang.reflect.Array;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -40,26 +40,44 @@ public class RepositoryTest {
     @InjectMocks
     private Repository repository;
 
-    private final static RectangleNoFlyZone RECTANGLE_NO_FLY_ZONE =
-            new RectangleNoFlyZone("NAME", 1, 1, 1, 1,1 ,1, 1);
+    private final static RectangleNoFlyZone RECTANGLE_NO_FLY_ZONE = new RectangleNoFlyZone()
+            .name("NAME")
+            .westLongDegree(1)
+            .eastLongDegree(1)
+            .southLatDegree(1)
+            .northLatDegree(1)
+            .rotationDegree(1)
+            .maxAltitude(1)
+            .minAltitude(1);
 
+
+    //    }
     private final static PolygonNoFlyZone POLYGON_NO_FLY_ZONE =
-            new PolygonNoFlyZone("NAME", 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
+            new PolygonNoFlyZone()
+                    .name("NAME")
+                    .vertex1Long(1)
+                    .vertex1Lat(1)
+                    .vertex2Long(1)
+                    .vertex2Lat(1)
+                    .vertex3Long(1)
+                    .vertex3Lat(1)
+                    .vertex4Long(1)
+                    .vertex4Lat(1)
+                    .maxAltitude(1)
+                    .minAltitude(1);
 
     private final static EllipsoidNoFlyZone ELLIPSOID_NO_FLY_ZONE =
-            new EllipsoidNoFlyZone("NAME", 1, 1, 1, 1, 1, 1);
+            new EllipsoidNoFlyZone()
+                    .name("NAME")
+                    .longitude(1)
+                    .latitude(1)
+                    .altitude(1)
+                    .longRadius(1)
+                    .latRadius(1)
+                    .altRadius(1);
 
     private final static MilitaryNoFlyZone MILITARY_NO_FLY_ZONE =
             new MilitaryNoFlyZone("NAME", "GEOJSON");
-
-//    @Test
-//    public void getFlightLocationShouldReturnALocation(){
-//        when(jdbcTemplate.queryForObject(anyString(), any(), eq(String.class))).thenReturn("Nebraska");
-//
-//        String location = repository.getFlightLocation("1", "1");
-//
-//        assertEquals("Nebraska", location);
-//    }
 
     @Test
     public void getRectangleNoFlyZonesShouldReturnListOfRectangleNoFlyZones() throws SQLException {
@@ -68,52 +86,52 @@ public class RepositoryTest {
 
         List<RectangleNoFlyZone> rectangleNoFlyZoneList = repository.getRectangleNoFlyZones();
 
-        assertEquals("NAME", rectangleNoFlyZoneList.get(0).name);
+        assertEquals("NAME", rectangleNoFlyZoneList.get(0).name());
     }
 
     @Test
-    public void getPolygonNoFlyZoneShouldReturnNoFlyZones(){
-        when(jdbcTemplate.query(anyString(), (RowMapper<Object>) any())).thenReturn(Arrays.asList(POLYGON_NO_FLY_ZONE));
+    public void getPolygonNoFlyZoneShouldReturnNoFlyZones() {
+        when(jdbcTemplate.query(anyString(), (RowMapper<Object>) any())).thenReturn(List.of(POLYGON_NO_FLY_ZONE));
 
         List<PolygonNoFlyZone> polygonNoFlyZones = repository.getPolygonNoFlyZones();
 
-        assertEquals("NAME", polygonNoFlyZones.get(0).name);
+        assertEquals("NAME", polygonNoFlyZones.get(0).name());
     }
 
     @Test
-    public void getEllipsoidNoFlyZoneShouldReturnNoFlyZones(){
-        when(jdbcTemplate.query(anyString(), (RowMapper<Object>) any())).thenReturn(Arrays.asList(ELLIPSOID_NO_FLY_ZONE));
+    public void getEllipsoidNoFlyZoneShouldReturnNoFlyZones() {
+        when(jdbcTemplate.query(anyString(), (RowMapper<Object>) any())).thenReturn(List.of(ELLIPSOID_NO_FLY_ZONE));
 
         List<EllipsoidNoFlyZone> ellipsoidNoFlyZones = repository.getEllipsoidNoFlyZones();
 
-        assertEquals("NAME", ellipsoidNoFlyZones.get(0).name);
+        assertEquals("NAME", ellipsoidNoFlyZones.get(0).name());
     }
 
     @Test
-    public void getMilitaryNoFlyZonesShouldReturnNoFlyZones(){
-        when(jdbcTemplate.query(anyString(), (RowMapper<Object>) any())).thenReturn(Arrays.asList(MILITARY_NO_FLY_ZONE));
+    public void getMilitaryNoFlyZonesShouldReturnNoFlyZones() {
+        when(jdbcTemplate.query(anyString(), (RowMapper<Object>) any())).thenReturn(List.of(MILITARY_NO_FLY_ZONE));
 
         List<MilitaryNoFlyZone> militaryNoFlyZones = repository.getMilitaryNoFlyZones();
 
-        assertEquals("NAME", militaryNoFlyZones.get(0).getName());
+        assertEquals("NAME", militaryNoFlyZones.get(0).name());
     }
 
     @Test
-    public void addEllipsoidNoFlyZoneShouldCallAnJdbcUpdate(){
+    public void addEllipsoidNoFlyZoneShouldCallAnJdbcUpdate() {
         repository.addEllipsoidNoFlyZone(ELLIPSOID_NO_FLY_ZONE);
 
-        verify(namedParameterJdbcTemplate).update(anyString(),any(MapSqlParameterSource.class));
+        verify(namedParameterJdbcTemplate).update(anyString(), any(MapSqlParameterSource.class));
     }
 
     @Test
-    public void addPolygonNoFlyZoneShouldCallAnJdbcUpdate(){
+    public void addPolygonNoFlyZoneShouldCallAnJdbcUpdate() {
         repository.addPolygonNoFlyZone(POLYGON_NO_FLY_ZONE);
 
         verify(namedParameterJdbcTemplate).update(anyString(), any(MapSqlParameterSource.class));
     }
 
     @Test
-    public void addRectangleNoFlyZoneShouldCallAnJdbcUpdate(){
+    public void addRectangleNoFlyZoneShouldCallAnJdbcUpdate() {
         repository.addRectangleNoFlyZone(RECTANGLE_NO_FLY_ZONE);
 
         verify(namedParameterJdbcTemplate).update(anyString(), any(MapSqlParameterSource.class));

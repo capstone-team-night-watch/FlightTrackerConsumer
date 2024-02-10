@@ -3,7 +3,7 @@ package com.capstone.consumer.controllers;
 import com.capstone.consumer.bindings.EllipsoidNoFlyZone;
 import com.capstone.consumer.bindings.PolygonNoFlyZone;
 import com.capstone.consumer.bindings.RectangleNoFlyZone;
-import com.capstone.consumer.serviceHandler.NoFlyZoneServiceHandler;
+import com.capstone.consumer.servicehandler.NoFlyZoneServiceHandler;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,10 +30,9 @@ public class NoFlyZoneController {
      * @return A string representing the changes that were made to the database when adding the new no-fly zone
      */
     @CrossOrigin(origins = "*")
-    @RequestMapping(
+    @PostMapping(
             produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE,
-            method = RequestMethod.POST,
             path = "addNoFlyZone/ellipsoid"
     )
     @ResponseBody
@@ -52,10 +51,9 @@ public class NoFlyZoneController {
      * @return A string representing the changes that were made to the database when adding the new no-fly zone
      */
     @CrossOrigin(origins = "*")
-    @RequestMapping(
+    @PostMapping(
             produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE,
-            method = RequestMethod.POST,
             path = "addNoFlyZone/polygon"
     )
     @ResponseBody
@@ -72,10 +70,9 @@ public class NoFlyZoneController {
      * @return A string representing the changes that were made to the database when adding the new no-fly zone
      */
     @CrossOrigin(origins = "*")
-    @RequestMapping(
+    @PostMapping(
             produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE,
-            method = RequestMethod.POST,
             path = "addNoFlyZone/rectangle"
     )
     @ResponseBody
@@ -95,6 +92,7 @@ public class NoFlyZoneController {
     @GetMapping("/deleteNoFlyZone")
     @ResponseBody
     public String deleteNoFlyZone(@RequestParam String zoneName) {
-        return serviceHandler.deleteNoFlyZone(zoneName);
+        serviceHandler.deleteNoFlyZone(zoneName);
+        return "Ok";
     }
 }

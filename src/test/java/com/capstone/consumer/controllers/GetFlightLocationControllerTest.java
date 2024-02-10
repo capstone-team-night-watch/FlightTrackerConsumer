@@ -1,7 +1,7 @@
 package com.capstone.consumer.controllers;
 
 import com.capstone.consumer.bindings.GetFlightLocationResponse;
-import com.capstone.consumer.serviceHandler.GetFlightLocationServiceHandler;
+import com.capstone.consumer.servicehandler.GetFlightLocationServiceHandler;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;

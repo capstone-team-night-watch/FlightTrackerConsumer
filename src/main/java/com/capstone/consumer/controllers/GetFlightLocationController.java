@@ -2,7 +2,7 @@ package com.capstone.consumer.controllers;
 
 import com.capstone.consumer.bindings.GetFlightLocationResponse;
 import com.capstone.consumer.bindings.GetNoFlyZoneConflictResponse;
-import com.capstone.consumer.serviceHandler.GetFlightLocationServiceHandler;
+import com.capstone.consumer.servicehandler.GetFlightLocationServiceHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
@@ -50,9 +50,8 @@ public class GetFlightLocationController {
      * @return A Response Object representing the no-fly zone a flight is in
      */
     @CrossOrigin(origins = "*")
-    @RequestMapping(
+    @GetMapping(
             produces = MediaType.APPLICATION_JSON_VALUE,
-            method = RequestMethod.GET,
             path = "/getInNoFlyZone"
     )
     @ResponseBody

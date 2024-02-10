@@ -1,10 +1,7 @@
-package com.capstone.consumer.serviceHandler;
+package com.capstone.consumer.servicehandler;
 
 import com.capstone.consumer.bindings.GetNoFlyZonesResponse;
 import com.capstone.consumer.repository.Repository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -13,13 +10,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class GetNoFlyZonesServiceHandler {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(GetNoFlyZonesServiceHandler.class);
-
     /**
      * The Repository Object that facilitates the database interaction
      */
-    @Autowired
-    private Repository repository;
+    private final Repository repository;
 
     public GetNoFlyZonesServiceHandler(Repository repository) {
         this.repository = repository;

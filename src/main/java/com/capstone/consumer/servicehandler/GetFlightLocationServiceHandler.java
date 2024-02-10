@@ -1,4 +1,4 @@
-package com.capstone.consumer.serviceHandler;
+package com.capstone.consumer.servicehandler;
 
 import com.capstone.consumer.bindings.GetFlightLocationResponse;
 import com.capstone.consumer.bindings.GetNoFlyZoneConflictResponse;
@@ -31,7 +31,7 @@ public class GetFlightLocationServiceHandler {
      * @return A Response Object representing the location a flight is above
      */
     public GetFlightLocationResponse handleFlightLocation(final String longitude, final String latitude) {
-        LOGGER.warn("HANDLER LONG: " + longitude);
+        LOGGER.warn("HANDLER LONG: {}", longitude);
         return repository.getFlightLocation(longitude, latitude);
     }
 

@@ -1,4 +1,4 @@
-package com.capstone.consumer.serviceHandler;
+package com.capstone.consumer.servicehandler;
 
 import com.capstone.consumer.bindings.EllipsoidNoFlyZone;
 import com.capstone.consumer.bindings.PolygonNoFlyZone;
@@ -48,7 +48,7 @@ public class NoFlyZoneServiceHandler {
         repository.addRectangleNoFlyZone(noFlyZone);
     }
 
-    public String deleteNoFlyZone(String zoneName) {
-        return repository.deleteNoFlyZone(zoneName);
+    public void deleteNoFlyZone(String zoneName) {
+        repository.deleteNoFlyZone(zoneName);
     }
 }
