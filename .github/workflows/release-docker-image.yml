@@ -74,7 +74,7 @@ jobs:
 
       - name: Authenticate to dockerhub
         run : |
-          docker login -u ewagner2802 --password-stdin $DOCKERHUB_ACCESS_TOKEN
+          docker login -u ewagner2802 --password $DOCKERHUB_ACCESS_TOKEN
 
 # Removed temporarly to allow build to be successful
 #      - name: Build and Publish Docker Image to dockerhub
