@@ -13,7 +13,7 @@ env:
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "**" ]
 
 jobs:
   build:
@@ -76,9 +76,8 @@ jobs:
         run : |
           docker login -u ewagner2802 --password $DOCKERHUB_ACCESS_TOKEN
 
-# Removed temporarly to allow build to be successful
-#      - name: Build and Publish Docker Image to dockerhub
-#        run : |
-#          docker tag flight-tracker-consumer:latest ewagner2802/flighttrackerconsumer:${BUILD_NUMBER}
-#          docker push ewagner2802/flighttrackerconsumer:${BUILD_NUMBER}
+      - name: Build and Publish Docker Image to dockerhub
+        run : |
+          docker tag flight-tracker-consumer:latest ewagner2802/flighttrackerconsumer:${BUILD_NUMBER}
+          docker push ewagner2802/flighttrackerconsumer:${BUILD_NUMBER}
 
