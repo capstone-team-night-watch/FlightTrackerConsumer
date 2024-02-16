@@ -79,14 +79,14 @@ public class Repository {
         var query = "SELECT * FROM RECTANGLE_NO_FLY_ZONE r";
 
         return jdbcTemplate.query(query, (rs, rowNum) -> new RectangleNoFlyZone()
-                .name(rs.getString("zone_name"))
-                .westLongDegree(rs.getFloat("west_long_degree"))
-                .eastLongDegree(rs.getFloat("east_long_degree"))
-                .southLatDegree(rs.getFloat("south_lat_degree"))
-                .northLatDegree(rs.getFloat("north_lat_degree"))
-                .rotationDegree(rs.getFloat("rotation_degree"))
-                .maxAltitude(rs.getFloat("max_altitude"))
-                .minAltitude(rs.getFloat("min_altitude"))
+                .setName(rs.getString("zone_name"))
+                .setWestLongDegree(rs.getFloat("west_long_degree"))
+                .setEastLongDegree(rs.getFloat("east_long_degree"))
+                .setSouthLatDegree(rs.getFloat("south_lat_degree"))
+                .setNorthLatDegree(rs.getFloat("north_lat_degree"))
+                .setRotationDegree(rs.getFloat("rotation_degree"))
+                .setMaxAltitude(rs.getFloat("max_altitude"))
+                .setMinAltitude(rs.getFloat("min_altitude"))
         );
     }
 
@@ -98,17 +98,17 @@ public class Repository {
     public List<PolygonNoFlyZone> getPolygonNoFlyZones() {
         return jdbcTemplate.query("SELECT * FROM POLYGON_NO_FLY_ZONE r",
                 (rs, rowNum) -> new PolygonNoFlyZone()
-                        .name(rs.getString("zone_name"))
-                        .vertex1Long(rs.getFloat("vertex_one_long"))
-                        .vertex1Lat(rs.getFloat("vertex_one_lat"))
-                        .vertex2Long(rs.getFloat("vertex_two_long"))
-                        .vertex2Lat(rs.getFloat("vertex_two_lat"))
-                        .vertex3Lat(rs.getFloat("vertex_three_long"))
-                        .vertex3Lat(rs.getFloat("vertex_three_lat"))
-                        .vertex4Long(rs.getFloat("vertex_four_long"))
-                        .vertex4Lat(rs.getFloat("vertex_four_lat"))
-                        .maxAltitude(rs.getFloat("max_altitude"))
-                        .minAltitude(rs.getFloat("min_altitude")
+                        .setName(rs.getString("zone_name"))
+                        .setVertex1Long(rs.getFloat("vertex_one_long"))
+                        .setVertex1Lat(rs.getFloat("vertex_one_lat"))
+                        .setVertex2Long(rs.getFloat("vertex_two_long"))
+                        .setVertex2Lat(rs.getFloat("vertex_two_lat"))
+                        .setVertex3Lat(rs.getFloat("vertex_three_long"))
+                        .setVertex3Lat(rs.getFloat("vertex_three_lat"))
+                        .setVertex4Long(rs.getFloat("vertex_four_long"))
+                        .setVertex4Lat(rs.getFloat("vertex_four_lat"))
+                        .setMaxAltitude(rs.getFloat("max_altitude"))
+                        .setMinAltitude(rs.getFloat("min_altitude")
                         )
         );
     }
@@ -122,13 +122,13 @@ public class Repository {
         var query = "SELECT * FROM ELLIPSOID_NO_FLY_ZONE r";
 
         return jdbcTemplate.query(query, (rs, rowNum) -> new EllipsoidNoFlyZone()
-                .name(rs.getString("zone_name"))
-                .longitude(rs.getFloat("longitude"))
-                .latitude(rs.getFloat("latitude"))
-                .altitude(rs.getFloat("altitude"))
-                .longRadius(rs.getFloat("long_radius"))
-                .latRadius(rs.getFloat("latitude_radius"))
-                .altRadius(rs.getFloat("altitude_radius"))
+                .setName(rs.getString("zone_name"))
+                .setLongitude(rs.getFloat("longitude"))
+                .setLatitude(rs.getFloat("latitude"))
+                .setAltitude(rs.getFloat("altitude"))
+                .setLongRadius(rs.getFloat("long_radius"))
+                .setLatRadius(rs.getFloat("latitude_radius"))
+                .setAltRadius(rs.getFloat("altitude_radius"))
         );
     }
 
@@ -153,13 +153,13 @@ public class Repository {
      */
     public void addEllipsoidNoFlyZone(EllipsoidNoFlyZone noFlyZone) {
         var parameterSource = new MapSqlParameterSource()
-                .addValue("name", noFlyZone.name())
-                .addValue("longitude", noFlyZone.longitude())
-                .addValue("latitude", noFlyZone.latitude())
-                .addValue("altitude", noFlyZone.altitude())
-                .addValue("longRadius", noFlyZone.longRadius())
-                .addValue("latRadius", noFlyZone.latRadius())
-                .addValue("altRadius", noFlyZone.altRadius());
+                .addValue("name", noFlyZone.getName())
+                .addValue("longitude", noFlyZone.getLongitude())
+                .addValue("latitude", noFlyZone.getLatitude())
+                .addValue("altitude", noFlyZone.getAltitude())
+                .addValue("longRadius", noFlyZone.getLongRadius())
+                .addValue("latRadius", noFlyZone.getLatRadius())
+                .addValue("altRadius", noFlyZone.getAltRadius());
 
         var query = """
                     INSERT INTO ellipsoid_no_fly_zone
@@ -184,17 +184,17 @@ public class Repository {
                 """;
 
         MapSqlParameterSource parameterSource = new MapSqlParameterSource()
-                .addValue("name", noFlyZone.name())
-                .addValue("vertex1Long", noFlyZone.vertex1Long())
-                .addValue("vertex1Lat", noFlyZone.vertex1Lat())
-                .addValue("vertex2Long", noFlyZone.vertex2Long())
-                .addValue("vertex2Lat", noFlyZone.vertex2Lat())
-                .addValue("vertex3Long", noFlyZone.vertex3Long())
-                .addValue("vertex3Lat", noFlyZone.vertex3Lat())
-                .addValue("vertex4Long", noFlyZone.vertex4Long())
-                .addValue("vertex4Lat", noFlyZone.vertex4Lat())
-                .addValue("maxAltitude", noFlyZone.maxAltitude())
-                .addValue("minAltitude", noFlyZone.minAltitude());
+                .addValue("name", noFlyZone.getName())
+                .addValue("vertex1Long", noFlyZone.getVertex1Long())
+                .addValue("vertex1Lat", noFlyZone.getVertex1Lat())
+                .addValue("vertex2Long", noFlyZone.getVertex2Long())
+                .addValue("vertex2Lat", noFlyZone.getVertex2Lat())
+                .addValue("vertex3Long", noFlyZone.getVertex3Long())
+                .addValue("vertex3Lat", noFlyZone.getVertex3Lat())
+                .addValue("vertex4Long", noFlyZone.getVertex4Long())
+                .addValue("vertex4Lat", noFlyZone.getVertex4Lat())
+                .addValue("maxAltitude", noFlyZone.getMaxAltitude())
+                .addValue("minAltitude", noFlyZone.getMinAltitude());
 
         namedParameterJdbcTemplate.update(query, parameterSource);
     }
@@ -212,14 +212,14 @@ public class Repository {
                 """;
 
         MapSqlParameterSource parameterSource = new MapSqlParameterSource()
-                .addValue("name", noFlyZone.name())
-                .addValue("westLongDegree", noFlyZone.westLongDegree())
-                .addValue("eastLongDegree", noFlyZone.eastLongDegree())
-                .addValue("southLatDegree", noFlyZone.southLatDegree())
-                .addValue("northLatDegree", noFlyZone.northLatDegree())
-                .addValue("rotationDegree", noFlyZone.rotationDegree())
-                .addValue("maxAltitude", noFlyZone.maxAltitude())
-                .addValue("minAltitude", noFlyZone.minAltitude());
+                .addValue("name", noFlyZone.getName())
+                .addValue("westLongDegree", noFlyZone.getWestLongDegree())
+                .addValue("eastLongDegree", noFlyZone.getEastLongDegree())
+                .addValue("southLatDegree", noFlyZone.getSouthLatDegree())
+                .addValue("northLatDegree", noFlyZone.getNorthLatDegree())
+                .addValue("rotationDegree", noFlyZone.getRotationDegree())
+                .addValue("maxAltitude", noFlyZone.getMaxAltitude())
+                .addValue("minAltitude", noFlyZone.getMinAltitude());
 
         namedParameterJdbcTemplate.update(query, parameterSource);
     }
