@@ -26,6 +26,6 @@ public class GetFlightLocationControllerTest {
 
         GetFlightLocationResponse location = getFlightLocationController.getFlightLocation("long", "lat");
 
-        assertEquals("Nebraska", location.location);
+        assertEquals("Nebraska", location.getLocation());
     }
 }

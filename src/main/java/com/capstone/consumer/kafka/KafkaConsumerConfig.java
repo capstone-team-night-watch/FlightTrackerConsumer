@@ -20,7 +20,7 @@ import java.util.Map;
 @Configuration
 public class KafkaConsumerConfig {
     @Bean
-    public ConsumerFactory<Long, String> consumerFactory(@Value("${kafka.url}") String bootstrapServer) {
+    public ConsumerFactory<Long, String> consumerFactory(@Value("${kafka.host}") String bootstrapServer) {
         Map<String, Object> properties = new HashMap<>();
         properties.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServer);
         properties.put(ConsumerConfig.GROUP_ID_CONFIG, "kafkaFlightTopicGroup");
@@ -31,7 +31,7 @@ public class KafkaConsumerConfig {
     }
 
     @Bean
-    public ConcurrentKafkaListenerContainerFactory<Long, String> kafkaListenerContainerFactory(@Value("${kafka.url}") String bootstrapServer) {
+    public ConcurrentKafkaListenerContainerFactory<Long, String> kafkaListenerContainerFactory(@Value("${kafka.host}") String bootstrapServer) {
         ConcurrentKafkaListenerContainerFactory<Long, String> factory = new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory(bootstrapServer));
         return factory;

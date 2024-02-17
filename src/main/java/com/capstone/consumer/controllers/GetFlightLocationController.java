@@ -1,5 +1,7 @@
 package com.capstone.consumer.controllers;
 
+import com.capstone.consumer.ApplicationProperties;
+import com.capstone.consumer.bindings.HealthCheckResponse;
 import com.capstone.consumer.bindings.GetFlightLocationResponse;
 import com.capstone.consumer.bindings.GetNoFlyZoneConflictResponse;
 import com.capstone.consumer.servicehandler.GetFlightLocationServiceHandler;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class GetFlightLocationController {
 
+    private ApplicationProperties properties;
     private static final Logger LOGGER = LoggerFactory.getLogger(GetFlightLocationController.class);
 
     /**
@@ -21,7 +24,8 @@ public class GetFlightLocationController {
      */
     private final GetFlightLocationServiceHandler serviceHandler;
 
-    public GetFlightLocationController(GetFlightLocationServiceHandler serviceHandler) {
+    public GetFlightLocationController(GetFlightLocationServiceHandler serviceHandler, ApplicationProperties properties) {
+        this.properties = properties;
         this.serviceHandler = serviceHandler;
     }
 
@@ -41,6 +45,16 @@ public class GetFlightLocationController {
                 "longitude: {}, latitude: {}", longitude, latitude);
 
         return serviceHandler.handleFlightLocation(longitude, latitude);
+    }
+
+
+    @CrossOrigin(origins = "*")
+    @GetMapping(value = "/healthCheck")
+    public HealthCheckResponse returnThings() {
+        return new HealthCheckResponse()
+                .setStatus("Still Alive")
+                .setKafkaUrl(properties.getKafkaHostUrl())
+                .setServerPort(properties.getServerPort());
     }
 
     /**

@@ -1,15 +1,13 @@
 package com.capstone.consumer.bindings;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.experimental.Accessors;
+
+import com.fasterxml.jackson.annotation.JsonRootName;
+import lombok.Data;
 
 /**
  * Bindings class used for representing Rectangle no-fly zone data
  */
 
-@Setter
-@Getter
-@Accessors(fluent = true)
+@Data
 public class RectangleNoFlyZone {
     private String name;
 
@@ -26,18 +24,4 @@ public class RectangleNoFlyZone {
     private float maxAltitude;
 
     private float minAltitude;
-
-    @Override
-    public String toString() {
-        return "RectangleNoFlyZone{" +
-                "zone_name='" + name + '\'' +
-                ", westLongDegree='" + westLongDegree + '\'' +
-                ", eastLongDegree='" + eastLongDegree + '\'' +
-                ", southLatDegree='" + southLatDegree + '\'' +
-                ", northLatDegree='" + northLatDegree + '\'' +
-                ", rotationDegree='" + rotationDegree + '\'' +
-                ", maxAltitude=" + maxAltitude +
-                ", minAltitude=" + minAltitude +
-                '}';
-    }
 }

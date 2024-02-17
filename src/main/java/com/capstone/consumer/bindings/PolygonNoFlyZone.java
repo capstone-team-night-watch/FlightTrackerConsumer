@@ -1,4 +1,5 @@
 package com.capstone.consumer.bindings;
+import com.fasterxml.jackson.annotation.JsonRootName;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -6,7 +7,6 @@ import lombok.experimental.Accessors;
  * Bindings class used for representing Polygon no-fly zone data
  */
 @Data
-@Accessors(fluent = true)
 public class PolygonNoFlyZone {
     private String name;
     private float vertex1Long;
