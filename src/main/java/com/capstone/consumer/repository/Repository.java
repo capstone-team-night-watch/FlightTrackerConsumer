@@ -138,7 +138,7 @@ public class Repository {
      * @return A list of MilitaryNoFlyZone Objects if there are values in the db, otherwise an empty list
      */
     public List<MilitaryNoFlyZone> getMilitaryNoFlyZones() {
-        var query = "SELECT installation, ST_AsGeoJson(r.geometry) as geometry FROM us_military_geojson";
+        var query = "SELECT installation, ST_AsGeoJson(geometry) FROM us_military_geojson";
 
         return jdbcTemplate.query(query, (rs, rowNum) -> new MilitaryNoFlyZone(
                 rs.getString("installation"),

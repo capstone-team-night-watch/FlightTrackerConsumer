@@ -32,7 +32,7 @@ public class GetNoFlyZonesController {
      * @return A Response Object representing all the different-typed no-fly zones contained in the database
      */
     @CrossOrigin(origins = "*")
-    @PostMapping(
+    @GetMapping(
             produces = MediaType.APPLICATION_JSON_VALUE,
             path = "/get-no-fly-zones"
     )
