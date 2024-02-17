@@ -3,6 +3,7 @@ package com.capstone.consumer.kafka;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.LongDeserializer;
 import org.apache.kafka.common.serialization.StringDeserializer;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
@@ -18,12 +19,11 @@ import java.util.Map;
  */
 @Configuration
 public class KafkaConsumerConfig {
-    private static final String BOOTSTRAP_SERVER = "ec2-18-219-189-247.us-east-2.compute.amazonaws.com:9092";
 
     @Bean
-    public ConsumerFactory<Long, String> consumerFactory() {
+    public ConsumerFactory<Long, String> consumerFactory(@Value("${kafka.host}") String kafkaUrl) {
         Map<String, Object> properties = new HashMap<>();
-        properties.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, BOOTSTRAP_SERVER);
+        properties.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaUrl);
         properties.put(ConsumerConfig.GROUP_ID_CONFIG, "kafkaFlightTopicGroup");
         properties.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, LongDeserializer.class.getName());
         properties.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
@@ -32,9 +32,9 @@ public class KafkaConsumerConfig {
     }
 
     @Bean
-    public ConcurrentKafkaListenerContainerFactory<Long, String> kafkaListenerContainerFactory() {
+    public ConcurrentKafkaListenerContainerFactory<Long, String> kafkaListenerContainerFactory(@Value("${kafka.host}") String kafkaUrl){
         ConcurrentKafkaListenerContainerFactory<Long, String> factory = new ConcurrentKafkaListenerContainerFactory<>();
-        factory.setConsumerFactory(consumerFactory());
+        factory.setConsumerFactory(consumerFactory(kafkaUrl));
         return factory;
     }
 }

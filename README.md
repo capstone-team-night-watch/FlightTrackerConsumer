@@ -16,3 +16,12 @@ Heavily integrated with front end, websockets set up and communicating
 Milestone 5: 
 General clean up and commenting.
 
+
+## Docker Container
+
+This application is containerized and requires the following environment variables:
+
+- **KAFKA_BROKER** : The address of the Kafka broker
+- **POSTGRES_URL**: The address of the Postgres database
+- **POSTGRES_USERNAME**: The username for the Postgres database
+- **POSTGRES_PASSWORD**: The password for the Postgres database

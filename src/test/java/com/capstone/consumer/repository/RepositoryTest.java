@@ -11,16 +11,12 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
-import java.lang.reflect.Array;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -41,40 +37,40 @@ public class RepositoryTest {
     private Repository repository;
 
     private final static RectangleNoFlyZone RECTANGLE_NO_FLY_ZONE = new RectangleNoFlyZone()
-            .name("NAME")
-            .westLongDegree(1)
-            .eastLongDegree(1)
-            .southLatDegree(1)
-            .northLatDegree(1)
-            .rotationDegree(1)
-            .maxAltitude(1)
-            .minAltitude(1);
+            .setName("NAME")
+            .setWestLongDegree(1)
+            .setEastLongDegree(1)
+            .setSouthLatDegree(1)
+            .setNorthLatDegree(1)
+            .setRotationDegree(1)
+            .setMaxAltitude(1)
+            .setMinAltitude(1);
 
 
     //    }
     private final static PolygonNoFlyZone POLYGON_NO_FLY_ZONE =
             new PolygonNoFlyZone()
-                    .name("NAME")
-                    .vertex1Long(1)
-                    .vertex1Lat(1)
-                    .vertex2Long(1)
-                    .vertex2Lat(1)
-                    .vertex3Long(1)
-                    .vertex3Lat(1)
-                    .vertex4Long(1)
-                    .vertex4Lat(1)
-                    .maxAltitude(1)
-                    .minAltitude(1);
+                    .setName("NAME")
+                    .setVertex1Long(1)
+                    .setVertex1Lat(1)
+                    .setVertex2Long(1)
+                    .setVertex2Lat(1)
+                    .setVertex3Long(1)
+                    .setVertex3Lat(1)
+                    .setVertex4Long(1)
+                    .setVertex4Lat(1)
+                    .setMaxAltitude(1)
+                    .setMinAltitude(1);
 
     private final static EllipsoidNoFlyZone ELLIPSOID_NO_FLY_ZONE =
             new EllipsoidNoFlyZone()
-                    .name("NAME")
-                    .longitude(1)
-                    .latitude(1)
-                    .altitude(1)
-                    .longRadius(1)
-                    .latRadius(1)
-                    .altRadius(1);
+                    .setName("NAME")
+                    .setLongitude(1)
+                    .setLatitude(1)
+                    .setAltitude(1)
+                    .setLongRadius(1)
+                    .setLatRadius(1)
+                    .setAltRadius(1);
 
     private final static MilitaryNoFlyZone MILITARY_NO_FLY_ZONE =
             new MilitaryNoFlyZone("NAME", "GEOJSON");
@@ -86,7 +82,7 @@ public class RepositoryTest {
 
         List<RectangleNoFlyZone> rectangleNoFlyZoneList = repository.getRectangleNoFlyZones();
 
-        assertEquals("NAME", rectangleNoFlyZoneList.get(0).name());
+        assertEquals("NAME", rectangleNoFlyZoneList.get(0).getName());
     }
 
     @Test
@@ -95,7 +91,7 @@ public class RepositoryTest {
 
         List<PolygonNoFlyZone> polygonNoFlyZones = repository.getPolygonNoFlyZones();
 
-        assertEquals("NAME", polygonNoFlyZones.get(0).name());
+        assertEquals("NAME", polygonNoFlyZones.get(0).getName());
     }
 
     @Test
@@ -104,7 +100,7 @@ public class RepositoryTest {
 
         List<EllipsoidNoFlyZone> ellipsoidNoFlyZones = repository.getEllipsoidNoFlyZones();
 
-        assertEquals("NAME", ellipsoidNoFlyZones.get(0).name());
+        assertEquals("NAME", ellipsoidNoFlyZones.get(0).getName());
     }
 
     @Test
@@ -113,7 +109,7 @@ public class RepositoryTest {
 
         List<MilitaryNoFlyZone> militaryNoFlyZones = repository.getMilitaryNoFlyZones();
 
-        assertEquals("NAME", militaryNoFlyZones.get(0).name());
+        assertEquals("NAME", militaryNoFlyZones.get(0).getName());
     }
 
     @Test
