@@ -1,5 +1,5 @@
 .idea/
 /target/*
 *.iml
-.settings
-src\main\resources\application.properties
+.settings/
+/src/main/resources/application.properties
