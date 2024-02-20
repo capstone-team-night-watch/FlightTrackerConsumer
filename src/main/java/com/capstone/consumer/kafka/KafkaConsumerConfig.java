@@ -23,6 +23,7 @@ public class KafkaConsumerConfig {
     @Bean
     public ConsumerFactory<Long, String> consumerFactory(@Value("${kafka.host}") String kafkaUrl) {
         Map<String, Object> properties = new HashMap<>();
+
         properties.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaUrl);
         properties.put(ConsumerConfig.GROUP_ID_CONFIG, "kafkaFlightTopicGroup");
         properties.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, LongDeserializer.class.getName());
