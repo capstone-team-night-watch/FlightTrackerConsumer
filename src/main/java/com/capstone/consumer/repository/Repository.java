@@ -1,6 +1,7 @@
 package com.capstone.consumer.repository;
 
 import com.capstone.consumer.bindings.*;
+import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -31,7 +32,7 @@ public class Repository {
      */
     public GetFlightLocationResponse getFlightLocation(String longitude, String latitude) {
         var query = """
-                    SELECT name FROM public.statesgeojson_polygon
+                    SELECT name FROM states_geojson_polygon
                     WHERE ST_Within(ST_MakePoint(:longitude,:latitude), geom)
                 """;
 
@@ -39,13 +40,19 @@ public class Repository {
                 .addValue("longitude", Double.valueOf(longitude))
                 .addValue("latitude", Double.valueOf(latitude));
 
-        var flightLocation = namedParameterJdbcTemplate.queryForObject(
-                query,
-                parameterSource,
-                String.class
-        );
+        try {
 
-        return new GetFlightLocationResponse(flightLocation);
+            var flightLocation = namedParameterJdbcTemplate.queryForObject(
+                    query,
+                    parameterSource,
+                    String.class
+            );
+            return new GetFlightLocationResponse(flightLocation);
+
+        } catch (IncorrectResultSizeDataAccessException exception) {
+            return new GetFlightLocationResponse("Unknown");
+        }
+
     }
 
     /**
@@ -58,7 +65,7 @@ public class Repository {
      */
     public String getInNoFlyZoneConflict(Double longitude, Double latitude, Double altitude) {
         var query = """
-                    SELECT n.zone_name FROM public.noflygeom n WHERE
+                    SELECT n.zone_name FROM no_fly_geometry n WHERE
                     ST_Within(ST_SetSRID(ST_MakePoint(:longitude,:latitude),4326),n.geometry)
                     AND n.max_altitude > :altitude AND n.min_altitude < :altitude
                 """;
@@ -67,7 +74,11 @@ public class Repository {
                 .addValue("latitude", latitude)
                 .addValue("altitude", altitude);
 
-        return namedParameterJdbcTemplate.queryForObject(query, parameterSource, String.class);
+        try {
+            return namedParameterJdbcTemplate.queryForObject(query, parameterSource, String.class);
+        } catch (IncorrectResultSizeDataAccessException exception) {
+            return "Nothing here";
+        }
     }
 
     /**
@@ -138,7 +149,7 @@ public class Repository {
      * @return A list of MilitaryNoFlyZone Objects if there are values in the db, otherwise an empty list
      */
     public List<MilitaryNoFlyZone> getMilitaryNoFlyZones() {
-        var query = "SELECT installation, ST_AsGeoJson(r.geometry) as geometry FROM us_military_geojson";
+        var query = "SELECT installation, ST_AsGeoJson(geometry) FROM us_military_geojson";
 
         return jdbcTemplate.query(query, (rs, rowNum) -> new MilitaryNoFlyZone(
                 rs.getString("installation"),
@@ -163,8 +174,8 @@ public class Repository {
 
         var query = """
                     INSERT INTO ellipsoid_no_fly_zone
-                    (zone_name, longitude, latitude, altitude, longradius, latradius, altradius)
-                    VALUES (:name, :longitude, :latitude, :altitude, :longRadius, :latRadius, :altRadius)
+                    (zone_name, longitude, latitude, altitude, long_radius, latitude_radius, altitude_radius)
+                    VALUES (:name, :longitude, :latitude, :altitude, :long_radius, :latitude_radius, :altitude_radius)
                 """;
 
         namedParameterJdbcTemplate.update(query, parameterSource);
