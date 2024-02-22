@@ -28,10 +28,22 @@ public class KafkaConsumer {
      * @param message The message being received in Kafka. It is assumed that this message contains flight data
      */
     @KafkaListener(id = "kafkaConsumer777", topics = "FlightData")
-    public void listen(String message) {
+    public void flightDataListen(String message) {
         LOGGER.info("Received message from Kafka: {} ", message);
 
-        sendMessage(message);
+        sendFlightMessage(message);
+    }
+
+    /**
+     * Kafka listener method. Any message sent on the kafka broker is received here and then can be processed
+     *
+     * @param message The message being received in Kafka. It is assumed that this message contains NOTAM TFR
+     */
+    @KafkaListener(id = "kafkaTFRConsumer777", topics = "TFRData")
+    public void TfrListen(String message) {
+        LOGGER.info("Received message from Kafka: {} ", message);
+
+        processTFRMessage(message);
     }
 
     /**
@@ -39,9 +51,16 @@ public class KafkaConsumer {
      *
      * @param message Message containing flight information that has been received from the Kafka broker
      */
-    public void sendMessage(String message) {
+    public void sendFlightMessage(String message) {
         LOGGER.info("Sending message to web socket endpoint: /topic/liveCoords");
 
         messagingTemplate.convertAndSend("/topic/liveCoords", message);
+    }
+
+    public void processTFRMessage(String message) {
+        LOGGER.info("Received TFR to process");
+        //
+        // Save to DB
+        // TODO: Send message
     }
 }
