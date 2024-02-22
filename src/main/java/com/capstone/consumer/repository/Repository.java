@@ -119,7 +119,8 @@ public class Repository {
                         .setVertex4Long(rs.getFloat("vertex_four_long"))
                         .setVertex4Lat(rs.getFloat("vertex_four_lat"))
                         .setMaxAltitude(rs.getFloat("max_altitude"))
-                        .setMinAltitude(rs.getFloat("min_altitude"))
+                        .setMinAltitude(rs.getFloat("min_altitude")
+                        )
         );
     }
 
@@ -167,9 +168,9 @@ public class Repository {
                 .addValue("longitude", noFlyZone.getLongitude())
                 .addValue("latitude", noFlyZone.getLatitude())
                 .addValue("altitude", noFlyZone.getAltitude())
-                .addValue("long_radius", noFlyZone.getLongRadius())
-                .addValue("latitude_radius", noFlyZone.getLatRadius())
-                .addValue("altitude_radius", noFlyZone.getAltRadius());
+                .addValue("longRadius", noFlyZone.getLongRadius())
+                .addValue("latRadius", noFlyZone.getLatRadius())
+                .addValue("altRadius", noFlyZone.getAltRadius());
 
         var query = """
                     INSERT INTO ellipsoid_no_fly_zone

@@ -67,7 +67,7 @@ jobs:
 
       - name: Build and Publish Docker Image
         run : |
-          docker build -t flight-tracker-consumer .
+          docker build -t flight-tracker-consumer . --build-arg="build_type=prod"
           docker tag flight-tracker-consumer:latest 058264501037.dkr.ecr.us-east-1.amazonaws.com/flight-tracker-consumer:${BUILD_NUMBER}
           docker push 058264501037.dkr.ecr.us-east-1.amazonaws.com/flight-tracker-consumer:${BUILD_NUMBER}
           docker logout AWS
