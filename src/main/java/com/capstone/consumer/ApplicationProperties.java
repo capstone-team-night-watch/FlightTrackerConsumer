@@ -1,7 +1,6 @@
 package com.capstone.consumer;
 
 import lombok.Data;
-import lombok.experimental.Accessors;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 

@@ -21,7 +21,7 @@ public class KafkaConsumerTest {
 
     @Test
     public void shouldCallSimpMessagingTemplate(){
-        kafkaConsumer.listen("FLIGHT DATA");
+        kafkaConsumer.flightDataListen("FLIGHT DATA");
 
         verify(simpMessagingTemplate).convertAndSend(anyString(), anyString());
     }

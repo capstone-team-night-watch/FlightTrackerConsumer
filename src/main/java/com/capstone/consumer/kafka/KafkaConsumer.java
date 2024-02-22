@@ -6,6 +6,12 @@ import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Component;
 
+import com.capstone.consumer.beans.TfrBean;
+import com.capstone.consumer.bindings.TfrNotam;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 /**
  * This is the class where the kafka consumption gets set up.
  */
@@ -58,9 +64,19 @@ public class KafkaConsumer {
     }
 
     public void processTFRMessage(String message) {
-        LOGGER.info("Received TFR to process");
-        //
-        // Save to DB
-        // TODO: Send message
+        LOGGER.info("Received TFR to process: {}", message);
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            TfrNotam tfr = objectMapper.readValue(message, TfrNotam.class);
+            TfrBean.addNewTFR(tfr);
+
+            messagingTemplate.convertAndSend("/notam/newTfr", message);
+        } catch (JsonMappingException e) {
+            e.printStackTrace();
+            LOGGER.error("Unable to parse kafka TFR Message: {}", message);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            LOGGER.error("Unable to parse kafka TFR Message or unable to update TFR bean: {}", message);
+        }
     }
 }
