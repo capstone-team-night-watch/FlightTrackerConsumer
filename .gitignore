@@ -3,3 +3,4 @@
 *.iml
 .settings/
 /src/main/resources/application.properties
+.vscode/

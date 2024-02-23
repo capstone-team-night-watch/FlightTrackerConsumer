@@ -6,6 +6,12 @@ import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Component;
 
+import com.capstone.consumer.beans.TfrBean;
+import com.capstone.consumer.bindings.TfrNotam;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 /**
  * This is the class where the kafka consumption gets set up.
  */
@@ -28,10 +34,22 @@ public class KafkaConsumer {
      * @param message The message being received in Kafka. It is assumed that this message contains flight data
      */
     @KafkaListener(id = "flight-tracker-consumer", topics = "FlightData" )
-    public void listen(String message) {
+    public void flightDataListen(String message) {
         LOGGER.info("Received message from Kafka: {} ", message);
 
-        sendMessage(message);
+        sendFlightMessage(message);
+    }
+
+    /**
+     * Kafka listener method. Any message sent on the kafka broker is received here and then can be processed
+     *
+     * @param message The message being received in Kafka. It is assumed that this message contains NOTAM TFR
+     */
+    @KafkaListener(id = "kafkaTFRConsumer777", topics = "TFRData")
+    public void TfrListen(String message) {
+        LOGGER.info("Received message from Kafka: {} ", message);
+
+        processTFRMessage(message);
     }
 
     /**
@@ -39,9 +57,27 @@ public class KafkaConsumer {
      *
      * @param message Message containing flight information that has been received from the Kafka broker
      */
-    public void sendMessage(String message) {
+    public void sendFlightMessage(String message) {
         LOGGER.info("Sending message to web socket endpoint: /topic/liveCoords");
 
         messagingTemplate.convertAndSend("/topic/liveCoords", message);
+    }
+
+    public void processTFRMessage(String message) {
+        LOGGER.debug("Received TFR to process: {}", message);
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            TfrNotam tfr = objectMapper.readValue(message, TfrNotam.class);
+            LOGGER.debug("TFR NOTAM: {}", tfr);
+            TfrBean.addNewTFR(tfr);
+
+            messagingTemplate.convertAndSend("/notam/newTfr", message);
+        } catch (JsonMappingException e) {
+            e.printStackTrace();
+            LOGGER.error("Unable to parse kafka TFR Message: {}", message);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            LOGGER.error("Unable to parse kafka TFR Message or unable to update TFR bean: {}", message);
+        }
     }
 }
