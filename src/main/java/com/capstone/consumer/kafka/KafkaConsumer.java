@@ -33,7 +33,7 @@ public class KafkaConsumer {
      *
      * @param message The message being received in Kafka. It is assumed that this message contains flight data
      */
-    @KafkaListener(id = "kafkaConsumer777", topics = "FlightData")
+    @KafkaListener(id = "flight-tracker-consumer", topics = "FlightData" )
     public void flightDataListen(String message) {
         LOGGER.info("Received message from Kafka: {} ", message);
 
