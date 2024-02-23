@@ -22,6 +22,10 @@ public class TfrNotam {
 
     private String endTime;
 
+    public TfrNotam() {
+        super();
+    }
+
     public TfrNotam(String notamNumber, String notamType, List<String> latlong, String radius, String startTime, String endTime){
         this.notamNumber = notamNumber;
         this.notamType = notamType;

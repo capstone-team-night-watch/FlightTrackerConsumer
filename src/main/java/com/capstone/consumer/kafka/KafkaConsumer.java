@@ -64,13 +64,15 @@ public class KafkaConsumer {
     }
 
     public void processTFRMessage(String message) {
-        LOGGER.info("Received TFR to process: {}", message);
+        LOGGER.debug("Received TFR to process: {}", message);
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             TfrNotam tfr = objectMapper.readValue(message, TfrNotam.class);
+            LOGGER.debug("TFR NOTAM: {}", tfr);
             TfrBean.addNewTFR(tfr);
 
             messagingTemplate.convertAndSend("/notam/newTfr", message);
+            LOGGER.debug("Tfr json after adding: {}", TfrBean.getJsonString());
         } catch (JsonMappingException e) {
             e.printStackTrace();
             LOGGER.error("Unable to parse kafka TFR Message: {}", message);
