@@ -22,6 +22,7 @@ public class TfrNotam {
 
     private String endTime;
 
+    // Required to deserialize a serialized object
     public TfrNotam() {
         super();
     }
