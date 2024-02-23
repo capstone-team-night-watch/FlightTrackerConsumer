@@ -1,6 +1,5 @@
 package com.capstone.consumer.controllers;
 
-import com.capstone.consumer.beans.TfrBean;
 import com.capstone.consumer.bindings.EllipsoidNoFlyZone;
 import com.capstone.consumer.bindings.PolygonNoFlyZone;
 import com.capstone.consumer.bindings.RectangleNoFlyZone;
@@ -95,19 +94,5 @@ public class NoFlyZoneController {
     public String deleteNoFlyZone(@RequestParam String zoneName) {
         serviceHandler.deleteNoFlyZone(zoneName);
         return "Ok";
-    }
-
-    /**
-     * Sets up request mapping and request params for delete no-fly zone service
-     * Cross Origin scripting setup allows requests from any cross-origin script
-     *
-     * @param zoneName The name of the zone to be deleted
-     * @return String of deleted no-fly zone
-     */
-    @CrossOrigin(origins = "*")
-    @GetMapping("/getTfrNoFlyZones")
-    @ResponseBody
-    public String getTfrNoFlyZones() {
-        return TfrBean.getJsonString();
     }
 }

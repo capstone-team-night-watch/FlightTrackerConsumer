@@ -14,4 +14,5 @@ public class GetNoFlyZonesResponse {
     private List<RectangleNoFlyZone> rectangleNoFlyZones;
     private List<PolygonNoFlyZone> polygonNoFlyZones;
     private List<MilitaryNoFlyZone> militaryNoFlyZones;
+    private List<TfrNotam> tfrNoFlyZones;
 }

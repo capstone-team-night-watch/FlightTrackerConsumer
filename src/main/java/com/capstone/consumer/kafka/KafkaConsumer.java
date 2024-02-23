@@ -72,7 +72,6 @@ public class KafkaConsumer {
             TfrBean.addNewTFR(tfr);
 
             messagingTemplate.convertAndSend("/notam/newTfr", message);
-            LOGGER.debug("Tfr json after adding: {}", TfrBean.getJsonString());
         } catch (JsonMappingException e) {
             e.printStackTrace();
             LOGGER.error("Unable to parse kafka TFR Message: {}", message);
