@@ -14,14 +14,12 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
-import java.sql.SQLException;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class RepositoryTest {
@@ -50,6 +48,25 @@ public class RepositoryTest {
     private final static MilitaryNoFlyZone MILITARY_NO_FLY_ZONE =
             new MilitaryNoFlyZone("NAME", "GEOJSON");
 
+
+    @Test
+    public void getFlightLocationShouldReturnGetFlightLocationResponse() {
+        String longLat = "82.0";
+
+        var flightLocationResponse = repository.getFlightLocation(longLat, longLat);
+
+        assertNotNull(flightLocationResponse);
+    }
+
+    @Test
+    public void getInNoFlyZoneConflictShouldCallQueryForObject() {
+        double longitude = 1.0;
+        double latitude= 1.0;
+        double altitude = 1.0;
+        repository.getInNoFlyZoneConflict(longitude, latitude, altitude);
+        verify(namedParameterJdbcTemplate, times(1)).queryForObject(anyString(), any(MapSqlParameterSource.class), eq(String.class));
+    }
+
     @Test
     public void getEllipsoidNoFlyZoneShouldReturnNoFlyZones() {
         when(jdbcTemplate.query(anyString(), (RowMapper<Object>) any())).thenReturn(List.of(ELLIPSOID_NO_FLY_ZONE));
@@ -73,5 +90,12 @@ public class RepositoryTest {
         repository.addEllipsoidNoFlyZone(ELLIPSOID_NO_FLY_ZONE);
 
         verify(namedParameterJdbcTemplate).update(anyString(), any(MapSqlParameterSource.class));
+    }
+
+    @Test
+    public void deleteNoFlyZoneShouldCall3Templates() {
+        repository.deleteNoFlyZone("ZONE");
+
+        verify(namedParameterJdbcTemplate, times(3)).update(anyString(), any(MapSqlParameterSource.class));
     }
 }
