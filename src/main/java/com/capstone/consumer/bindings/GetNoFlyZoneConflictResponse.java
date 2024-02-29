@@ -6,8 +6,6 @@ import lombok.Data;
 /**
  * Bindings class used for representing data relating to Flight no-fly zone conflicts
  */
-
-
 @Data
 public class GetNoFlyZoneConflictResponse {
     private String noFlyZoneName;

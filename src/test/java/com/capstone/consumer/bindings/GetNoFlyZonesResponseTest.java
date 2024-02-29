@@ -1,9 +1,11 @@
 package com.capstone.consumer.bindings;
 
+import com.capstone.consumer.enums.NoFlyZoneType;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -13,28 +15,12 @@ public class GetNoFlyZonesResponseTest {
 
     GetNoFlyZonesResponse getNoFlyZonesResponse;
 
-    private final static RectangleNoFlyZone RECTANGLE_NO_FLY_ZONE = new RectangleNoFlyZone()
-            .setName("NAME")
-            .setWestLongDegree(1)
-            .setEastLongDegree(1)
-            .setSouthLatDegree(1)
-            .setNorthLatDegree(1)
-            .setRotationDegree(1)
-            .setMaxAltitude(1)
-            .setMinAltitude(1);
-
     private final static PolygonNoFlyZone POLYGON_NO_FLY_ZONE = new PolygonNoFlyZone()
-            .setName("NAME")
-            .setVertex1Long(1)
-            .setVertex1Lat(1)
-            .setVertex2Long(1)
-            .setVertex2Lat(1)
-            .setVertex3Long(1)
-            .setVertex3Lat(1)
-            .setVertex4Long(1)
-            .setVertex4Lat(1)
-            .setMaxAltitude(1)
-            .setMinAltitude(1);
+            .setVertices(new ArrayList<>());
+
+
+    private final static CircularNoFlyZone CIRCULAR_NO_FLY_ZONE = new CircularNoFlyZone()
+            .setCenter(new GeographicCoordinates2D(20, 10));
 
     private final static EllipsoidNoFlyZone ELLIPSOID_NO_FLY_ZONE = new EllipsoidNoFlyZone()
             .setName("NAME")
@@ -48,6 +34,21 @@ public class GetNoFlyZonesResponseTest {
     private final static MilitaryNoFlyZone MILITARY_NO_FLY_ZONE =
             new MilitaryNoFlyZone("NAME", "GEOJSON");
 
+    @Test
+    public void PolygonNoFlyZone_ShouldHaveTypePolygon() {
+        var polygonNoFlyZone = new PolygonNoFlyZone();
+        polygonNoFlyZone.setVertices(new ArrayList<>());
+
+        assertEquals(NoFlyZoneType.POLYGON, polygonNoFlyZone.getType());
+    }
+
+
+    @Test
+    public void CircularNoFlyZone_ShouldHaveTypeCircular() {
+        var circleNoFlyZone = new CircularNoFlyZone();
+
+        assertEquals(NoFlyZoneType.CIRCLE, circleNoFlyZone.getType());
+    }
 
     @Test
     public void setAndGetEllipsoidNoFlyZones() {
@@ -55,25 +56,17 @@ public class GetNoFlyZonesResponseTest {
         getNoFlyZonesResponse.setEllipsoidNoFlyZones(List.of(ELLIPSOID_NO_FLY_ZONE));
         EllipsoidNoFlyZone ellipsoidNoFlyZone = getNoFlyZonesResponse.getEllipsoidNoFlyZones().get(0);
 
+        new PolygonNoFlyZone().setVertices(new ArrayList<>());
+
         assertEquals("NAME", ellipsoidNoFlyZone.getName());
     }
 
     @Test
-    public void setAndGetRectangleNoFlyZones() {
-        getNoFlyZonesResponse = new GetNoFlyZonesResponse();
-        getNoFlyZonesResponse.setRectangleNoFlyZones(List.of(RECTANGLE_NO_FLY_ZONE));
-        RectangleNoFlyZone rectangleNoFlyZone = getNoFlyZonesResponse.getRectangleNoFlyZones().get(0);
-
-        assertEquals("NAME", rectangleNoFlyZone.getName());
-    }
-
-    @Test
     public void setAndGetPolygonNoFlyZones() {
-        getNoFlyZonesResponse = new GetNoFlyZonesResponse();
-        getNoFlyZonesResponse.setPolygonNoFlyZones(List.of(POLYGON_NO_FLY_ZONE));
-        PolygonNoFlyZone polygonNoFlyZone = getNoFlyZonesResponse.getPolygonNoFlyZones().get(0);
+        var testNoFlyZone = new PolygonNoFlyZone()
+                .setNotamNumber("123456");
 
-        assertEquals("NAME", polygonNoFlyZone.getName());
+        assertEquals("123456", testNoFlyZone.getNotamNumber());
     }
 
     @Test

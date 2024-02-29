@@ -2,7 +2,6 @@ package com.capstone.consumer.controllers;
 
 import com.capstone.consumer.bindings.EllipsoidNoFlyZone;
 import com.capstone.consumer.bindings.PolygonNoFlyZone;
-import com.capstone.consumer.bindings.RectangleNoFlyZone;
 import com.capstone.consumer.servicehandler.NoFlyZoneServiceHandler;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -41,44 +40,6 @@ public class NoFlyZoneController {
         serviceHandler.handleEllipsoid(ellipsoidNoFlyZone);
         return "add new no fly zone = " + ellipsoidNoFlyZone.toString();
 
-    }
-
-    /**
-     * Sets up the request mapping for adding a Polygon no-fly zone
-     * Cross Origin scripting setup allows requests from any cross-origin script
-     *
-     * @param polygonNoFlyZone The Polygon no-fly zone request object
-     * @return A string representing the changes that were made to the database when adding the new no-fly zone
-     */
-    @CrossOrigin(origins = "*")
-    @PostMapping(
-            produces = MediaType.APPLICATION_JSON_VALUE,
-            consumes = MediaType.APPLICATION_JSON_VALUE,
-            path = "addNoFlyZone/polygon"
-    )
-    @ResponseBody
-    public String addPolygonNoFlyZone(@RequestBody PolygonNoFlyZone polygonNoFlyZone) {
-        serviceHandler.handlePolygon(polygonNoFlyZone);
-        return "add new no fly zone = " + polygonNoFlyZone.toString();
-    }
-
-    /**
-     * Sets up the request mapping for adding a Rectangle no-fly zone
-     * Cross Origin scripting setup allows requests from any cross-origin script
-     *
-     * @param rectangleNoFlyZone The Polygon no-fly zone request object
-     * @return A string representing the changes that were made to the database when adding the new no-fly zone
-     */
-    @CrossOrigin(origins = "*")
-    @PostMapping(
-            produces = MediaType.APPLICATION_JSON_VALUE,
-            consumes = MediaType.APPLICATION_JSON_VALUE,
-            path = "addNoFlyZone/rectangle"
-    )
-    @ResponseBody
-    public String addRectangleNoFlyZone(@RequestBody RectangleNoFlyZone rectangleNoFlyZone) {
-        serviceHandler.handleRectangle(rectangleNoFlyZone);
-        return "add new no fly zone = " + rectangleNoFlyZone.toString();
     }
 
     /**

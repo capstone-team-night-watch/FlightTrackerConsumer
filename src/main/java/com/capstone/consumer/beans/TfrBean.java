@@ -16,15 +16,14 @@ public class TfrBean {
     /**
      * The Repository Object that facilitates the database interaction
      */
-    private static List<TfrNotam> allCurrentTfr = new ArrayList<TfrNotam>();
+    private static final List<TfrNotam> allCurrentTfr = new ArrayList<TfrNotam>();
 
     /**
      * Handles making the necessary Repository call to add a TFR
      *
      * @param tfr The TFR Notam Object that will be used
-     * @throws JsonProcessingException 
      */
-    public static void addNewTFR(TfrNotam tfr) throws JsonProcessingException {
+    public static void addNewTFR(TfrNotam tfr) {
         allCurrentTfr.add(tfr);
     }
 

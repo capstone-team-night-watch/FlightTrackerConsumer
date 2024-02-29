@@ -1,21 +1,19 @@
 package com.capstone.consumer.bindings;
 
-import lombok.Data;
+import com.capstone.consumer.enums.NoFlyZoneType;
+import lombok.*;
+
+import java.util.List;
 
 /**
  * Bindings class used for representing Polygon no-fly zone data
  */
 @Data
-public class PolygonNoFlyZone {
-    private String name;
-    private float vertex1Long;
-    private float vertex1Lat;
-    private float vertex2Long;
-    private float vertex2Lat;
-    private float vertex3Long;
-    private float vertex3Lat;
-    private float vertex4Long;
-    private float vertex4Lat;
-    private float maxAltitude;
-    private float minAltitude;
+@EqualsAndHashCode(callSuper = true)
+public class PolygonNoFlyZone extends BaseNoFlyZone {
+    private List<GeographicCoordinates2D> vertices;
+
+    public PolygonNoFlyZone() {
+        this.type = NoFlyZoneType.POLYGON;
+    }
 }

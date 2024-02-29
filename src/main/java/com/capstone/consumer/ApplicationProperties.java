@@ -12,4 +12,7 @@ public class ApplicationProperties {
 
     @Value("${kafka.host}")
     private String kafkaHostUrl;
+
+    @Value("${socketio.port}")
+    private int socketIoPort;
 }

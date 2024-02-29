@@ -27,8 +27,7 @@ public class GetNoFlyZonesServiceHandler {
      */
     public GetNoFlyZonesResponse handle() {
         GetNoFlyZonesResponse response = new GetNoFlyZonesResponse();
-        response.setRectangleNoFlyZones(repository.getRectangleNoFlyZones());
-        response.setPolygonNoFlyZones(repository.getPolygonNoFlyZones());
+
         response.setEllipsoidNoFlyZones(repository.getEllipsoidNoFlyZones());
         response.setMilitaryNoFlyZones(repository.getMilitaryNoFlyZones());
 
