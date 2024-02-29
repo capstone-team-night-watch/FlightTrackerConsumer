@@ -1,10 +1,8 @@
 package com.capstone.consumer.repository;
 
-import com.capstone.consumer.bindings.EllipsoidNoFlyZone;
-import com.capstone.consumer.bindings.MilitaryNoFlyZone;
-import com.capstone.consumer.bindings.PolygonNoFlyZone;
-import com.capstone.consumer.bindings.RectangleNoFlyZone;
+import com.capstone.consumer.bindings.*;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -17,12 +15,13 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
 import java.sql.SQLException;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class RepositoryTest {
@@ -74,6 +73,25 @@ public class RepositoryTest {
 
     private final static MilitaryNoFlyZone MILITARY_NO_FLY_ZONE =
             new MilitaryNoFlyZone("NAME", "GEOJSON");
+
+
+    @Test
+    public void getFlightLocationShouldReturnGetFlightLocationResponse() {
+        String longLat = "82.0";
+
+        GetFlightLocationResponse flightLocationResponse = repository.getFlightLocation(longLat, longLat);
+
+        assertNotNull(flightLocationResponse);
+    }
+
+    @Test
+    public void getInNoFlyZoneConflictShouldCallQueryForObject() {
+        double longitude = 1.0;
+        double latitude= 1.0;
+        double altitude = 1.0;
+        repository.getInNoFlyZoneConflict(longitude, latitude, altitude);
+        verify(namedParameterJdbcTemplate, times(1)).queryForObject(anyString(), any(MapSqlParameterSource.class), eq(String.class));
+    }
 
     @Test
     public void getRectangleNoFlyZonesShouldReturnListOfRectangleNoFlyZones() throws SQLException {
@@ -131,5 +149,12 @@ public class RepositoryTest {
         repository.addRectangleNoFlyZone(RECTANGLE_NO_FLY_ZONE);
 
         verify(namedParameterJdbcTemplate).update(anyString(), any(MapSqlParameterSource.class));
+    }
+
+    @Test
+    public void deleteNoFlyZoneShouldCall3Templates() {
+        repository.deleteNoFlyZone("ZONE");
+
+        verify(namedParameterJdbcTemplate, times(3)).update(anyString(), any(MapSqlParameterSource.class));
     }
 }
