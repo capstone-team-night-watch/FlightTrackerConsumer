@@ -82,49 +82,6 @@ public class Repository {
     }
 
     /**
-     * Get the Rectangle type no-fly zones
-     *
-     * @return A list of RectangleNoFlyZone Objects if there are values in the db, otherwise an empty list
-     */
-    public List<RectangleNoFlyZone> getRectangleNoFlyZones() {
-        var query = "SELECT * FROM RECTANGLE_NO_FLY_ZONE r";
-
-        return jdbcTemplate.query(query, (rs, rowNum) -> new RectangleNoFlyZone()
-                .setName(rs.getString("zone_name"))
-                .setWestLongDegree(rs.getFloat("west_long_degree"))
-                .setEastLongDegree(rs.getFloat("east_long_degree"))
-                .setSouthLatDegree(rs.getFloat("south_lat_degree"))
-                .setNorthLatDegree(rs.getFloat("north_lat_degree"))
-                .setRotationDegree(rs.getFloat("rotation_degree"))
-                .setMaxAltitude(rs.getFloat("max_altitude"))
-                .setMinAltitude(rs.getFloat("min_altitude"))
-        );
-    }
-
-    /**
-     * Get the Polygon type no-fly zones
-     *
-     * @return A list of PolygonNoFlyZone Objects if there are values in the db, otherwise an empty list
-     */
-    public List<PolygonNoFlyZone> getPolygonNoFlyZones() {
-        return jdbcTemplate.query("SELECT * FROM POLYGON_NO_FLY_ZONE r",
-                (rs, rowNum) -> new PolygonNoFlyZone()
-                        .setName(rs.getString("zone_name"))
-                        .setVertex1Long(rs.getFloat("vertex_one_long"))
-                        .setVertex1Lat(rs.getFloat("vertex_one_lat"))
-                        .setVertex2Long(rs.getFloat("vertex_two_long"))
-                        .setVertex2Lat(rs.getFloat("vertex_two_lat"))
-                        .setVertex3Lat(rs.getFloat("vertex_three_long"))
-                        .setVertex3Lat(rs.getFloat("vertex_three_lat"))
-                        .setVertex4Long(rs.getFloat("vertex_four_long"))
-                        .setVertex4Lat(rs.getFloat("vertex_four_lat"))
-                        .setMaxAltitude(rs.getFloat("max_altitude"))
-                        .setMinAltitude(rs.getFloat("min_altitude")
-                        )
-        );
-    }
-
-    /**
      * Get the Ellipsoid type no-fly zones
      *
      * @return A list of EllipsoidNoFlyZone Objects if there are values in the db, otherwise an empty list
@@ -177,60 +134,6 @@ public class Repository {
                     (zone_name, longitude, latitude, altitude, long_radius, latitude_radius, altitude_radius)
                     VALUES (:name, :longitude, :latitude, :altitude, :long_radius, :latitude_radius, :altitude_radius)
                 """;
-
-        namedParameterJdbcTemplate.update(query, parameterSource);
-    }
-
-    /**
-     * Adds a new Polygon type no-fly zone
-     *
-     * @param noFlyZone The PolygonNoFlyZone Object that provides the values that will be inserted into the DB
-     */
-    public void addPolygonNoFlyZone(PolygonNoFlyZone noFlyZone) {
-
-        var query = """
-                    INSERT INTO POLYGON_NO_FLY_ZONE
-                    (zone_name, vertex_one_long, vertex_one_lat, vertex_two_long, vertex_two_lat, vertex_three_long, vertex_three_lat, vertex_four_long, vertex_four_lat, max_altitude, min_altitude)
-                    VALUES (:name, :vertex1Long, :vertex1Lat, :vertex2Long, :vertex2Lat, :vertex3Long, :vertex3Lat, :vertex4Long, :vertex4Lat, :maxAltitude, :minAltitude)
-                """;
-
-        MapSqlParameterSource parameterSource = new MapSqlParameterSource()
-                .addValue("name", noFlyZone.getName())
-                .addValue("vertex1Long", noFlyZone.getVertex1Long())
-                .addValue("vertex1Lat", noFlyZone.getVertex1Lat())
-                .addValue("vertex2Long", noFlyZone.getVertex2Long())
-                .addValue("vertex2Lat", noFlyZone.getVertex2Lat())
-                .addValue("vertex3Long", noFlyZone.getVertex3Long())
-                .addValue("vertex3Lat", noFlyZone.getVertex3Lat())
-                .addValue("vertex4Long", noFlyZone.getVertex4Long())
-                .addValue("vertex4Lat", noFlyZone.getVertex4Lat())
-                .addValue("maxAltitude", noFlyZone.getMaxAltitude())
-                .addValue("minAltitude", noFlyZone.getMinAltitude());
-
-        namedParameterJdbcTemplate.update(query, parameterSource);
-    }
-
-    /**
-     * Adds a new Rectangle type no-fly zone
-     *
-     * @param noFlyZone The RectangleNoFlyZone Object that provides the values that will be inserted into the DB
-     */
-    public void addRectangleNoFlyZone(RectangleNoFlyZone noFlyZone) {
-        var query = """
-                    INSERT INTO rectangle_no_fly_zone
-                    (zone_name, west_long_degree, east_long_degree, south_lat_degree, north_lat_degree, rotation_degree, max_altitude, min_altitude)
-                    VALUES (:name, :westLongDegree, :eastLongDegree, :southLatDegree, :northLatDegree, :rotationDegree, :maxAltitude, :minAltitude)
-                """;
-
-        MapSqlParameterSource parameterSource = new MapSqlParameterSource()
-                .addValue("name", noFlyZone.getName())
-                .addValue("westLongDegree", noFlyZone.getWestLongDegree())
-                .addValue("eastLongDegree", noFlyZone.getEastLongDegree())
-                .addValue("southLatDegree", noFlyZone.getSouthLatDegree())
-                .addValue("northLatDegree", noFlyZone.getNorthLatDegree())
-                .addValue("rotationDegree", noFlyZone.getRotationDegree())
-                .addValue("maxAltitude", noFlyZone.getMaxAltitude())
-                .addValue("minAltitude", noFlyZone.getMinAltitude());
 
         namedParameterJdbcTemplate.update(query, parameterSource);
     }

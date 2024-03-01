@@ -11,6 +11,7 @@ import lombok.Setter;
 public class TfrNotam {
     @NotEmpty
     private String notamNumber;
+
     @NotEmpty
     private String notamType;
 

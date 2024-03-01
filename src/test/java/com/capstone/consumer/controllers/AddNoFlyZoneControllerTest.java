@@ -2,7 +2,6 @@ package com.capstone.consumer.controllers;
 
 import com.capstone.consumer.bindings.EllipsoidNoFlyZone;
 import com.capstone.consumer.bindings.PolygonNoFlyZone;
-import com.capstone.consumer.bindings.RectangleNoFlyZone;
 import com.capstone.consumer.servicehandler.NoFlyZoneServiceHandler;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,19 +25,5 @@ public class AddNoFlyZoneControllerTest {
         addNoFlyZoneController.addEllipsoidNoFlyZone(new EllipsoidNoFlyZone());
 
         verify(serviceHandler).handleEllipsoid(any());
-    }
-
-    @Test
-    public void shouldCallServicePolygon() {
-        addNoFlyZoneController.addPolygonNoFlyZone(new PolygonNoFlyZone());
-
-        verify(serviceHandler).handlePolygon(any());
-    }
-
-    @Test
-    public void shouldCallServiceRectangle() {
-        addNoFlyZoneController.addRectangleNoFlyZone(new RectangleNoFlyZone());
-
-        verify(serviceHandler).handleRectangle(any());
     }
 }

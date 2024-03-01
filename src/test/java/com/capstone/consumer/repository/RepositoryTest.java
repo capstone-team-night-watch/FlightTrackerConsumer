@@ -1,8 +1,9 @@
 package com.capstone.consumer.repository;
 
-import com.capstone.consumer.bindings.*;
+import com.capstone.consumer.bindings.EllipsoidNoFlyZone;
+import com.capstone.consumer.bindings.MilitaryNoFlyZone;
+import com.capstone.consumer.bindings.PolygonNoFlyZone;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -13,9 +14,6 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
-import java.sql.SQLException;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -35,31 +33,7 @@ public class RepositoryTest {
     @InjectMocks
     private Repository repository;
 
-    private final static RectangleNoFlyZone RECTANGLE_NO_FLY_ZONE = new RectangleNoFlyZone()
-            .setName("NAME")
-            .setWestLongDegree(1)
-            .setEastLongDegree(1)
-            .setSouthLatDegree(1)
-            .setNorthLatDegree(1)
-            .setRotationDegree(1)
-            .setMaxAltitude(1)
-            .setMinAltitude(1);
-
-
-    //    }
-    private final static PolygonNoFlyZone POLYGON_NO_FLY_ZONE =
-            new PolygonNoFlyZone()
-                    .setName("NAME")
-                    .setVertex1Long(1)
-                    .setVertex1Lat(1)
-                    .setVertex2Long(1)
-                    .setVertex2Lat(1)
-                    .setVertex3Long(1)
-                    .setVertex3Lat(1)
-                    .setVertex4Long(1)
-                    .setVertex4Lat(1)
-                    .setMaxAltitude(1)
-                    .setMinAltitude(1);
+    private final static PolygonNoFlyZone POLYGON_NO_FLY_ZONE = new PolygonNoFlyZone();
 
     private final static EllipsoidNoFlyZone ELLIPSOID_NO_FLY_ZONE =
             new EllipsoidNoFlyZone()
@@ -79,7 +53,7 @@ public class RepositoryTest {
     public void getFlightLocationShouldReturnGetFlightLocationResponse() {
         String longLat = "82.0";
 
-        GetFlightLocationResponse flightLocationResponse = repository.getFlightLocation(longLat, longLat);
+        var flightLocationResponse = repository.getFlightLocation(longLat, longLat);
 
         assertNotNull(flightLocationResponse);
     }
@@ -91,25 +65,6 @@ public class RepositoryTest {
         double altitude = 1.0;
         repository.getInNoFlyZoneConflict(longitude, latitude, altitude);
         verify(namedParameterJdbcTemplate, times(1)).queryForObject(anyString(), any(MapSqlParameterSource.class), eq(String.class));
-    }
-
-    @Test
-    public void getRectangleNoFlyZonesShouldReturnListOfRectangleNoFlyZones() throws SQLException {
-
-        when(jdbcTemplate.query(anyString(), (RowMapper<Object>) any())).thenReturn(Arrays.asList(RECTANGLE_NO_FLY_ZONE));
-
-        List<RectangleNoFlyZone> rectangleNoFlyZoneList = repository.getRectangleNoFlyZones();
-
-        assertEquals("NAME", rectangleNoFlyZoneList.get(0).getName());
-    }
-
-    @Test
-    public void getPolygonNoFlyZoneShouldReturnNoFlyZones() {
-        when(jdbcTemplate.query(anyString(), (RowMapper<Object>) any())).thenReturn(List.of(POLYGON_NO_FLY_ZONE));
-
-        List<PolygonNoFlyZone> polygonNoFlyZones = repository.getPolygonNoFlyZones();
-
-        assertEquals("NAME", polygonNoFlyZones.get(0).getName());
     }
 
     @Test
@@ -133,20 +88,6 @@ public class RepositoryTest {
     @Test
     public void addEllipsoidNoFlyZoneShouldCallAnJdbcUpdate() {
         repository.addEllipsoidNoFlyZone(ELLIPSOID_NO_FLY_ZONE);
-
-        verify(namedParameterJdbcTemplate).update(anyString(), any(MapSqlParameterSource.class));
-    }
-
-    @Test
-    public void addPolygonNoFlyZoneShouldCallAnJdbcUpdate() {
-        repository.addPolygonNoFlyZone(POLYGON_NO_FLY_ZONE);
-
-        verify(namedParameterJdbcTemplate).update(anyString(), any(MapSqlParameterSource.class));
-    }
-
-    @Test
-    public void addRectangleNoFlyZoneShouldCallAnJdbcUpdate() {
-        repository.addRectangleNoFlyZone(RECTANGLE_NO_FLY_ZONE);
 
         verify(namedParameterJdbcTemplate).update(anyString(), any(MapSqlParameterSource.class));
     }

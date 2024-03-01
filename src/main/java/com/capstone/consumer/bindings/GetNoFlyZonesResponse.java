@@ -10,9 +10,7 @@ import java.util.List;
  */
 @Data
 public class GetNoFlyZonesResponse {
-    private List<EllipsoidNoFlyZone> ellipsoidNoFlyZones;
-    private List<RectangleNoFlyZone> rectangleNoFlyZones;
-    private List<PolygonNoFlyZone> polygonNoFlyZones;
-    private List<MilitaryNoFlyZone> militaryNoFlyZones;
     private List<TfrNotam> tfrNoFlyZones;
+    private List<EllipsoidNoFlyZone> ellipsoidNoFlyZones;
+    private List<MilitaryNoFlyZone> militaryNoFlyZones;
 }

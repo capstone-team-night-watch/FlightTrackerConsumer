@@ -2,7 +2,6 @@ package com.capstone.consumer.servicehandler;
 
 import com.capstone.consumer.bindings.EllipsoidNoFlyZone;
 import com.capstone.consumer.bindings.PolygonNoFlyZone;
-import com.capstone.consumer.bindings.RectangleNoFlyZone;
 import com.capstone.consumer.repository.Repository;
 import org.springframework.stereotype.Service;
 
@@ -30,23 +29,6 @@ public class NoFlyZoneServiceHandler {
         repository.addEllipsoidNoFlyZone(noFlyZone);
     }
 
-    /**
-     * Handles making the necessary Repository call to add a Polygon no-fly zone
-     *
-     * @param noFlyZone The PolygonNoFlyZone Object that will be used by the Repository class
-     */
-    public void handlePolygon(PolygonNoFlyZone noFlyZone) {
-        repository.addPolygonNoFlyZone(noFlyZone);
-    }
-
-    /**
-     * Handles making the necessary Repository call to add a Rectangle no-fly zone
-     *
-     * @param noFlyZone The RectangleNoFlyZone Object that will be used by the Repository class
-     */
-    public void handleRectangle(RectangleNoFlyZone noFlyZone) {
-        repository.addRectangleNoFlyZone(noFlyZone);
-    }
 
     public void deleteNoFlyZone(String zoneName) {
         repository.deleteNoFlyZone(zoneName);
