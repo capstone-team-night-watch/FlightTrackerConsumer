@@ -1,7 +1,6 @@
 package com.capstone.consumer.controllers;
 
 import com.capstone.consumer.bindings.EllipsoidNoFlyZone;
-import com.capstone.consumer.bindings.PolygonNoFlyZone;
 import com.capstone.consumer.servicehandler.NoFlyZoneServiceHandler;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
