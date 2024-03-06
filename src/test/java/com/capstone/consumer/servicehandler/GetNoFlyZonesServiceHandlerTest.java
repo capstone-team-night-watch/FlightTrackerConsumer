@@ -34,13 +34,6 @@ public class GetNoFlyZonesServiceHandlerTest {
 
     @Test
     public void handleShouldReturnValid() {
-        List<RectangleNoFlyZone> rectangleNoFlyZoneList= new ArrayList<>();
-        rectangleNoFlyZoneList.add(new RectangleNoFlyZone());
-        getNoFlyZonesResponse.setRectangleNoFlyZones(rectangleNoFlyZoneList);
-
-        List<PolygonNoFlyZone> polygonNoFlyZoneList = new ArrayList<>();
-        polygonNoFlyZoneList.add(new PolygonNoFlyZone());
-        getNoFlyZonesResponse.setPolygonNoFlyZones(polygonNoFlyZoneList);
 
         List<EllipsoidNoFlyZone> ellipsoidNoFlyZoneList = new ArrayList<>();
         ellipsoidNoFlyZoneList.add(new EllipsoidNoFlyZone());
@@ -50,8 +43,6 @@ public class GetNoFlyZonesServiceHandlerTest {
         militaryNoFlyZoneList.add(new MilitaryNoFlyZone("name", "geoJson"));
         getNoFlyZonesResponse.setMilitaryNoFlyZones(militaryNoFlyZoneList);
 
-        when(repository.getRectangleNoFlyZones()).thenReturn(rectangleNoFlyZoneList); //List<RectangleNoFlyZone>
-        when(repository.getPolygonNoFlyZones()).thenReturn(polygonNoFlyZoneList);
         when(repository.getEllipsoidNoFlyZones()).thenReturn(ellipsoidNoFlyZoneList);
         when(repository.getMilitaryNoFlyZones()).thenReturn(militaryNoFlyZoneList);
 
