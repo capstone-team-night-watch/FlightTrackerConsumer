@@ -12,26 +12,7 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 public class PolygonNoFlyZone extends BaseNoFlyZone {
     /**
-     * Sample dto object for this class
-     * {
-     * "altitude": 1000,
-     * "notamNumber": "1234",
-     * "type": "POLYGON",
-     * "vertices": [
-     * {
-     * "latitude": 1.0,
-     * "longitude": 1.0
-     * },
-     * {
-     * "latitude": 2.0,
-     * "longitude": 2.0
-     * },
-     * {
-     * "latitude": 3.0,
-     * "longitude": 3.0
-     * }
-     * ]
-     * }
+     * List of vertices that make up the polygon
      */
     private List<GeographicCoordinates2D> vertices;
 
