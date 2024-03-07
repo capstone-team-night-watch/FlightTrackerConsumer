@@ -6,7 +6,6 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 
 import com.capstone.consumer.bindings.TfrNotam;
-import com.fasterxml.jackson.core.JsonProcessingException;
 
 /**
  * Service Handler class that facilitates adding new TFR to the repository
@@ -16,7 +15,7 @@ public class TfrBean {
     /**
      * The Repository Object that facilitates the database interaction
      */
-    private static final List<TfrNotam> allCurrentTfr = new ArrayList<TfrNotam>();
+    private static final List<TfrNotam> allCurrentTfr = new ArrayList<>();
 
     /**
      * Handles making the necessary Repository call to add a TFR
