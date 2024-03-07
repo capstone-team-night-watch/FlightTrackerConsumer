@@ -61,5 +61,4 @@ public class GetFlightLocationServiceHandlerTest {
         verify(repository, times(1)).getInNoFlyZoneConflict(anyDouble(), anyDouble(), anyDouble());
         assertEquals(getNoFlyZoneConflictResponse, response);
     }
-
 }

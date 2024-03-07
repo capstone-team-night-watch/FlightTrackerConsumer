@@ -1,20 +1,77 @@
 # CapstoneConsumer
+
 CapstoneConsumer
 This project contains our barebones project that listens for events coming in from our Kafka broker
 This application logs the messages received from the broker and can be viewed in the docker container logs
 The kafka broker is running on one of our Ubuntu AWS instance
 
-
-Milestone 1: 
+Milestone 1:
 Environment set up.
-Milestone 2: 
+Milestone 2:
 Created initial application that is able to recieve hello world messages from broker
-Milestone 3: 
+Milestone 3:
 Initial integration consuming flight data, added various services that will serve the front end.
-Milestone 4: 
+Milestone 4:
 Heavily integrated with front end, websockets set up and communicating
-Milestone 5: 
+Milestone 5:
 General clean up and commenting.
+
+## Kafka listeners payload
+
+- Sample Polygon no fly-zone payload
+
+```json5
+{
+  "altitude": 1000,
+  "notamNumber": "1234",
+  "type": "POLYGON",
+  "vertices": [
+    {
+      "latitude": 1,
+      "longitude": 1
+    },
+    {
+      "latitude": 2,
+      "longitude": 2
+    },
+    {
+      "latitude": 3,
+      "longitude": 3
+    }
+  ]
+}
+```
+
+- Sample circular no fly-zone payload
+
+```json5
+{
+  "altitude": 1000,
+  "notamNumber": "1234",
+  "type": "CIRCLE",
+  "center": {
+    "latitude": 1,
+    "longitude": 1
+  },
+  radius: 100
+}
+```
+
+- Sample flight location data message
+
+```json5
+{
+  "location": {
+    "altitude": 1,
+    "latitude": 1,
+    "longitude": 1
+  },
+  "heading": 90,
+  "groundSpeed": 100,
+  "flightId": "1234",
+  "timestamp": "2021-10-10T10:10:10"
+}
+```
 
 
 ## Docker Container

@@ -1,9 +1,8 @@
 package com.capstone.consumer.config;
 
-import com.capstone.consumer.ApplicationProperties;
-import com.corundumstudio.socketio.SocketConfig;
-import com.corundumstudio.socketio.SocketIOServer;
 import lombok.extern.slf4j.Slf4j;
+import com.capstone.consumer.ApplicationProperties;
+import com.corundumstudio.socketio.SocketIOServer;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
