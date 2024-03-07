@@ -1,7 +1,6 @@
 package com.capstone.consumer.servicehandler;
 
 import com.capstone.consumer.bindings.EllipsoidNoFlyZone;
-import com.capstone.consumer.bindings.PolygonNoFlyZone;
 import com.capstone.consumer.repository.Repository;
 import org.springframework.stereotype.Service;
 
