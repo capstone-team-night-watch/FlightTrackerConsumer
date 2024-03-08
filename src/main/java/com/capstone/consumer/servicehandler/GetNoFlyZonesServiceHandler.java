@@ -1,6 +1,5 @@
 package com.capstone.consumer.servicehandler;
 
-import com.capstone.consumer.beans.TfrBean;
 import com.capstone.consumer.bindings.GetNoFlyZonesResponse;
 import com.capstone.consumer.repository.Repository;
 import org.springframework.stereotype.Service;
@@ -41,7 +40,6 @@ public class GetNoFlyZonesServiceHandler {
      */
     public GetNoFlyZonesResponse handleTfr() {
         GetNoFlyZonesResponse response = new GetNoFlyZonesResponse();
-        response.setTfrNoFlyZones(TfrBean.getAllTfr());
 
         return response;
     }

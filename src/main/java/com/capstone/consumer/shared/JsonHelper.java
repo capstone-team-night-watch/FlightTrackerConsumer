@@ -1,9 +1,11 @@
 package com.capstone.consumer.shared;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.Optional;
 
+@Slf4j
 public class JsonHelper {
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
@@ -21,6 +23,7 @@ public class JsonHelper {
             var value =  objectMapper.readValue(json, clazz);
             return Optional.of(value);
         } catch (Exception exception) {
+            log.error("Error deserializing object", exception);
             return Optional.empty();
         }
     }

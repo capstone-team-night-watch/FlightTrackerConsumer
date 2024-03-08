@@ -1,18 +1,13 @@
 package com.capstone.consumer.kafka;
 
-import com.capstone.consumer.bindings.CircularNoFlyZone;
-import com.capstone.consumer.bindings.GeographicCoordinates2D;
-import com.capstone.consumer.bindings.PolygonNoFlyZone;
+import com.capstone.consumer.bindings.*;
 import com.capstone.consumer.config.SocketIoService;
+import com.capstone.consumer.servicehandler.FlightLocationService;
+import com.capstone.consumer.servicehandler.NoFlyZoneService;
 import com.capstone.consumer.shared.JsonHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Component;
-
-import com.capstone.consumer.beans.TfrBean;
-import com.capstone.consumer.bindings.TfrNotam;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * This is the class where the kafka consumption gets set up.
@@ -20,83 +15,69 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Slf4j
 @Component
 public class KafkaConsumer {
+    private static final String CONSUMER_ID = "flight-tracker-consumer";
     private final SocketIoService socketIoService;
 
     /**
      * Template provided by spring to facilitate sending messages to a receiving source. This one is used to send to our web socket endpoint
      */
-    private final SimpMessagingTemplate messagingTemplate;
 
-    public KafkaConsumer(SimpMessagingTemplate messagingTemplate, SocketIoService socketIoService) {
+    private final NoFlyZoneService noFlyZoneService;
+
+    private final FlightLocationService flightLocationService;
+
+    public KafkaConsumer(
+            SocketIoService socketIoService,
+            NoFlyZoneService noFlyZoneService,
+            FlightLocationService flightLocationService
+    ) {
         this.socketIoService = socketIoService;
-        this.messagingTemplate = messagingTemplate;
+        this.noFlyZoneService = noFlyZoneService;
+        this.flightLocationService = flightLocationService;
     }
 
-    /**
-     * Kafka listener method. Any message sent on the kafka broker is received here and then can be processed
-     *
-     * @param message The message being received in Kafka. It is assumed that this message contains flight data
-     */
-    @KafkaListener(id = "flight-tracker-consumer", topics = "FlightData")
-    public void flightDataListen(String message) {
-        log.info("Received message from Kafka: {} ", message);
+    @KafkaListener(groupId = CONSUMER_ID, topics = "CircularNoFlyZone")
+    public void handleCircularNoFlyZone(String message) {
+        var optionalNoFlyZone = JsonHelper.fromJson(message, CircularNoFlyZone.class);
 
-        sendFlightMessage(message);
-    }
-
-    /**
-     * Kafka listener method. Any message sent on the kafka broker is received here and then can be processed
-     *
-     * @param message The message being received in Kafka. It is assumed that this message contains NOTAM TFR
-     */
-    @KafkaListener(id = "kafkaTFRConsumer777", topics = "TFRData")
-    public void handleTfrData(String message) {
-        log.info("Received message from Kafka: {} ", message);
-
-        var notam = JsonHelper.fromJson(message, TfrNotam.class);
-
-        if (notam.isEmpty()) {
+        if (optionalNoFlyZone.isEmpty()) {
+            log.error("Failed to parse circular no-fly-zone from Kafka message: {}", message);
             return;
         }
 
+        var noFlyZone = optionalNoFlyZone.get();
 
-        handleNewNoFlyZone(notam.get());
+        noFlyZoneService.createNoFlyZone(noFlyZone);
+        socketIoService.notifyNoFlyZoneCreated(noFlyZone);
     }
 
-    /**
-     * Simple method to send a message to the connected web socket endpoint.
-     *
-     * @param message Message containing flight information that has been received from the Kafka broker
-     */
-    public void sendFlightMessage(String message) {
-        log.info("Sending message to web socket endpoint: /topic/liveCoords");
+    @KafkaListener(groupId = CONSUMER_ID, topics = "PolygonNoFlyZone")
+    public void handlePolygonNoFlyZone(String message) {
+        var optionalNoFlyZone = JsonHelper.fromJson(message, PolygonNoFlyZone.class);
 
-        messagingTemplate.convertAndSend("/topic/liveCoords", message);
+        if (optionalNoFlyZone.isEmpty()) {
+            log.error("Failed to parse polygon no-fly-zone from Kafka message: {}", message);
+            return;
+        }
+
+        var noFlyZone = optionalNoFlyZone.get();
+
+        noFlyZoneService.createNoFlyZone(noFlyZone);
+        socketIoService.notifyNoFlyZoneCreated(noFlyZone);
     }
 
-    public void handleNewNoFlyZone(TfrNotam notam) {
-        TfrBean.addNewTFR(notam);
+    @KafkaListener(groupId = CONSUMER_ID, topics = "FlightLocationData")
+    public void handleFlightUpdate(String message) {
+        var optionalFlightInformation = JsonHelper.fromJson(message, FlightInformation.class);
 
-        messagingTemplate.convertAndSend("/notam/newTfr", JsonHelper.toJson(notam));
-
-        // Handle circular no-fly-zone
-        if (notam.getNotamType().equals("CIRCLE")) {
-            var newNoFlyZone = new CircularNoFlyZone()
-                    .setCenter(new GeographicCoordinates2D(notam.getLatlong().get(0), notam.getLatlong().get(1)))
-                    .setRadius(notam.getRadius())
-                    .setNotamNumber(notam.getNotamNumber())
-                    .setAltitude(10000);
-
-            socketIoService.notifyNoFlyZoneCreated(newNoFlyZone);
+        if (optionalFlightInformation.isEmpty()) {
+            log.error("Failed to parse flight information from Kafka message: {}", message);
+            return;
         }
 
-        // Handle polygon
-        else if (notam.getNotamType().equals("Polygon")) {
-            var newNoFlyZone = new PolygonNoFlyZone()
-                    .setNotamNumber(notam.getNotamNumber())
-                    .setAltitude(10000);
+        var flightInformation = optionalFlightInformation.get();
 
-            socketIoService.notifyNoFlyZoneCreated(newNoFlyZone);
-        }
+        socketIoService.notifyFlightLocationUpdated(flightInformation);
+        flightLocationService.upsertFlightInformation(flightInformation);
     }
 }

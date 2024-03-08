@@ -1,0 +1,10 @@
+{
+  "altitude": 1000,
+  "notamNumber": "1234",
+  "type": "CIRCLE",
+  "center": {
+    "latitude": 1,
+    "longitude": 1
+  },
+  "radius": 100
+}

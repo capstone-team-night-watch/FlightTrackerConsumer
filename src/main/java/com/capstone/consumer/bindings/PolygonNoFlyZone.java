@@ -11,6 +11,9 @@ import java.util.List;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class PolygonNoFlyZone extends BaseNoFlyZone {
+    /**
+     * List of vertices that make up the polygon
+     */
     private List<GeographicCoordinates2D> vertices;
 
     public PolygonNoFlyZone() {

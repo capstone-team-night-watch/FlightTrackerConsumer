@@ -1,0 +1,19 @@
+{
+  "altitude": 1000,
+  "notamNumber": "1234",
+  "type": "POLYGON",
+  "vertices": [
+    {
+      "latitude": 1,
+      "longitude": 1
+    },
+    {
+      "latitude": 2,
+      "longitude": 2
+    },
+    {
+      "latitude": 3,
+      "longitude": 3
+    }
+  ]
+}

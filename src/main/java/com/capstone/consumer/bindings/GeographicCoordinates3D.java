@@ -12,5 +12,8 @@ public class GeographicCoordinates3D {
 
     private double longitude;
 
-    private   double altitude;
+    private double altitude;
+
+    GeographicCoordinates3D() {
+    }
 }
