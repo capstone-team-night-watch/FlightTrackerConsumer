@@ -1,11 +1,16 @@
 package com.capstone.consumer.shared;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.Optional;
 
 public class JsonHelper {
     private static final ObjectMapper objectMapper = new ObjectMapper();
+
+    static {
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+    }
 
     public static Optional<String> toJson(Object obj) {
         try {
