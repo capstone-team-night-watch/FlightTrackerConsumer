@@ -1,5 +1,6 @@
 package com.capstone.consumer.shared;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 
@@ -8,6 +9,10 @@ import java.util.Optional;
 @Slf4j
 public class JsonHelper {
     private static final ObjectMapper objectMapper = new ObjectMapper();
+
+    static {
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+    }
 
     public static Optional<String> toJson(Object obj) {
         try {
