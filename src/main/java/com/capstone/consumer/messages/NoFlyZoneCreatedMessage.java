@@ -1,7 +1,8 @@
 package com.capstone.consumer.messages;
 
-import com.capstone.consumer.bindings.BaseNoFlyZone;
-import com.capstone.consumer.enums.NoFlyZoneType;
+
+import com.capstone.shared.bindings.BaseNoFlyZone;
+import com.capstone.shared.enums.NoFlyZoneType;
 import lombok.Data;
 
 @Data

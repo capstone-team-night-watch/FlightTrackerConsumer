@@ -1,7 +1,7 @@
 package com.capstone.consumer.messages;
 
-import com.capstone.consumer.bindings.FlightInformation;
-import com.capstone.consumer.bindings.GeographicCoordinates3D;
+
+import com.capstone.shared.bindings.FlightInformation;
 import lombok.Data;
 
 @Data

@@ -1,11 +1,8 @@
 package com.capstone.consumer.messages;
 
-import com.capstone.consumer.bindings.FlightInformation;
-import com.capstone.consumer.bindings.BaseNoFlyZone;
+import com.capstone.shared.bindings.BaseNoFlyZone;
+import com.capstone.shared.bindings.FlightInformation;
 import lombok.Data;
-import org.springframework.http.HttpStatus;
-
-import java.util.ArrayList;
 
 @Data
 public class FlightIntersectWithNoFlyZoneMessage {

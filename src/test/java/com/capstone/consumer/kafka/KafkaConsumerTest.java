@@ -1,29 +1,22 @@
 package com.capstone.consumer.kafka;
 
-import com.capstone.consumer.bindings.BaseNoFlyZone;
-import com.capstone.consumer.bindings.CircularNoFlyZone;
-import com.capstone.consumer.bindings.FlightInformation;
-import com.capstone.consumer.bindings.PolygonNoFlyZone;
-import com.capstone.consumer.config.SocketIoService;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.capstone.consumer.enums.Messages;
 import com.capstone.consumer.enums.Rooms;
 import com.capstone.consumer.messages.NoFlyZoneCreatedMessage;
 import com.capstone.consumer.servicehandler.FlightLocationService;
-import com.capstone.consumer.servicehandler.NoFlyZoneService;
 import com.capstone.consumer.shared.FileHelper;
+import com.capstone.shared.bindings.CircularNoFlyZone;
+import com.capstone.shared.bindings.FlightInformation;
+import com.capstone.shared.bindings.PolygonNoFlyZone;
 import com.corundumstudio.socketio.SingleRoomBroadcastOperations;
 import com.corundumstudio.socketio.SocketIOServer;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -49,9 +42,6 @@ public class KafkaConsumerTest {
 
     @Mock
     private SingleRoomBroadcastOperations singleRoomBroadcastOperations;
-
-    @Autowired
-    private NoFlyZoneService noFlyZoneService;
 
     @Autowired
     private FlightLocationService flightLocationService;
@@ -86,7 +76,7 @@ public class KafkaConsumerTest {
     }
 
     @Test
-    public void handlePolygonNoFlyZone_NotifyWebSocket() throws IOException {
+    public void handlePolygonNoFlyZone_NotifyWebSocket() {
         consumer.handlePolygonNoFlyZone("""
                 {
                   "altitude": 1000,
@@ -126,7 +116,7 @@ public class KafkaConsumerTest {
     }
 
     @Test
-    public void handleFlightInformation_ShouldNotifyFrontend() throws IOException {
+    public void handleFlightInformation_ShouldNotifyFrontend() {
         consumer.handleFlightUpdate("""
                          {
                            "location": {
@@ -168,7 +158,7 @@ public class KafkaConsumerTest {
 
 
     @Test
-    public void handleFlightInformation_ShouldTrackFlightInFlightService() throws IOException {
+    public void handleFlightInformation_ShouldTrackFlightInFlightService() {
         consumer.handleFlightUpdate("""
                          {
                            "location": {
@@ -188,5 +178,57 @@ public class KafkaConsumerTest {
         assertThat(flightInformation)
                 .extracting(FlightInformation::getFlightId)
                 .contains("9999");
+    }
+
+    @Test
+    public void handleFlightInformation_ShouldTrackFlight_Airport() {
+        consumer.handleFlightUpdate("""
+                         {
+                           "location": {
+                             "altitude": 1,
+                             "latitude": 1,
+                             "longitude": 1
+                           },
+                           "source": {
+                             "icaoCode": "JFK",
+                             "name": "John F. Kennedy International Airport",
+                             "coordinates": {
+                               "latitude": 1,
+                               "longitude": 1
+                             }
+                           },
+                           "destination": {
+                             "icaoCode": "JFK-Destination",
+                             "name": "John F. Kennedy International Airport",
+                             "coordinates": {
+                               "latitude": 1,
+                               "longitude": 1
+                             }
+                           },
+                           "checkPoints": [
+                                {
+                                    "latitude": 2,
+                                    "longitude": 20
+                                },
+                                {
+                                    "latitude": 21,
+                                    "longitude": 60
+                                }
+                           ],
+                           "heading": 90,
+                           "groundSpeed": 100,
+                           "flightId": "9999"
+                         }
+                """
+        );
+
+        var flightInformation = flightLocationService.getActiveFlight();
+
+        assertThat(flightInformation)
+                .extracting(FlightInformation::getFlightId)
+                .contains("9999");
+
+        assertEquals("JFK", flightInformation.get(0).getSource().getIcaoCode());
+        assertEquals("JFK-Destination", flightInformation.get(0).getDestination().getIcaoCode());
     }
 }
