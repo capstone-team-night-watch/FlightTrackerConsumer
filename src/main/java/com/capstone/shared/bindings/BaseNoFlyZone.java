@@ -1,6 +1,6 @@
-package com.capstone.consumer.bindings;
+package com.capstone.shared.bindings;
 
-import com.capstone.consumer.enums.NoFlyZoneType;
+import com.capstone.shared.enums.NoFlyZoneType;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 
@@ -14,6 +14,8 @@ public abstract class BaseNoFlyZone {
     protected String notamNumber;
 
     protected Date CreatedAt;
+
+    protected String description;
 
     protected NoFlyZoneType type;
 

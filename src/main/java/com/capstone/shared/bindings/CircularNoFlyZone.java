@@ -1,6 +1,6 @@
-package com.capstone.consumer.bindings;
+package com.capstone.shared.bindings;
 
-import com.capstone.consumer.enums.NoFlyZoneType;
+import com.capstone.shared.enums.NoFlyZoneType;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

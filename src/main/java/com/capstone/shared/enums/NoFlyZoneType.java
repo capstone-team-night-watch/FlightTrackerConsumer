@@ -1,4 +1,4 @@
-package com.capstone.consumer.enums;
+package com.capstone.shared.enums;
 
 
 import com.capstone.shared.bindings.CircularNoFlyZone;
@@ -10,14 +10,12 @@ import com.capstone.shared.bindings.PolygonNoFlyZone;
 public enum NoFlyZoneType {
     /**
      * Describes a circular no-fly-zone. Circular no-fly-zones are defined by a center point, a radius and an altitude
-     *
      * @see CircularNoFlyZone
      */
     CIRCLE,
 
     /**
      * Describes a polygon no-fly-zone. Polygon no-fly-zones are defined by a list of points (vertices) and an altitude
-     *
      * @see PolygonNoFlyZone
      */
     POLYGON
