@@ -1,4 +1,4 @@
-package com.capstone.consumer.bindings;
+package com.capstone.shared.bindings;
 
 import lombok.Data;
 
@@ -12,8 +12,5 @@ public class GeographicCoordinates3D {
 
     private double longitude;
 
-    private double altitude;
-
-    GeographicCoordinates3D() {
-    }
+    private   double altitude;
 }

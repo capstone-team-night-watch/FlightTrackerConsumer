@@ -2,6 +2,8 @@ package com.capstone.consumer.config;
 
 import com.capstone.consumer.enums.Messages;
 import com.capstone.consumer.enums.Rooms;
+import com.capstone.shared.bindings.BaseNoFlyZone;
+import com.capstone.shared.bindings.FlightInformation;
 import lombok.extern.slf4j.Slf4j;
 import com.capstone.consumer.messages.*;
 import com.capstone.consumer.bindings.*;

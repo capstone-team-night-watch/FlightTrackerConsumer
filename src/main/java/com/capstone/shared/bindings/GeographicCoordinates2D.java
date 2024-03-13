@@ -1,4 +1,4 @@
-package com.capstone.consumer.bindings;
+package com.capstone.shared.bindings;
 
 import lombok.Data;
 

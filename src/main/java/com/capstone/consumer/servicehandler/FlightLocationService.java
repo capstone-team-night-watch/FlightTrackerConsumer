@@ -1,6 +1,7 @@
 package com.capstone.consumer.servicehandler;
 
-import com.capstone.consumer.bindings.FlightInformation;
+
+import com.capstone.shared.bindings.FlightInformation;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

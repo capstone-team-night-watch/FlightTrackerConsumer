@@ -45,5 +45,4 @@ public class KafkaConsumerConfigTest {
 
         assertNotNull(factory);
     }
-
 }
