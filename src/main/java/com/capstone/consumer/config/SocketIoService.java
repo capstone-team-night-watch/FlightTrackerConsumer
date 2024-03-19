@@ -6,7 +6,6 @@ import com.capstone.shared.bindings.BaseNoFlyZone;
 import com.capstone.shared.bindings.FlightInformation;
 import lombok.extern.slf4j.Slf4j;
 import com.capstone.consumer.messages.*;
-import com.capstone.consumer.bindings.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import com.corundumstudio.socketio.listener.ConnectListener;
@@ -70,7 +69,7 @@ public class SocketIoService {
      */
     public void notifyFlightLocationUpdated(FlightInformation flightInformation) {
         server.getRoomOperations(flightInformation.getFlightId()).sendEvent(
-                "flight-location-updated",
+                Messages.FLIGHT_LOCATION_UPDATED,
                 new FlightLocationUpdatedMessage()
                         .setFlightInformation(flightInformation)
         );
@@ -79,10 +78,17 @@ public class SocketIoService {
 
         if (created){
             server.getRoomOperations(Rooms.FLIGHT_INFORMATION_LOBBY).sendEvent(
-                    "flight-created",
+                    Messages.FLIGHT_CREATED,
                     flightInformation
             );
         }
+    }
+
+    public void sendMessage(SocketMessageInterface socketMessage){
+        server.getRoomOperations(socketMessage.getRoom()).sendEvent(
+                socketMessage.getName(),
+                socketMessage
+        );
     }
 
     /**
@@ -100,7 +106,7 @@ public class SocketIoService {
                         .setNoFlyZoneMessage("A new more place where you don't get to fly")
         );
 
-        noFlyZoneService.createNoFlyZone(noFlyZone);
+        noFlyZoneService.storeNoFlyZone(noFlyZone);
     }
 
 

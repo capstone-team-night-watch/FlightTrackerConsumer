@@ -1,7 +1,11 @@
 package com.capstone.shared.bindings;
 
+import com.capstone.consumer.utils.GeoUtils;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Geometry;
 
 import java.util.List;
 
@@ -46,4 +50,15 @@ public class FlightInformation {
      * List of checkpoints that the flight must pass through. Only specified on initial flight creation or on update
      */
     private List<GeographicCoordinates2D> checkPoints;
+
+    @JsonIgnore
+    public Geometry getFlightPathGeometry() {
+        var checkpoints = this.checkPoints
+                .stream()
+                .map(checkPoint -> new Coordinate(checkPoint.getLatitude(), checkPoint.getLongitude()))
+                .toList()
+                .toArray(new Coordinate[0]);
+
+        return GeoUtils.geometryFactory.createLineString(checkpoints);
+    }
 }

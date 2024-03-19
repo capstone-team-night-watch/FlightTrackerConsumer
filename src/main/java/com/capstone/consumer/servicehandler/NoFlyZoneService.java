@@ -14,7 +14,7 @@ public class NoFlyZoneService {
 
     private final List<BaseNoFlyZone> noFlyZoneStore = Collections.synchronizedList(new ArrayList<BaseNoFlyZone>());
 
-    public void createNoFlyZone(BaseNoFlyZone noFlyZone) {
+    public void storeNoFlyZone(BaseNoFlyZone noFlyZone) {
         noFlyZoneStore.removeIf(x -> Objects.equals(x.getId(), noFlyZone.getId()));
         noFlyZoneStore.add(noFlyZone);
     }

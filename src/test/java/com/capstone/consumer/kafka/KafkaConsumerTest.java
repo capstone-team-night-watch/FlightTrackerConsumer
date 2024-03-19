@@ -6,7 +6,7 @@ import com.capstone.consumer.enums.Messages;
 import com.capstone.consumer.enums.Rooms;
 import com.capstone.consumer.messages.NoFlyZoneCreatedMessage;
 import com.capstone.consumer.servicehandler.FlightLocationService;
-import com.capstone.consumer.shared.FileHelper;
+import com.capstone.shared.FileHelper;
 import com.capstone.shared.bindings.CircularNoFlyZone;
 import com.capstone.shared.bindings.FlightInformation;
 import com.capstone.shared.bindings.PolygonNoFlyZone;
@@ -56,7 +56,18 @@ public class KafkaConsumerTest {
     public void listenToRectangleNoFlyZone_ShouldNotifyWebSocket() throws IOException {
         var testCircularNoFlyZone = FileHelper.readFile("test-circular-no-fly-zone.json");
 
-        consumer.handleCircularNoFlyZone(testCircularNoFlyZone);
+        consumer.handleCircularNoFlyZone("""
+                {
+                  "altitude": 1000,
+                  "notamNumber": "1234",
+                  "type": "CIRCLE",
+                  "center": {
+                    "latitude": 1,
+                    "longitude": 1
+                  },
+                  "radius": 100 
+                }
+                """);
 
 
         var stringCaptor = ArgumentCaptor.forClass(String.class);
@@ -126,7 +137,17 @@ public class KafkaConsumerTest {
                            },
                            "heading": 90,
                            "groundSpeed": 100,
-                           "flightId": "1234"
+                           "flightId": "1234",
+                           "checkPoints": [
+                                {
+                                    "latitude": 2,
+                                    "longitude": 20
+                                },
+                                {
+                                    "latitude": 21,
+                                    "longitude": 60
+                                }
+                           ]
                          }
                 """
         );
@@ -168,7 +189,17 @@ public class KafkaConsumerTest {
                            },
                            "heading": 90,
                            "groundSpeed": 100,
-                           "flightId": "9999"
+                           "flightId": "9999",
+                           "checkPoints": [
+                                {
+                                    "latitude": 2,
+                                    "longitude": 20
+                                },
+                                {
+                                    "latitude": 21,
+                                    "longitude": 60
+                                }
+                           ]
                          }
                 """
         );

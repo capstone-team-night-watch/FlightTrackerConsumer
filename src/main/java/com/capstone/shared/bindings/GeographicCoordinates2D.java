@@ -15,4 +15,5 @@ public class GeographicCoordinates2D {
         this.latitude = latitude;
         this.longitude = longitude;
     }
+
 }
