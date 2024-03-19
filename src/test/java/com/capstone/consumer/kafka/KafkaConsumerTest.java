@@ -6,7 +6,7 @@ import com.capstone.consumer.enums.Messages;
 import com.capstone.consumer.enums.Rooms;
 import com.capstone.consumer.messages.NoFlyZoneCreatedMessage;
 import com.capstone.consumer.servicehandler.FlightLocationService;
-import com.capstone.consumer.shared.FileHelper;
+import com.capstone.shared.FileHelper;
 import com.capstone.shared.bindings.CircularNoFlyZone;
 import com.capstone.shared.bindings.FlightInformation;
 import com.capstone.shared.bindings.PolygonNoFlyZone;

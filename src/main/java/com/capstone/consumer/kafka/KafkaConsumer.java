@@ -1,10 +1,10 @@
 package com.capstone.consumer.kafka;
 
-import com.capstone.consumer.bindings.*;
 import com.capstone.consumer.config.SocketIoService;
+import com.capstone.consumer.servicehandler.CollisionListenerService;
 import com.capstone.consumer.servicehandler.FlightLocationService;
 import com.capstone.consumer.servicehandler.NoFlyZoneService;
-import com.capstone.consumer.shared.JsonHelper;
+import com.capstone.shared.JsonHelper;
 import com.capstone.shared.bindings.CircularNoFlyZone;
 import com.capstone.shared.bindings.FlightInformation;
 import com.capstone.shared.bindings.PolygonNoFlyZone;
@@ -29,14 +29,18 @@ public class KafkaConsumer {
 
     private final FlightLocationService flightLocationService;
 
+    private final CollisionListenerService collisionListenerService;
+
     public KafkaConsumer(
             SocketIoService socketIoService,
             NoFlyZoneService noFlyZoneService,
-            FlightLocationService flightLocationService
+            FlightLocationService flightLocationService,
+            CollisionListenerService collisionListenerService
     ) {
         this.socketIoService = socketIoService;
         this.noFlyZoneService = noFlyZoneService;
         this.flightLocationService = flightLocationService;
+        this.collisionListenerService = collisionListenerService;
     }
 
     @KafkaListener(groupId = CONSUMER_ID, topics = "CircularNoFlyZone")
@@ -50,8 +54,9 @@ public class KafkaConsumer {
 
         var noFlyZone = optionalNoFlyZone.get();
 
-        noFlyZoneService.createNoFlyZone(noFlyZone);
+        noFlyZoneService.storeNoFlyZone(noFlyZone);
         socketIoService.notifyNoFlyZoneCreated(noFlyZone);
+        collisionListenerService.trackNewNoFlyZone(noFlyZone);
     }
 
     @KafkaListener(groupId = CONSUMER_ID, topics = "PolygonNoFlyZone")
@@ -65,8 +70,10 @@ public class KafkaConsumer {
 
         var noFlyZone = optionalNoFlyZone.get();
 
-        noFlyZoneService.createNoFlyZone(noFlyZone);
+
+        noFlyZoneService.storeNoFlyZone(noFlyZone);
         socketIoService.notifyNoFlyZoneCreated(noFlyZone);
+        collisionListenerService.trackNewNoFlyZone(noFlyZone);
     }
 
     @KafkaListener(groupId = CONSUMER_ID, topics = "FlightLocationData")
@@ -81,6 +88,17 @@ public class KafkaConsumer {
         var flightInformation = optionalFlightInformation.get();
 
         socketIoService.notifyFlightLocationUpdated(flightInformation);
-        flightLocationService.upsertFlightInformation(flightInformation);
+        var isNewFlight = flightLocationService.upsertFlightInformation(flightInformation);
+
+
+        collisionListenerService.handleFlightLocationUpdated(flightInformation);
+
+        if (isNewFlight) {
+            collisionListenerService.handleNewFlight(flightInformation);
+        }
+
+        if (flightInformation.getCheckPoints() != null) {
+            collisionListenerService.handleFlightPathUpdated(flightInformation);
+        }
     }
 }

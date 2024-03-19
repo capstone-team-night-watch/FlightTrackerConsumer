@@ -1,8 +1,10 @@
 package com.capstone.shared.bindings;
 
+import com.capstone.consumer.utils.GeoUtils;
 import com.capstone.shared.enums.NoFlyZoneType;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.locationtech.jts.geom.Geometry;
 
 /**
  * Bindings class used for representing Polygon no-fly zone data
@@ -16,5 +18,10 @@ public class CircularNoFlyZone extends BaseNoFlyZone {
 
     public CircularNoFlyZone() {
         this.type = NoFlyZoneType.CIRCLE;
+    }
+
+    @Override
+    public Geometry getNoFlyZoneBoundariesGeometry() {
+        return GeoUtils.createCircleGeometry(center, radius * 2);
     }
 }
