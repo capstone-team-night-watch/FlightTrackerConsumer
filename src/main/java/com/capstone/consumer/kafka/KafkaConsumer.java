@@ -6,7 +6,7 @@ import com.capstone.consumer.servicehandler.FlightLocationService;
 import com.capstone.consumer.servicehandler.NoFlyZoneService;
 import com.capstone.shared.JsonHelper;
 import com.capstone.shared.bindings.CircularNoFlyZone;
-import com.capstone.shared.bindings.FlightInformation;
+import com.capstone.shared.bindings.FlightInformationKafkaDto;
 import com.capstone.shared.bindings.PolygonNoFlyZone;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -78,7 +78,7 @@ public class KafkaConsumer {
 
     @KafkaListener(groupId = CONSUMER_ID, topics = "FlightLocationData")
     public void handleFlightUpdate(String message) {
-        var optionalFlightInformation = JsonHelper.fromJson(message, FlightInformation.class);
+        var optionalFlightInformation = JsonHelper.fromJson(message, FlightInformationKafkaDto.class);
 
         if (optionalFlightInformation.isEmpty()) {
             log.error("Failed to parse flight information from Kafka message: {}", message);
@@ -87,18 +87,8 @@ public class KafkaConsumer {
 
         var flightInformation = optionalFlightInformation.get();
 
-        socketIoService.notifyFlightLocationUpdated(flightInformation);
-        var isNewFlight = flightLocationService.upsertFlightInformation(flightInformation);
+        flightLocationService.upsertFlightInformation(flightInformation);
 
-
-        collisionListenerService.handleFlightLocationUpdated(flightInformation);
-
-        if (isNewFlight) {
-            collisionListenerService.handleNewFlight(flightInformation);
-        }
-
-        if (flightInformation.getCheckPoints() != null) {
-            collisionListenerService.handleFlightPathUpdated(flightInformation);
-        }
+        collisionListenerService.upsertFlightInformation(flightInformation);
     }
 }
