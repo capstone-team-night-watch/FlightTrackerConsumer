@@ -62,27 +62,6 @@ public class SocketIoService {
         server.addEventListener("leave-rooms", ExitRoomPayload.class, handleExitRoomRequest());
     }
 
-    /**
-     * Notify the client that a flight has intersected with a no-fly zone
-     *
-     * @param flightInformation the flight information
-     */
-//    public void notifyFlightLocationUpdated(FlightInformationKafkaDto flightInformation) {
-//        server.getRoomOperations(flightInformation.getFlightId()).sendEvent(
-//                Messages.FLIGHT_LOCATION_UPDATED,
-//                new FlightLocationUpdatedMessage(flightInformation)
-//        );
-//
-//        var created = flightLocationService.upsertFlightInformation(flightInformation);
-//
-//        if (created){
-//            server.getRoomOperations(Rooms.FLIGHT_INFORMATION_LOBBY).sendEvent(
-//                    Messages.FLIGHT_CREATED,
-//                    flightInformation
-//            );
-//        }
-//    }
-
     public void sendMessage(SocketMessageInterface socketMessage){
         server.getRoomOperations(socketMessage.getRoom()).sendEvent(
                 socketMessage.getName(),
