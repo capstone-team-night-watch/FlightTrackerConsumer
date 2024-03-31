@@ -2,14 +2,12 @@ package com.capstone.consumer.kafka;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.capstone.consumer.bindings.FlightInformation;
 import com.capstone.consumer.enums.Messages;
 import com.capstone.consumer.enums.Rooms;
 import com.capstone.consumer.messages.FlightCreatedMessage;
 import com.capstone.consumer.messages.FlightEnteredNoFlyZoneMessage;
 import com.capstone.consumer.messages.NoFlyZoneCreatedMessage;
 import com.capstone.consumer.servicehandler.FlightLocationService;
-import com.capstone.shared.FileHelper;
 import com.capstone.shared.bindings.CircularNoFlyZone;
 import com.capstone.shared.bindings.FlightInformationKafkaDto;
 import com.capstone.shared.bindings.PolygonNoFlyZone;

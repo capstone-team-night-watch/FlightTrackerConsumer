@@ -9,6 +9,7 @@ import org.locationtech.jts.geom.LineString;
 import jakarta.validation.constraints.NotNull;
 import com.capstone.shared.bindings.GeographicCoordinates3D;
 
+import java.util.Collections;
 import java.util.List;
 
 public class FlightInformation {
@@ -70,6 +71,14 @@ public class FlightInformation {
     private List<Double> checkPoints;
 
     private LineString geometry;
+
+    @Getter
+    @Setter
+    private  List<FlightCollision> flightCollisions;
+
+    @Getter
+    @Setter
+    private  List<FlightPathCollision> flightPathCollisions;
 
     public FlightInformation setCheckPoints(List<Double> checkPoints) {
         this.geometry = null;

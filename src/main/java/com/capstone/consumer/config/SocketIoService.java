@@ -2,15 +2,14 @@ package com.capstone.consumer.config;
 
 import com.capstone.consumer.enums.Messages;
 import com.capstone.consumer.enums.Rooms;
+import com.capstone.consumer.servicehandler.CollisionListenerService;
 import com.capstone.shared.bindings.BaseNoFlyZone;
-import com.capstone.shared.bindings.FlightInformationKafkaDto;
 import lombok.extern.slf4j.Slf4j;
 import com.capstone.consumer.messages.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import com.corundumstudio.socketio.listener.ConnectListener;
 import com.capstone.consumer.servicehandler.NoFlyZoneService;
-import com.capstone.consumer.servicehandler.FlightLocationService;
 import com.corundumstudio.socketio.SocketIOClient;
 import com.corundumstudio.socketio.SocketIOServer;
 import com.corundumstudio.socketio.listener.DataListener;
@@ -18,20 +17,22 @@ import com.corundumstudio.socketio.listener.DisconnectListener;
 
 import java.util.*;
 
-import static com.capstone.consumer.enums.Rooms.NO_FLY_ZONE_ROOM;
-
 @Slf4j
 @Component
 public class SocketIoService {
     private final SocketIOServer server;
 
     private final NoFlyZoneService noFlyZoneService;
-    private final FlightLocationService flightLocationService;
 
-    public SocketIoService(SocketIOServer server, NoFlyZoneService noFlyZoneService, FlightLocationService flightLocationService) {
+    private final CollisionListenerService collisionListenerService;
+
+    public SocketIoService(
+            SocketIOServer server,
+            NoFlyZoneService noFlyZoneService,
+            CollisionListenerService collisionListenerService) {
         this.server = server;
         this.noFlyZoneService = noFlyZoneService;
-        this.flightLocationService = flightLocationService;
+        this.collisionListenerService = collisionListenerService;
 
         server.addConnectListener(onConnected());
         server.addDisconnectListener(onDisconnected());
@@ -60,13 +61,6 @@ public class SocketIoService {
 
         server.addEventListener("join-rooms", JoinRoomPayload.class, handleJoinRoomRequest());
         server.addEventListener("leave-rooms", ExitRoomPayload.class, handleExitRoomRequest());
-    }
-
-    public void sendMessage(SocketMessageInterface socketMessage){
-        server.getRoomOperations(socketMessage.getRoom()).sendEvent(
-                socketMessage.getName(),
-                socketMessage
-        );
     }
 
     /**
@@ -102,10 +96,10 @@ public class SocketIoService {
      *
      * @param client client that should join no-fly-zone
      */
-    private void joinNoFlyZoneRoom(SocketIOClient client){
-        client.joinRoom(NO_FLY_ZONE_ROOM);
+    private void joinNoFlyZoneRoom(SocketIOClient client) {
+        client.joinRoom(Rooms.NO_FLY_ZONE_ROOM);
 
-        var currentNoFlyZone =  noFlyZoneService.getNoFlyZones();
+        var currentNoFlyZone = noFlyZoneService.getNoFlyZones();
 
         for (var baseNoFlyZone : currentNoFlyZone) {
             client.sendEvent("active-no-fly-zone", baseNoFlyZone);
@@ -117,10 +111,10 @@ public class SocketIoService {
      *
      * @param client client that should join the new lobby
      */
-    private void joinFlightLobby(SocketIOClient client){
+    private void joinFlightLobby(SocketIOClient client) {
         client.joinRoom(Rooms.FLIGHT_INFORMATION_LOBBY);
 
-        var activeFlights =  flightLocationService.getActiveFlight();
+        var activeFlights = collisionListenerService.getAllCurrentFlight();
 
         for (var activeFlight : activeFlights) {
             client.sendEvent("active-flight", activeFlight);
@@ -128,19 +122,17 @@ public class SocketIoService {
     }
 
 
-    /** Handle the request from the client to join a room */
+    /**
+     * Handle the request from the client to join a room
+     */
     private DataListener<JoinRoomPayload> handleJoinRoomRequest() {
         return (client, data, ackSender) -> {
             for (String room : data.getRooms()) {
-                if (room.equals(Rooms.FLIGHT_INFORMATION_LOBBY)){
+                if (room.equals(Rooms.FLIGHT_INFORMATION_LOBBY)) {
                     joinFlightLobby(client);
-                }
-
-                else if (room.equals(NO_FLY_ZONE_ROOM)){
+                } else if (room.equals(Rooms.NO_FLY_ZONE_ROOM)) {
                     joinNoFlyZoneRoom(client);
-                }
-
-                else client.joinRoom(room);
+                } else client.joinRoom(room);
             }
 
             log.info("Client[{}] - Joined rooms: {}", client.getSessionId().toString(), data.getRooms());
@@ -153,7 +145,9 @@ public class SocketIoService {
         };
     }
 
-    /** Handle the request from the client to leave a room */
+    /**
+     * Handle the request from the client to leave a room
+     */
     private DataListener<ExitRoomPayload> handleExitRoomRequest() {
         return (client, data, ackSender) -> {
             for (String room : data.getRooms()) {
