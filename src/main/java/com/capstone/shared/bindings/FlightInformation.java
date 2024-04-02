@@ -21,6 +21,11 @@ public class FlightInformation {
      * Current location of the plane
      */
     @NotNull
+    private GeographicCoordinates3D location;
+
+    /**
+     * Known actual flight path of the plane
+     */
     private List<GeographicCoordinates3D> realFlightPath;
 
 

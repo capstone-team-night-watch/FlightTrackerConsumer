@@ -2,9 +2,12 @@ package com.capstone.consumer.servicehandler;
 
 
 import com.capstone.shared.bindings.FlightInformation;
+import com.capstone.shared.bindings.GeographicCoordinates3D;
+
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -24,15 +27,22 @@ public class FlightLocationService {
                 .findFirst();
 
         if (existingFlightLocation.isEmpty()) {
-            flightInformationStore.add(newFlightLocation);
+            GeographicCoordinates3D location = newFlightLocation.getLocation();
+            flightInformationStore.add(newFlightLocation.setRealFlightPath(Arrays.asList(new GeographicCoordinates3D()
+                                                                                .setAltitude(location.getAltitude())
+                                                                                .setLatitude(location.getLatitude())
+                                                                                .setLongitude(location.getLongitude()) )
+                                                                        ));
             return true;
         }
+
 
         existingFlightLocation.get()
                 .setHeading(newFlightLocation.getHeading())
                 .setFlightId(newFlightLocation.getFlightId())
                 .setLocation(newFlightLocation.getLocation())
-                .setGroundSpeed(newFlightLocation.getGroundSpeed());
+                .setGroundSpeed(newFlightLocation.getGroundSpeed())
+                .getRealFlightPath().add(newFlightLocation.getLocation());
 
         return false;
     }

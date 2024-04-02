@@ -6,7 +6,6 @@ import com.capstone.consumer.enums.Messages;
 import com.capstone.consumer.enums.Rooms;
 import com.capstone.consumer.messages.NoFlyZoneCreatedMessage;
 import com.capstone.consumer.servicehandler.FlightLocationService;
-import com.capstone.shared.FileHelper;
 import com.capstone.shared.bindings.CircularNoFlyZone;
 import com.capstone.shared.bindings.FlightInformation;
 import com.capstone.shared.bindings.PolygonNoFlyZone;
@@ -54,7 +53,6 @@ public class KafkaConsumerTest {
 
     @Test
     public void listenToRectangleNoFlyZone_ShouldNotifyWebSocket() throws IOException {
-        var testCircularNoFlyZone = FileHelper.readFile("test-circular-no-fly-zone.json");
 
         consumer.handleCircularNoFlyZone("""
                 {
