@@ -3,6 +3,7 @@ package com.capstone.consumer.servicehandler;
 
 import com.capstone.shared.bindings.FlightInformation;
 import com.capstone.shared.bindings.GeographicCoordinates3D;
+import com.google.common.collect.Lists;
 
 import org.springframework.stereotype.Service;
 
@@ -29,7 +30,7 @@ public class FlightLocationService {
         if (existingFlightLocation.isEmpty()) {
             GeographicCoordinates3D location = newFlightLocation.getLocation();
             flightInformationStore.add(newFlightLocation
-                                            .setRealFlightPath(Arrays.asList(new GeographicCoordinates3D()
+                                            .setRealFlightPath(Lists.newArrayList(new GeographicCoordinates3D()
                                                                                 .setAltitude(location.getAltitude())
                                                                                 .setLatitude(location.getLatitude())
                                                                                 .setLongitude(location.getLongitude()) )
