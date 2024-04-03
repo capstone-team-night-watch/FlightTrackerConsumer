@@ -28,11 +28,13 @@ public class FlightLocationService {
 
         if (existingFlightLocation.isEmpty()) {
             GeographicCoordinates3D location = newFlightLocation.getLocation();
-            flightInformationStore.add(newFlightLocation.setRealFlightPath(Arrays.asList(new GeographicCoordinates3D()
+            flightInformationStore.add(newFlightLocation
+                                            .setRealFlightPath(Arrays.asList(new GeographicCoordinates3D()
                                                                                 .setAltitude(location.getAltitude())
                                                                                 .setLatitude(location.getLatitude())
                                                                                 .setLongitude(location.getLongitude()) )
-                                                                        ));
+                                                                        )
+                                        );
             return true;
         }
 
