@@ -15,7 +15,7 @@ public abstract class BaseNoFlyZone {
     @NotEmpty
     protected String notamNumber;
 
-    protected Date CreatedAt;
+    protected Date createdAt;
 
     protected String description;
 

@@ -1,16 +1,16 @@
 package com.capstone.shared.bindings;
 
+import lombok.Data;
 import com.capstone.consumer.utils.GeoUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.validation.constraints.NotNull;
-import lombok.Data;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Geometry;
 
 import java.util.List;
 
 @Data
-public class FlightInformation {
+public class FlightInformationKafkaDto {
     /**
      * Unique identifier for the flight
      */
@@ -47,18 +47,7 @@ public class FlightInformation {
     private Airport destination;
 
     /**
-     * List of checkpoints that the flight must pass through. Only specified on initial flight creation or on update
+     * List of checkpoints that the flight must pass through. Only specified on initial flight creation or on update in lat long format
      */
-    private List<GeographicCoordinates2D> checkPoints;
-
-    @JsonIgnore
-    public Geometry getFlightPathGeometry() {
-        var checkpoints = this.checkPoints
-                .stream()
-                .map(checkPoint -> new Coordinate(checkPoint.getLatitude(), checkPoint.getLongitude()))
-                .toList()
-                .toArray(new Coordinate[0]);
-
-        return GeoUtils.geometryFactory.createLineString(checkpoints);
-    }
+    private List<Double> checkPoints;
 }
