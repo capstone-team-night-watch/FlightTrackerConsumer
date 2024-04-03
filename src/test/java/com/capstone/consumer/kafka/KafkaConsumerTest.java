@@ -2,6 +2,7 @@ package com.capstone.consumer.kafka;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.capstone.consumer.bindings.FlightInformation;
 import com.capstone.consumer.enums.Messages;
 import com.capstone.consumer.enums.Rooms;
 import com.capstone.consumer.messages.FlightCreatedMessage;
