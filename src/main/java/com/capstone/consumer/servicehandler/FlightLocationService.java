@@ -1,10 +1,10 @@
 package com.capstone.consumer.servicehandler;
 
 
-import com.capstone.shared.bindings.FlightInformation;
 import com.capstone.shared.bindings.GeographicCoordinates3D;
 import com.google.common.collect.Lists;
 
+import com.capstone.shared.bindings.FlightInformationKafkaDto;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -13,15 +13,15 @@ import java.util.List;
 
 @Service
 public class FlightLocationService {
-    private final List<FlightInformation> flightInformationStore = Collections.synchronizedList(new ArrayList<FlightInformation>());
+    private final List<FlightInformationKafkaDto> flightInformationStore = Collections.synchronizedList(new ArrayList<FlightInformationKafkaDto>());
 
 
     /**
      * Updates flight information if it already exists or create a new one if not
+     *
      * @param newFlightLocation flight information to be updated or inserted
-     * @return return true if created and flase if not
      */
-    public boolean upsertFlightInformation(FlightInformation newFlightLocation) {
+    public void upsertFlightInformation(FlightInformationKafkaDto newFlightLocation) {
         var existingFlightLocation = flightInformationStore.stream()
                 .filter(flightLocation -> flightLocation.getFlightId().equals(newFlightLocation.getFlightId()))
                 .findFirst();
@@ -35,7 +35,7 @@ public class FlightLocationService {
                                                                                 .setLongitude(location.getLongitude()) )
                                                                         )
                                         );
-            return true;
+            return;
         }
 
 
@@ -46,10 +46,9 @@ public class FlightLocationService {
                 .setGroundSpeed(newFlightLocation.getGroundSpeed())
                 .getRealFlightPath().add(newFlightLocation.getLocation());
 
-        return false;
     }
 
-    public List<FlightInformation> getActiveFlight() {
+    public List<FlightInformationKafkaDto> getActiveFlight() {
         return flightInformationStore;
     }
 }

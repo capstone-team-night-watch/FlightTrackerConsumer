@@ -1,30 +1,31 @@
 package com.capstone.consumer.messages;
 
+import com.capstone.consumer.bindings.FlightInformation;
+import com.capstone.consumer.utils.StringUtils;
 import com.capstone.shared.bindings.BaseNoFlyZone;
-import com.capstone.shared.bindings.FlightInformation;
+import com.capstone.shared.bindings.FlightInformationKafkaDto;
 import lombok.Getter;
 
-public class FlightEnteredNoFlyZoneMessage implements SocketMessageInterface{
+public class FlightEnteredNoFlyZoneMessage implements SocketMessageInterface {
     @Getter
     private final BaseNoFlyZone baseNoFlyZone;
 
     @Getter
     private final FlightInformation flightInformation;
 
-
-    public FlightEnteredNoFlyZoneMessage(FlightInformation flightInformation, BaseNoFlyZone baseNoFlyZone)  {
+    public FlightEnteredNoFlyZoneMessage(FlightInformation flightInformation, BaseNoFlyZone baseNoFlyZone) {
         this.baseNoFlyZone = baseNoFlyZone;
         this.flightInformation = flightInformation;
     }
 
     @Override
     public String getName() {
-        return "flight-entered-no-fly-zone-message";
+        return StringUtils.getMessageName(FlightEnteredNoFlyZoneMessage.class);
     }
 
     @Override
     public String getRoom() {
-        return this.getFlightInformation().getFlightId();
+        return "flight-" + this.getFlightInformation().getFlightId();
     }
 
     @Override

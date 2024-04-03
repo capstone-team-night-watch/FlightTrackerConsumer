@@ -3,7 +3,7 @@ package com.capstone.consumer.config;
 import com.capstone.consumer.enums.Messages;
 import com.capstone.consumer.enums.Rooms;
 import com.capstone.shared.bindings.BaseNoFlyZone;
-import com.capstone.shared.bindings.FlightInformation;
+import com.capstone.shared.bindings.FlightInformationKafkaDto;
 import lombok.extern.slf4j.Slf4j;
 import com.capstone.consumer.messages.*;
 import org.springframework.http.HttpStatus;
@@ -60,28 +60,6 @@ public class SocketIoService {
 
         server.addEventListener("join-rooms", JoinRoomPayload.class, handleJoinRoomRequest());
         server.addEventListener("leave-rooms", ExitRoomPayload.class, handleExitRoomRequest());
-    }
-
-    /**
-     * Notify the client that a flight has intersected with a no-fly zone
-     *
-     * @param flightInformation the flight information
-     */
-    public void notifyFlightLocationUpdated(FlightInformation flightInformation) {
-        server.getRoomOperations(flightInformation.getFlightId()).sendEvent(
-                Messages.FLIGHT_LOCATION_UPDATED,
-                new FlightLocationUpdatedMessage()
-                        .setFlightInformation(flightInformation)
-        );
-
-        var created = flightLocationService.upsertFlightInformation(flightInformation);
-
-        if (created){
-            server.getRoomOperations(Rooms.FLIGHT_INFORMATION_LOBBY).sendEvent(
-                    Messages.FLIGHT_CREATED,
-                    flightInformation
-            );
-        }
     }
 
     public void sendMessage(SocketMessageInterface socketMessage){

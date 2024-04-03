@@ -1,10 +1,11 @@
 package com.capstone.consumer.messages;
 
+import com.capstone.consumer.bindings.FlightInformation;
+import com.capstone.consumer.utils.StringUtils;
 import lombok.Getter;
 import com.capstone.shared.bindings.BaseNoFlyZone;
-import com.capstone.shared.bindings.FlightInformation;
 
-public class PathCollisionWithNoFlyZoneMessage implements SocketMessageInterface{
+public class FlightPathIntersectWithNoFlyZoneMessage implements SocketMessageInterface{
     @Getter
     private final BaseNoFlyZone baseNoFlyZone;
 
@@ -12,14 +13,14 @@ public class PathCollisionWithNoFlyZoneMessage implements SocketMessageInterface
     private final FlightInformation flightInformation;
 
 
-    public PathCollisionWithNoFlyZoneMessage(FlightInformation flightInformation,BaseNoFlyZone baseNoFlyZone)  {
+    public FlightPathIntersectWithNoFlyZoneMessage(FlightInformation flightInformation, BaseNoFlyZone baseNoFlyZone)  {
         this.baseNoFlyZone = baseNoFlyZone;
         this.flightInformation = flightInformation;
     }
 
     @Override
     public String getName() {
-        return "path-collision-with-no-fly-zone";
+        return StringUtils.getMessageName(FlightPathIntersectWithNoFlyZoneMessage.class);
     }
 
     @Override

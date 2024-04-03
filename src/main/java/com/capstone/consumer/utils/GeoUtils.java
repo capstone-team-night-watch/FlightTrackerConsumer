@@ -1,7 +1,7 @@
 package com.capstone.consumer.utils;
 
+import com.capstone.consumer.bindings.FlightInformation;
 import com.capstone.shared.bindings.BaseNoFlyZone;
-import com.capstone.shared.bindings.FlightInformation;
 import com.capstone.shared.bindings.GeographicCoordinates2D;
 import org.geotools.geometry.jts.JTSFactoryFinder;
 import org.locationtech.jts.geom.Coordinate;
@@ -15,15 +15,19 @@ public class GeoUtils {
     private GeoUtils() {
     }
 
-    public static boolean flightIsIntersectingWithNoFlyZone(FlightInformation flightInformation, BaseNoFlyZone noFlyZone) {
-        var pathGeometry = flightInformation.getFlightPathGeometry();
+    public static Geometry getFlightIntersectionWithNoFlyZone(FlightInformation flightInformation, BaseNoFlyZone noFlyZone) {
+        var pathGeometry = flightInformation.getGeometry();
         var noFlyZoneGeometry = noFlyZone.getNoFlyZoneBoundariesGeometry();
 
-        return pathGeometry.intersects(noFlyZoneGeometry);
+        return pathGeometry.intersection(noFlyZoneGeometry);
     }
 
     public static boolean flightIsWithinNoFlyZone(FlightInformation flightInformation, BaseNoFlyZone noFlyZone) {
-        var pathGeometry = flightInformation.getFlightPathGeometry();
+        var pathGeometry = geometryFactory.createPoint(new Coordinate(
+                flightInformation.getLocation().getLatitude(),
+                flightInformation.getLocation().getLongitude()
+        ));
+
         var noFlyZoneGeometry = noFlyZone.getNoFlyZoneBoundariesGeometry();
 
         return pathGeometry.within(noFlyZoneGeometry);
