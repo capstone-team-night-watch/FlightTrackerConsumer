@@ -19,6 +19,11 @@ public class FlightInformationKafkaDto {
     @NotNull
     private GeographicCoordinates3D location;
 
+    /**
+     * Known actual flight path of the plane
+     */
+    private List<GeographicCoordinates3D> realFlightPath;
+
 
     /**
      * Describes the group speed of the plan in miles per second
