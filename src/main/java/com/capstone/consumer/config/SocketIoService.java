@@ -1,9 +1,7 @@
 package com.capstone.consumer.config;
 
-import com.capstone.consumer.enums.Messages;
 import com.capstone.consumer.enums.Rooms;
-import com.capstone.consumer.servicehandler.CollisionListenerService;
-import com.capstone.shared.bindings.BaseNoFlyZone;
+import com.capstone.consumer.servicehandler.LiveTrackingService;
 import lombok.extern.slf4j.Slf4j;
 import com.capstone.consumer.messages.*;
 import org.springframework.http.HttpStatus;
@@ -24,12 +22,12 @@ public class SocketIoService {
 
     private final NoFlyZoneService noFlyZoneService;
 
-    private final CollisionListenerService collisionListenerService;
+    private final LiveTrackingService collisionListenerService;
 
     public SocketIoService(
             SocketIOServer server,
             NoFlyZoneService noFlyZoneService,
-            CollisionListenerService collisionListenerService) {
+            LiveTrackingService collisionListenerService) {
         this.server = server;
         this.noFlyZoneService = noFlyZoneService;
         this.collisionListenerService = collisionListenerService;
@@ -62,25 +60,6 @@ public class SocketIoService {
         server.addEventListener("join-rooms", JoinRoomPayload.class, handleJoinRoomRequest());
         server.addEventListener("leave-rooms", ExitRoomPayload.class, handleExitRoomRequest());
     }
-
-    /**
-     * Notify the client that a new no-fly zone has been created
-     *
-     * @param noFlyZone information about the no-fly-zone that has just been created
-     */
-    public void notifyNoFlyZoneCreated(BaseNoFlyZone noFlyZone) {
-        server.getRoomOperations(Rooms.NO_FLY_ZONE_ROOM).sendEvent(
-                Messages.NO_FLY_ZONE_CREATED,
-                new NoFlyZoneCreatedMessage()
-                        .setNoFlyZoneId(noFlyZone.getId())
-                        .setNoFlyZone(noFlyZone)
-                        .setType(noFlyZone.getType())
-                        .setNoFlyZoneMessage("A new more place where you don't get to fly")
-        );
-
-        noFlyZoneService.storeNoFlyZone(noFlyZone);
-    }
-
 
     private ConnectListener onConnected() {
         return client -> log.info("Socket ID[{}]  Connected to socket", client.getSessionId().toString());

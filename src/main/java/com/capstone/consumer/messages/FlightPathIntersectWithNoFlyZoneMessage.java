@@ -7,14 +7,14 @@ import com.capstone.shared.bindings.BaseNoFlyZone;
 
 public class FlightPathIntersectWithNoFlyZoneMessage implements SocketMessageInterface{
     @Getter
-    private final BaseNoFlyZone baseNoFlyZone;
+    private final BaseNoFlyZone noFlyZone;
 
     @Getter
     private final FlightInformation flightInformation;
 
 
     public FlightPathIntersectWithNoFlyZoneMessage(FlightInformation flightInformation, BaseNoFlyZone baseNoFlyZone)  {
-        this.baseNoFlyZone = baseNoFlyZone;
+        this.noFlyZone = baseNoFlyZone;
         this.flightInformation = flightInformation;
     }
 

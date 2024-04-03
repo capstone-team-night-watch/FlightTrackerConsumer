@@ -9,7 +9,6 @@ import org.locationtech.jts.geom.LineString;
 import jakarta.validation.constraints.NotNull;
 import com.capstone.shared.bindings.GeographicCoordinates3D;
 
-import java.util.Collections;
 import java.util.List;
 
 public class FlightInformation {

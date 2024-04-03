@@ -3,6 +3,7 @@ package com.capstone.consumer;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.lang.NonNullApi;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -19,6 +20,7 @@ public class Application {
 
     /**
      * Configurer to set up the Cors environment
+     *
      * @return a WebMvcConfigurer Object that is used by Spring when configuring the project
      */
     @Bean

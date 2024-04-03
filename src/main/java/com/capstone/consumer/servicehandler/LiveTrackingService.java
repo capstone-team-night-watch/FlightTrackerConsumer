@@ -4,23 +4,19 @@ import java.util.List;
 import java.util.ArrayList;
 
 import com.capstone.consumer.config.MessagingService;
+import com.capstone.consumer.messages.*;
 import org.webjars.NotFoundException;
-import org.locationtech.jts.geom.Geometry;
 import com.capstone.consumer.utils.GeoUtils;
 import org.springframework.stereotype.Component;
 import com.capstone.shared.bindings.BaseNoFlyZone;
 import com.capstone.consumer.bindings.FlightCollision;
 import com.capstone.consumer.bindings.FlightInformation;
 import com.capstone.consumer.bindings.FlightPathCollision;
-import com.capstone.consumer.messages.FlightCreatedMessage;
 import com.capstone.shared.bindings.FlightInformationKafkaDto;
-import com.capstone.consumer.messages.FlightLocationUpdatedMessage;
-import com.capstone.consumer.messages.FlightEnteredNoFlyZoneMessage;
-import com.capstone.consumer.messages.FlightPathIntersectWithNoFlyZoneMessage;
 
 
 @Component
-public class CollisionListenerService {
+public class LiveTrackingService {
     private final List<BaseNoFlyZone> noFlyZones = new ArrayList<>();
 
     private final List<FlightInformation> flights = new ArrayList<>();
@@ -34,18 +30,19 @@ public class CollisionListenerService {
         return noFlyZones;
     }
 
-    public CollisionListenerService(MessagingService messagingService) {
+    public LiveTrackingService(MessagingService messagingService) {
         this.messagingService = messagingService;
     }
 
     public void trackNewNoFlyZone(BaseNoFlyZone noFlyZone) {
         noFlyZones.add(noFlyZone);
+        messagingService.sendMessage(new NoFlyZoneCreatedMessage(noFlyZone));
 
         for (var flight : flights) {
             var intersection = GeoUtils.getFlightIntersectionWithNoFlyZone(flight, noFlyZone);
 
             if (!intersection.isEmpty()) {
-                handleFlightPathCollision(flight, noFlyZone, intersection);
+                handleFlightPathCollision(flight, noFlyZone);
             }
         }
     }
@@ -154,12 +151,12 @@ public class CollisionListenerService {
             }
 
             if (!intersection.isEmpty()) {
-                handleFlightPathCollision(flightInformation, noFlyZone, intersection);
+                handleFlightPathCollision(flightInformation, noFlyZone);
             }
         }
     }
 
-    private void handleFlightPathCollision(FlightInformation flightInformation, BaseNoFlyZone noFlyZone, Geometry intersection) {
+    private void handleFlightPathCollision(FlightInformation flightInformation, BaseNoFlyZone noFlyZone) {
         var message = new FlightPathIntersectWithNoFlyZoneMessage(flightInformation, noFlyZone);
         messagingService.sendMessage(message);
     }
