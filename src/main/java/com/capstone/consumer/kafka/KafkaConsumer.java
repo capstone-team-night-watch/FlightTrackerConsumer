@@ -1,10 +1,9 @@
 package com.capstone.consumer.kafka;
 
-import com.capstone.consumer.config.SocketIoService;
-import com.capstone.consumer.servicehandler.CollisionListenerService;
+import com.capstone.shared.JsonHelper;
+import com.capstone.consumer.servicehandler.LiveTrackingService;
 import com.capstone.consumer.servicehandler.FlightLocationService;
 import com.capstone.consumer.servicehandler.NoFlyZoneService;
-import com.capstone.shared.JsonHelper;
 import com.capstone.shared.bindings.CircularNoFlyZone;
 import com.capstone.shared.bindings.FlightInformationKafkaDto;
 import com.capstone.shared.bindings.PolygonNoFlyZone;
@@ -19,25 +18,18 @@ import org.springframework.stereotype.Component;
 @Component
 public class KafkaConsumer {
     private static final String CONSUMER_ID = "flight-tracker-consumer";
-    private final SocketIoService socketIoService;
-
-    /**
-     * Template provided by spring to facilitate sending messages to a receiving source. This one is used to send to our web socket endpoint
-     */
 
     private final NoFlyZoneService noFlyZoneService;
 
     private final FlightLocationService flightLocationService;
 
-    private final CollisionListenerService collisionListenerService;
+    private final LiveTrackingService collisionListenerService;
 
     public KafkaConsumer(
-            SocketIoService socketIoService,
             NoFlyZoneService noFlyZoneService,
             FlightLocationService flightLocationService,
-            CollisionListenerService collisionListenerService
+            LiveTrackingService collisionListenerService
     ) {
-        this.socketIoService = socketIoService;
         this.noFlyZoneService = noFlyZoneService;
         this.flightLocationService = flightLocationService;
         this.collisionListenerService = collisionListenerService;
@@ -55,7 +47,6 @@ public class KafkaConsumer {
         var noFlyZone = optionalNoFlyZone.get();
 
         noFlyZoneService.storeNoFlyZone(noFlyZone);
-        socketIoService.notifyNoFlyZoneCreated(noFlyZone);
         collisionListenerService.trackNewNoFlyZone(noFlyZone);
     }
 
@@ -72,7 +63,6 @@ public class KafkaConsumer {
 
 
         noFlyZoneService.storeNoFlyZone(noFlyZone);
-        socketIoService.notifyNoFlyZoneCreated(noFlyZone);
         collisionListenerService.trackNewNoFlyZone(noFlyZone);
     }
 
@@ -88,7 +78,6 @@ public class KafkaConsumer {
         var flightInformation = optionalFlightInformation.get();
 
         flightLocationService.upsertFlightInformation(flightInformation);
-
         collisionListenerService.upsertFlightInformation(flightInformation);
     }
 }

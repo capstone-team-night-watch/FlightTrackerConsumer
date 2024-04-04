@@ -1,11 +1,7 @@
 package com.capstone.shared.bindings;
 
 import lombok.Data;
-import com.capstone.consumer.utils.GeoUtils;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.validation.constraints.NotNull;
-import org.locationtech.jts.geom.Coordinate;
-import org.locationtech.jts.geom.Geometry;
 
 import java.util.List;
 

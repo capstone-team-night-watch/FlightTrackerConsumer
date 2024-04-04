@@ -71,6 +71,14 @@ public class FlightInformation {
 
     private LineString geometry;
 
+    @Getter
+    @Setter
+    private  List<FlightCollision> flightCollisions;
+
+    @Getter
+    @Setter
+    private  List<FlightPathCollision> flightPathCollisions;
+
     public FlightInformation setCheckPoints(List<Double> checkPoints) {
         this.geometry = null;
         this.checkPoints = checkPoints;
