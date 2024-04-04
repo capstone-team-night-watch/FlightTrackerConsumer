@@ -1,6 +1,0 @@
-var searchData=
-[
-  ['addellipsoidnoflyzone_0',['addEllipsoidNoFlyZone',['../classcom_1_1capstone_1_1consumer_1_1controllers_1_1NoFlyZoneController.html#adb61b5c8e475d39a9389a30b09f28c14',1,'com.capstone.consumer.controllers.NoFlyZoneController.addEllipsoidNoFlyZone()'],['../classcom_1_1capstone_1_1consumer_1_1repository_1_1Repository.html#aa3563afba58878ed83bf7cd327c545bd',1,'com.capstone.consumer.repository.Repository.addEllipsoidNoFlyZone()']]],
-  ['addpolygonnoflyzone_1',['addPolygonNoFlyZone',['../classcom_1_1capstone_1_1consumer_1_1controllers_1_1NoFlyZoneController.html#a0accee3de25e2e69b3e5623f537a46ae',1,'com.capstone.consumer.controllers.NoFlyZoneController.addPolygonNoFlyZone()'],['../classcom_1_1capstone_1_1consumer_1_1repository_1_1Repository.html#a87f932ff4f5148ed4c8d5d3967e8b1c3',1,'com.capstone.consumer.repository.Repository.addPolygonNoFlyZone()']]],
-  ['addrectanglenoflyzone_2',['addRectangleNoFlyZone',['../classcom_1_1capstone_1_1consumer_1_1controllers_1_1NoFlyZoneController.html#ae807c75f77040eb9696ec0b2a1845b35',1,'com.capstone.consumer.controllers.NoFlyZoneController.addRectangleNoFlyZone()'],['../classcom_1_1capstone_1_1consumer_1_1repository_1_1Repository.html#a4de153926afd7cfbae732d8e01c58397',1,'com.capstone.consumer.repository.Repository.addRectangleNoFlyZone()']]]
-];
