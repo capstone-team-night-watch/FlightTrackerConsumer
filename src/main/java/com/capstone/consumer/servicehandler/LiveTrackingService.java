@@ -13,6 +13,8 @@ import com.capstone.consumer.bindings.FlightCollision;
 import com.capstone.consumer.bindings.FlightInformation;
 import com.capstone.consumer.bindings.FlightPathCollision;
 import com.capstone.shared.bindings.FlightInformationKafkaDto;
+import com.capstone.shared.bindings.GeographicCoordinates3D;
+import com.google.common.collect.Lists;
 
 
 @Component
@@ -66,12 +68,20 @@ public class LiveTrackingService {
      * @param flightInformationDto information about the new flight that has been created
      */
     public void createInternalFlight(FlightInformationKafkaDto flightInformationDto) {
+        GeographicCoordinates3D location = flightInformationDto.getLocation();
         var newFlightInformation = new FlightInformation()
                 .setFlightId(flightInformationDto.getFlightId())
                 .setLocation(flightInformationDto.getLocation())
                 .setGroundSpeed(flightInformationDto.getGroundSpeed())
                 .setHeading(flightInformationDto.getHeading())
-                .setCheckPoints(flightInformationDto.getCheckPoints());
+                .setCheckPoints(flightInformationDto.getCheckPoints())
+                .setSource(flightInformationDto.getSource())
+                .setDestination(flightInformationDto.getDestination())
+                .setRealFlightPath(Lists.newArrayList(new GeographicCoordinates3D()
+                                                        .setAltitude(location.getAltitude())
+                                                        .setLatitude(location.getLatitude())
+                                                        .setLongitude(location.getLongitude()) )
+                                                );
 
         this.flights.add(newFlightInformation);
 
@@ -99,7 +109,8 @@ public class LiveTrackingService {
         }
 
         if (flightInformationKafkaDto.getLocation() != null) {
-            targetFlight.get().setLocation(flightInformationKafkaDto.getLocation());
+            targetFlight.get().setLocation(flightInformationKafkaDto.getLocation())
+                            .getRealFlightPath().add(flightInformationKafkaDto.getLocation());
             messagingService.sendMessage(new FlightLocationUpdatedMessage(targetFlight.get()));
 
             verityFlightIsInNoFlyZone(targetFlight.get());
@@ -159,5 +170,9 @@ public class LiveTrackingService {
     private void handleFlightPathCollision(FlightInformation flightInformation, BaseNoFlyZone noFlyZone) {
         var message = new FlightPathIntersectWithNoFlyZoneMessage(flightInformation, noFlyZone);
         messagingService.sendMessage(message);
+    }
+
+    public List<FlightInformation> getActiveFlight() {
+        return flights;
     }
 }
