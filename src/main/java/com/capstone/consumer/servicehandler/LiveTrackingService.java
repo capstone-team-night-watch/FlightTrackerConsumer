@@ -13,6 +13,8 @@ import com.capstone.consumer.bindings.FlightCollision;
 import com.capstone.consumer.bindings.FlightInformation;
 import com.capstone.consumer.bindings.FlightPathCollision;
 import com.capstone.shared.bindings.FlightInformationKafkaDto;
+import com.capstone.shared.bindings.GeographicCoordinates3D;
+import com.google.common.collect.Lists;
 
 
 @Component
@@ -66,6 +68,7 @@ public class LiveTrackingService {
      * @param flightInformationDto information about the new flight that has been created
      */
     public void createInternalFlight(FlightInformationKafkaDto flightInformationDto) {
+        GeographicCoordinates3D location = flightInformationDto.getLocation();
         var newFlightInformation = new FlightInformation()
                 .setSource(flightInformationDto.getSource())
                 .setHeading(flightInformationDto.getHeading())
@@ -73,7 +76,15 @@ public class LiveTrackingService {
                 .setLocation(flightInformationDto.getLocation())
                 .setSource(flightInformationDto.getDestination())
                 .setGroundSpeed(flightInformationDto.getGroundSpeed())
-                .setCheckPoints(flightInformationDto.getCheckPoints());
+                .setHeading(flightInformationDto.getHeading())
+                .setCheckPoints(flightInformationDto.getCheckPoints())
+                .setSource(flightInformationDto.getSource())
+                .setDestination(flightInformationDto.getDestination())
+                .setRealFlightPath(Lists.newArrayList(new GeographicCoordinates3D()
+                                                        .setAltitude(location.getAltitude())
+                                                        .setLatitude(location.getLatitude())
+                                                        .setLongitude(location.getLongitude()) )
+                                                );
 
         this.flights.add(newFlightInformation);
 
@@ -168,5 +179,9 @@ public class LiveTrackingService {
     private void handleFlightPathCollision(FlightInformation flightInformation, BaseNoFlyZone noFlyZone) {
         var message = new FlightPathIntersectWithNoFlyZoneMessage(flightInformation, noFlyZone);
         messagingService.sendMessage(message);
+    }
+
+    public List<FlightInformation> getActiveFlight() {
+        return flights;
     }
 }

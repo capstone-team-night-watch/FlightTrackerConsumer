@@ -8,9 +8,8 @@ import com.capstone.consumer.enums.Rooms;
 import com.capstone.consumer.messages.FlightCreatedMessage;
 import com.capstone.consumer.messages.FlightEnteredNoFlyZoneMessage;
 import com.capstone.consumer.messages.NoFlyZoneCreatedMessage;
-import com.capstone.consumer.servicehandler.FlightLocationService;
+import com.capstone.consumer.servicehandler.LiveTrackingService;
 import com.capstone.shared.bindings.CircularNoFlyZone;
-import com.capstone.shared.bindings.FlightInformationKafkaDto;
 import com.capstone.shared.bindings.PolygonNoFlyZone;
 import com.corundumstudio.socketio.SingleRoomBroadcastOperations;
 import com.corundumstudio.socketio.SocketIOServer;
@@ -46,7 +45,7 @@ public class KafkaConsumerTest {
     private SingleRoomBroadcastOperations singleRoomBroadcastOperations;
 
     @Autowired
-    private FlightLocationService flightLocationService;
+    private LiveTrackingService flightLocationService;
 
     @Before
     public void setUp() {
@@ -183,7 +182,7 @@ public class KafkaConsumerTest {
         var flightInformation = flightLocationService.getActiveFlight();
 
         assertThat(flightInformation)
-                .extracting(FlightInformationKafkaDto::getFlightId)
+                .extracting(FlightInformation::getFlightId)
                 .contains("9999");
     }
 
@@ -223,7 +222,7 @@ public class KafkaConsumerTest {
         var flightInformation = flightLocationService.getActiveFlight();
 
         assertThat(flightInformation)
-                .extracting(FlightInformationKafkaDto::getFlightId)
+                .extracting(FlightInformation::getFlightId)
                 .contains("9999");
 
         assertEquals("JFK", flightInformation.get(0).getSource().getIcaoCode());

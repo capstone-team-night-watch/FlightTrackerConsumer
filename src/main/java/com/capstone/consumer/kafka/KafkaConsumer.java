@@ -2,13 +2,14 @@ package com.capstone.consumer.kafka;
 
 import com.capstone.shared.JsonHelper;
 import com.capstone.consumer.servicehandler.LiveTrackingService;
-import com.capstone.consumer.servicehandler.FlightLocationService;
 import com.capstone.consumer.servicehandler.NoFlyZoneService;
 import com.capstone.shared.bindings.CircularNoFlyZone;
 import com.capstone.shared.bindings.FlightInformationKafkaDto;
 import com.capstone.shared.bindings.PolygonNoFlyZone;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.kafka.annotation.TopicPartition;
+import org.springframework.kafka.annotation.PartitionOffset;
 import org.springframework.stereotype.Component;
 
 /**
@@ -21,22 +22,23 @@ public class KafkaConsumer {
 
     private final NoFlyZoneService noFlyZoneService;
 
-    private final FlightLocationService flightLocationService;
-
     private final LiveTrackingService collisionListenerService;
 
     public KafkaConsumer(
             NoFlyZoneService noFlyZoneService,
-            FlightLocationService flightLocationService,
             LiveTrackingService collisionListenerService
     ) {
         this.noFlyZoneService = noFlyZoneService;
-        this.flightLocationService = flightLocationService;
         this.collisionListenerService = collisionListenerService;
     }
 
-    @KafkaListener(topics = "CircularNoFlyZone")
+    @KafkaListener(groupId = CONSUMER_ID, topicPartitions =
+                        { @TopicPartition(topic = "CircularNoFlyZone",
+                            partitions = "0",
+                            partitionOffsets = @PartitionOffset(partition = "*", initialOffset = "0"))
+                        })
     public void handleCircularNoFlyZone(String message) {
+        log.atInfo().log("Received message from Kafka.");
         var optionalNoFlyZone = JsonHelper.fromJson(message, CircularNoFlyZone.class);
 
         if (optionalNoFlyZone.isEmpty()) {
@@ -50,8 +52,13 @@ public class KafkaConsumer {
         collisionListenerService.trackNewNoFlyZone(noFlyZone);
     }
 
-    @KafkaListener(topics = "PolygonNoFlyZone")
+    @KafkaListener(groupId = CONSUMER_ID, topicPartitions =
+                        { @TopicPartition(topic = "PolygonNoFlyZone",
+                            partitions = "0",
+                            partitionOffsets = @PartitionOffset(partition = "*", initialOffset = "0"))
+                        })
     public void handlePolygonNoFlyZone(String message) {
+        log.atInfo().log("Received message from Kafka.");
         var optionalNoFlyZone = JsonHelper.fromJson(message, PolygonNoFlyZone.class);
 
         if (optionalNoFlyZone.isEmpty()) {
@@ -66,8 +73,13 @@ public class KafkaConsumer {
         collisionListenerService.trackNewNoFlyZone(noFlyZone);
     }
 
-    @KafkaListener(topics = "FlightLocationData")
+    @KafkaListener(groupId = CONSUMER_ID, topicPartitions =
+                        { @TopicPartition(topic = "FlightLocationData",
+                            partitions = "0",
+                            partitionOffsets = @PartitionOffset(partition = "*", initialOffset = "0"))
+                        })
     public void handleFlightUpdate(String message) {
+        log.atInfo().log("Received message from Kafka.");
         var optionalFlightInformation = JsonHelper.fromJson(message, FlightInformationKafkaDto.class);
 
         if (optionalFlightInformation.isEmpty()) {
@@ -77,7 +89,6 @@ public class KafkaConsumer {
 
         var flightInformation = optionalFlightInformation.get();
 
-        flightLocationService.upsertFlightInformation(flightInformation);
         collisionListenerService.upsertFlightInformation(flightInformation);
     }
 }
