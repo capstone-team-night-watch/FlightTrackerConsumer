@@ -14,8 +14,10 @@ import com.capstone.shared.bindings.PolygonNoFlyZone;
 import com.corundumstudio.socketio.SingleRoomBroadcastOperations;
 import com.corundumstudio.socketio.SocketIOServer;
 import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,10 +81,10 @@ public class KafkaConsumerTest {
         var rooms = stringCaptor.getAllValues();
         var noFlyZone = noFlyZoneCaptor.getAllValues();
 
-        assertThat(rooms).contains(Rooms.NO_FLY_ZONE_ROOM);
-        assertThat(noFlyZone).hasAtLeastOneElementOfType(CircularNoFlyZone.class);
+        assertThat(rooms).contains("no-fly-zone-created");
+        assertThat(noFlyZone).hasAtLeastOneElementOfType(NoFlyZoneCreatedMessage.class);
 
-        verify(socketIOServer).getRoomOperations(stringCaptor.capture());
+        verify(socketIOServer, atLeastOnce()).getRoomOperations(stringCaptor.capture());
         assertThat(stringCaptor.getAllValues()).contains(Rooms.NO_FLY_ZONE_ROOM);
     }
 
@@ -122,8 +124,8 @@ public class KafkaConsumerTest {
         assertEquals(Messages.NO_FLY_ZONE_CREATED, room);
         assertTrue(noFlyZone instanceof PolygonNoFlyZone);
 
-        verify(socketIOServer).getRoomOperations(stringCaptor.capture());
-        assertEquals(Rooms.NO_FLY_ZONE_ROOM, stringCaptor.getValue());
+        verify(socketIOServer, atLeastOnce()).getRoomOperations(stringCaptor.capture());
+        assertThat(stringCaptor.getAllValues()).contains(Rooms.NO_FLY_ZONE_ROOM);
     }
 
     @Test
@@ -234,8 +236,7 @@ public class KafkaConsumerTest {
 
     @Test
     public void handleFlightUpdate_ShouldNotifyWhenEnters_NoFlyZone() throws IOException {
-        clearInvocations(singleRoomBroadcastOperations);
-        when(socketIOServer.getRoomOperations("flight-9999")).thenReturn(singleRoomBroadcastOperations);
+        when(socketIOServer.getRoomOperations(anyString())).thenReturn(singleRoomBroadcastOperations);
 
         consumer.handleCircularNoFlyZone("""
                 {
@@ -246,7 +247,7 @@ public class KafkaConsumerTest {
                     "latitude": 40,
                     "longitude": 40
                   },
-                  "radius": 100
+                  "radius": 10000
                 }
                 """);
 

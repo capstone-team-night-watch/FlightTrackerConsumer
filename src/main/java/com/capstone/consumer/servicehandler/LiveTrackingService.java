@@ -143,8 +143,11 @@ public class LiveTrackingService {
         flightInformation.setFlightCollisions(new ArrayList<>());
 
         for (var noFlyZone : noFlyZones) {
-            if (!GeoUtils.flightIsWithinNoFlyZone(flightInformation, noFlyZone)) continue;
+            if (!GeoUtils.flightIsWithinNoFlyZone(flightInformation, noFlyZone)) {
+                continue;
+            }
 
+            handleFlightEnteredNoFlyZone(flightInformation, noFlyZone);
         }
     }
 
