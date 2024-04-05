@@ -25,7 +25,7 @@ public class FlightPathIntersectWithNoFlyZoneMessage implements SocketMessageInt
 
     @Override
     public String getRoom() {
-        return this.getFlightInformation().getFlightId();
+        return "flight-" + this.getFlightInformation().getFlightId();
     }
 
     @Override

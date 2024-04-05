@@ -67,10 +67,12 @@ public class LiveTrackingService {
      */
     public void createInternalFlight(FlightInformationKafkaDto flightInformationDto) {
         var newFlightInformation = new FlightInformation()
+                .setSource(flightInformationDto.getSource())
+                .setHeading(flightInformationDto.getHeading())
                 .setFlightId(flightInformationDto.getFlightId())
                 .setLocation(flightInformationDto.getLocation())
+                .setSource(flightInformationDto.getDestination())
                 .setGroundSpeed(flightInformationDto.getGroundSpeed())
-                .setHeading(flightInformationDto.getHeading())
                 .setCheckPoints(flightInformationDto.getCheckPoints());
 
         this.flights.add(newFlightInformation);
@@ -83,6 +85,7 @@ public class LiveTrackingService {
     }
 
     public void updateFlight(FlightInformationKafkaDto flightInformationKafkaDto) {
+
         var targetFlight = flights.stream()
                 .filter(x -> x.getFlightId().equals(flightInformationKafkaDto.getFlightId()))
                 .findFirst();
@@ -92,22 +95,28 @@ public class LiveTrackingService {
         }
 
         if (flightInformationKafkaDto.getCheckPoints() != null) {
+            targetFlight.get().setSource(flightInformationKafkaDto.getSource());
             targetFlight.get().setCheckPoints(flightInformationKafkaDto.getCheckPoints());
-            messagingService.sendMessage(new FlightLocationUpdatedMessage(targetFlight.get()));
+            targetFlight.get().setDestination(flightInformationKafkaDto.getDestination());
+
+            messagingService.sendMessage(new FlightPathUpdatedMessage(targetFlight.get()));
 
             verifyFlightPath(targetFlight.get());
         }
 
         if (flightInformationKafkaDto.getLocation() != null) {
+            targetFlight.get().setHeading(flightInformationKafkaDto.getHeading());
             targetFlight.get().setLocation(flightInformationKafkaDto.getLocation());
+            targetFlight.get().setGroundSpeed(flightInformationKafkaDto.getGroundSpeed());
+
             messagingService.sendMessage(new FlightLocationUpdatedMessage(targetFlight.get()));
 
             verityFlightIsInNoFlyZone(targetFlight.get());
         }
 
-        targetFlight.get()
-                .setDestination(flightInformationKafkaDto.getDestination())
-                .setHeading(flightInformationKafkaDto.getHeading());
+        if (flightInformationKafkaDto.getGroundSpeed() != null) {
+            targetFlight.get().setGroundSpeed(flightInformationKafkaDto.getGroundSpeed());
+        }
     }
 
     public void verityFlightIsInNoFlyZone(FlightInformation flightInformation) {

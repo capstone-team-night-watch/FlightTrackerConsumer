@@ -12,9 +12,17 @@ public class FlightLocationUpdatedMessage implements SocketMessageInterface {
     @Getter
     private final GeographicCoordinates3D newLocation;
 
+    @Getter
+    private final float heading;
+
+    @Getter
+    private final float groundSpeed;
+
     public FlightLocationUpdatedMessage(FlightInformation flightInformation) {
+        this.heading = flightInformation.getHeading();
         this.flightId = flightInformation.getFlightId();
         this.newLocation = flightInformation.getLocation();
+        this.groundSpeed = flightInformation.getGroundSpeed();
     }
 
     @Override
