@@ -1,5 +1,6 @@
 package com.capstone.consumer.bindings;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import com.capstone.consumer.utils.GeoUtils;
@@ -85,6 +86,7 @@ public class FlightInformation {
         return this;
     }
 
+    @JsonIgnore
     public LineString getGeometry() {
         if (this.geometry != null) {
             return this.geometry;

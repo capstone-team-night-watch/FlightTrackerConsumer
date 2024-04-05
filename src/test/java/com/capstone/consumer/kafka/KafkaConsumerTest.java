@@ -193,8 +193,8 @@ public class KafkaConsumerTest {
                          {
                            "location": {
                              "altitude": 1,
-                             "latitude": 1,
-                             "longitude": 1
+                             "latitude": 41,
+                             "longitude": 95 
                            },
                            "source": {
                              "icaoCode": "JFK",

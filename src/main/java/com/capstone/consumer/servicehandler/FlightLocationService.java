@@ -29,12 +29,12 @@ public class FlightLocationService {
         if (existingFlightLocation.isEmpty()) {
             GeographicCoordinates3D location = newFlightLocation.getLocation();
             flightInformationStore.add(newFlightLocation
-                                            .setRealFlightPath(Lists.newArrayList(new GeographicCoordinates3D()
-                                                                                .setAltitude(location.getAltitude())
-                                                                                .setLatitude(location.getLatitude())
-                                                                                .setLongitude(location.getLongitude()) )
-                                                                        )
-                                        );
+                    .setRealFlightPath(Lists.newArrayList(new GeographicCoordinates3D()
+                            .setAltitude(location.getAltitude())
+                            .setLatitude(location.getLatitude())
+                            .setLongitude(location.getLongitude()))
+                    )
+            );
             return;
         }
 
@@ -45,7 +45,6 @@ public class FlightLocationService {
                 .setLocation(newFlightLocation.getLocation())
                 .setGroundSpeed(newFlightLocation.getGroundSpeed())
                 .getRealFlightPath().add(newFlightLocation.getLocation());
-
     }
 
     public List<FlightInformationKafkaDto> getActiveFlight() {

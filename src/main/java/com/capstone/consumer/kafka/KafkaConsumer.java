@@ -35,7 +35,7 @@ public class KafkaConsumer {
         this.collisionListenerService = collisionListenerService;
     }
 
-    @KafkaListener(groupId = CONSUMER_ID, topics = "CircularNoFlyZone")
+    @KafkaListener(topics = "CircularNoFlyZone")
     public void handleCircularNoFlyZone(String message) {
         var optionalNoFlyZone = JsonHelper.fromJson(message, CircularNoFlyZone.class);
 
@@ -50,7 +50,7 @@ public class KafkaConsumer {
         collisionListenerService.trackNewNoFlyZone(noFlyZone);
     }
 
-    @KafkaListener(groupId = CONSUMER_ID, topics = "PolygonNoFlyZone")
+    @KafkaListener(topics = "PolygonNoFlyZone")
     public void handlePolygonNoFlyZone(String message) {
         var optionalNoFlyZone = JsonHelper.fromJson(message, PolygonNoFlyZone.class);
 
@@ -66,7 +66,7 @@ public class KafkaConsumer {
         collisionListenerService.trackNewNoFlyZone(noFlyZone);
     }
 
-    @KafkaListener(groupId = CONSUMER_ID, topics = "FlightLocationData")
+    @KafkaListener(topics = "FlightLocationData")
     public void handleFlightUpdate(String message) {
         var optionalFlightInformation = JsonHelper.fromJson(message, FlightInformationKafkaDto.class);
 
