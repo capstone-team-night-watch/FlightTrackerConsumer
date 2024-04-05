@@ -30,6 +30,14 @@ public class FlightInformation {
 
 
     /**
+     * Known actual flight path of the plane
+     */
+    @Getter
+    @Setter
+    private List<GeographicCoordinates3D> realFlightPath;
+
+
+    /**
      * Describes the group speed of the plan in miles per second
      */
     @Getter
