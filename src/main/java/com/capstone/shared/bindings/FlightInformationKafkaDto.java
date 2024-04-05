@@ -28,13 +28,13 @@ public class FlightInformationKafkaDto {
     /**
      * Describes the group speed of the plan in miles per second
      */
-    private float groundSpeed;
+    private Float groundSpeed;
 
 
     /**
      * Describes the general direction of the plane
      */
-    private float heading;
+    private Float heading;
 
 
     /**

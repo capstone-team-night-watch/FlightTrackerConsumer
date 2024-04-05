@@ -24,7 +24,7 @@ public class LiveTrackingService {
     private final List<FlightInformation> flights = new ArrayList<>();
     private final MessagingService messagingService;
 
-    public List<FlightInformation> getAllCurrentFlight() {
+    public List<FlightInformation> getAllActiveFlight() {
         return flights;
     }
 
@@ -45,6 +45,14 @@ public class LiveTrackingService {
 
             if (!intersection.isEmpty()) {
                 handleFlightPathCollision(flight, noFlyZone);
+            }
+        }
+
+        for (var flight : flights) {
+            var flightIsWithinNoFlyZone = GeoUtils.flightIsWithinNoFlyZone(flight, noFlyZone);
+
+            if (flightIsWithinNoFlyZone) {
+                handleFlightEnteredNoFlyZone(flight, noFlyZone);
             }
         }
     }
@@ -70,18 +78,21 @@ public class LiveTrackingService {
     public void createInternalFlight(FlightInformationKafkaDto flightInformationDto) {
         GeographicCoordinates3D location = flightInformationDto.getLocation();
         var newFlightInformation = new FlightInformation()
+                .setSource(flightInformationDto.getSource())
+                .setHeading(flightInformationDto.getHeading())
                 .setFlightId(flightInformationDto.getFlightId())
                 .setLocation(flightInformationDto.getLocation())
+                .setSource(flightInformationDto.getDestination())
                 .setGroundSpeed(flightInformationDto.getGroundSpeed())
                 .setHeading(flightInformationDto.getHeading())
                 .setCheckPoints(flightInformationDto.getCheckPoints())
                 .setSource(flightInformationDto.getSource())
                 .setDestination(flightInformationDto.getDestination())
                 .setRealFlightPath(Lists.newArrayList(new GeographicCoordinates3D()
-                                                        .setAltitude(location.getAltitude())
-                                                        .setLatitude(location.getLatitude())
-                                                        .setLongitude(location.getLongitude()) )
-                                                );
+                        .setAltitude(location.getAltitude())
+                        .setLatitude(location.getLatitude())
+                        .setLongitude(location.getLongitude()))
+                );
 
         this.flights.add(newFlightInformation);
 
@@ -93,6 +104,7 @@ public class LiveTrackingService {
     }
 
     public void updateFlight(FlightInformationKafkaDto flightInformationKafkaDto) {
+
         var targetFlight = flights.stream()
                 .filter(x -> x.getFlightId().equals(flightInformationKafkaDto.getFlightId()))
                 .findFirst();
@@ -102,45 +114,45 @@ public class LiveTrackingService {
         }
 
         if (flightInformationKafkaDto.getCheckPoints() != null) {
+            targetFlight.get().setSource(flightInformationKafkaDto.getSource());
             targetFlight.get().setCheckPoints(flightInformationKafkaDto.getCheckPoints());
-            messagingService.sendMessage(new FlightLocationUpdatedMessage(targetFlight.get()));
+            targetFlight.get().setDestination(flightInformationKafkaDto.getDestination());
+
+            messagingService.sendMessage(new FlightPathUpdatedMessage(targetFlight.get()));
 
             verifyFlightPath(targetFlight.get());
         }
 
         if (flightInformationKafkaDto.getLocation() != null) {
-            targetFlight.get().setLocation(flightInformationKafkaDto.getLocation())
-                            .getRealFlightPath().add(flightInformationKafkaDto.getLocation());
+            targetFlight.get().setHeading(flightInformationKafkaDto.getHeading());
+            targetFlight.get().setLocation(flightInformationKafkaDto.getLocation());
+            targetFlight.get().setGroundSpeed(flightInformationKafkaDto.getGroundSpeed());
+            targetFlight.get().getRealFlightPath().add(flightInformationKafkaDto.getLocation());
+
             messagingService.sendMessage(new FlightLocationUpdatedMessage(targetFlight.get()));
 
             verityFlightIsInNoFlyZone(targetFlight.get());
         }
 
-        targetFlight.get()
-                .setDestination(flightInformationKafkaDto.getDestination())
-                .setHeading(flightInformationKafkaDto.getHeading());
+        if (flightInformationKafkaDto.getGroundSpeed() != null) {
+            targetFlight.get().setGroundSpeed(flightInformationKafkaDto.getGroundSpeed());
+        }
     }
 
     public void verityFlightIsInNoFlyZone(FlightInformation flightInformation) {
         flightInformation.setFlightCollisions(new ArrayList<>());
 
         for (var noFlyZone : noFlyZones) {
-            if (!GeoUtils.flightIsWithinNoFlyZone(flightInformation, noFlyZone)) continue;
+            if (!GeoUtils.flightIsWithinNoFlyZone(flightInformation, noFlyZone)) {
+                continue;
+            }
 
-            var message = new FlightEnteredNoFlyZoneMessage(flightInformation, noFlyZone);
-
-            messagingService.sendMessage(message);
-
-            flightInformation.getFlightCollisions().add(
-                    new FlightCollision()
-                            .setFlightId(flightInformation.getFlightId())
-                            .setNoFlyZone(noFlyZone.getId())
-            );
+            handleFlightEnteredNoFlyZone(flightInformation, noFlyZone);
         }
     }
 
     /**
-     * Performs verification on the flight path to ensure that it is not colliding with any of the no fly zones that are being tracked
+     * Performs verification on the flight path to ensure that it is not colliding with any of the no-fly-zones that are being tracked
      *
      * @param flightInformation flight information that must be verified
      */
@@ -172,7 +184,16 @@ public class LiveTrackingService {
         messagingService.sendMessage(message);
     }
 
-    public List<FlightInformation> getActiveFlight() {
-        return flights;
+    private void handleFlightEnteredNoFlyZone(FlightInformation flightInformation, BaseNoFlyZone noFlyZone) {
+        var message = new FlightEnteredNoFlyZoneMessage(flightInformation, noFlyZone);
+
+        messagingService.sendMessage(message);
+
+        flightInformation.getFlightCollisions().add(
+                new FlightCollision()
+                        .setFlightId(flightInformation.getFlightId())
+                        .setNoFlyZone(noFlyZone.getId())
+        );
     }
+
 }
