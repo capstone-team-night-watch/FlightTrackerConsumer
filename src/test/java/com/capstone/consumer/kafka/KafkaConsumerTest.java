@@ -179,7 +179,7 @@ public class KafkaConsumerTest {
                 """
         );
 
-        var flightInformation = flightLocationService.getActiveFlight();
+        var flightInformation = flightLocationService.getAllActiveFlight();
 
         assertThat(flightInformation)
                 .extracting(FlightInformation::getFlightId)
@@ -219,7 +219,7 @@ public class KafkaConsumerTest {
                 """
         );
 
-        var flightInformation = flightLocationService.getActiveFlight();
+        var flightInformation = flightLocationService.getAllActiveFlight();
 
         assertThat(flightInformation)
                 .extracting(FlightInformation::getFlightId)

@@ -93,7 +93,7 @@ public class SocketIoService {
     private void joinFlightLobby(SocketIOClient client) {
         client.joinRoom(Rooms.FLIGHT_INFORMATION_LOBBY);
 
-        var activeFlights = collisionListenerService.getAllCurrentFlight();
+        var activeFlights = collisionListenerService.getAllActiveFlight();
 
         for (var activeFlight : activeFlights) {
             client.sendEvent("active-flight", activeFlight);
