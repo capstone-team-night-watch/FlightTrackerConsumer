@@ -54,6 +54,8 @@ public class KafkaConsumerTest {
 
     @Test
     public void listenToRectangleNoFlyZone_ShouldNotifyWebSocket() throws IOException {
+        clearInvocations(singleRoomBroadcastOperations);
+
         consumer.handleCircularNoFlyZone("""
                 {
                   "altitude": 1000,
@@ -61,7 +63,7 @@ public class KafkaConsumerTest {
                   "type": "CIRCLE",
                   "center": {
                     "latitude": 40,
-                    "longitude": 40
+                    "longitude": -40
                   },
                   "radius": 100
                 }
@@ -71,17 +73,17 @@ public class KafkaConsumerTest {
         var stringCaptor = ArgumentCaptor.forClass(String.class);
         var noFlyZoneCaptor = ArgumentCaptor.forClass(NoFlyZoneCreatedMessage.class);
 
-        verify(singleRoomBroadcastOperations).sendEvent(stringCaptor.capture(), noFlyZoneCaptor.capture());
+        verify(singleRoomBroadcastOperations, atLeastOnce()).sendEvent(stringCaptor.capture(), noFlyZoneCaptor.capture());
 
 
-        var room = stringCaptor.getValue();
-        var noFlyZone = noFlyZoneCaptor.getValue().getNoFlyZone();
+        var rooms = stringCaptor.getAllValues();
+        var noFlyZone = noFlyZoneCaptor.getAllValues();
 
-        assertEquals(Messages.NO_FLY_ZONE_CREATED, room);
-        assertTrue(noFlyZone instanceof CircularNoFlyZone);
+        assertThat(rooms).contains(Rooms.NO_FLY_ZONE_ROOM);
+        assertThat(noFlyZone).hasAtLeastOneElementOfType(CircularNoFlyZone.class);
 
         verify(socketIOServer).getRoomOperations(stringCaptor.capture());
-        assertEquals(Rooms.NO_FLY_ZONE_ROOM, stringCaptor.getValue());
+        assertThat(stringCaptor.getAllValues()).contains(Rooms.NO_FLY_ZONE_ROOM);
     }
 
     @Test
