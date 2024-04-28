@@ -1,12 +1,16 @@
 package com.capstone.consumer;
 
+import com.capstone.geocode.ReverseGeoCode;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.lang.NonNullApi;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.util.ResourceUtils;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import java.io.FileInputStream;
+import java.io.IOException;
 
 /**
  * Application class that handles the kicking off the execution of the project
@@ -39,4 +43,11 @@ public class Application {
         };
     }
 
+    @Bean
+    public ReverseGeoCode getReverseGeoCoder(ApplicationProperties applicationProperties) throws IOException {
+        var fileIdentifier = ResourceUtils.getFile(applicationProperties.getGeonamePath());
+        var file = new FileInputStream(fileIdentifier);
+
+        return new ReverseGeoCode(file, true);
+    }
 }

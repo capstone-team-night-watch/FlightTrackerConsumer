@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 public class AviationEntities {
-    public LiveTrackingService liveTrackingService;
+    private final LiveTrackingService liveTrackingService;
 
     public AviationEntities(LiveTrackingService liveTrackingService) {
         this.liveTrackingService = liveTrackingService;
