@@ -156,9 +156,10 @@ public class LiveTrackingService {
             targetFlight.get().setGroundSpeed(flightInformationKafkaDto.getGroundSpeed());
             targetFlight.get().getRealFlightPath().add(flightInformationKafkaDto.getLocation());
 
+            updateFlightLocationName(targetFlight.get());
+
             messagingService.sendMessage(new FlightLocationUpdatedMessage(targetFlight.get()));
 
-            updateFlightLocationName(targetFlight.get());
             verityFlightIsInNoFlyZone(targetFlight.get());
         }
 
