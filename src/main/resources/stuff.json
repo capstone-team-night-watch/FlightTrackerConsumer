@@ -1,0 +1,39 @@
+{
+  "source": {
+    "icaoCode": "JFK",
+    "name": "John F. Kennedy International Airport",
+    "coordinates": {
+      "latitude": 1,
+      "longitude": 1
+    }
+  },
+  "destination": {
+    "icaoCode": "JFK-Destination",
+    "name": "John F. Kennedy International Airport",
+    "coordinates": {
+      "latitude": 1,
+      "longitude": 1
+    }
+  },
+  "checkPoints": [
+    38.9072,
+    -77.0369,
+    40.4406,
+    -79.9959,
+    39.9612,
+    -82.9988,
+    39.7684,
+    -86.1581,
+    38.6270,
+    -90.1994,
+    39.0997,
+    -94.5786,
+    41.2565,
+    -95.9345,
+    41.8781,
+    -87.6298,
+    37.7749,
+    -122.4194
+  ],
+  "flightId": 9999
+}

@@ -1,10 +1,15 @@
 package com.capstone.consumer.servicehandler;
 
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.util.Date;
 import java.util.List;
 import java.util.ArrayList;
 
+import com.capstone.consumer.bindings.FlightLocationName;
 import com.capstone.consumer.config.MessagingService;
 import com.capstone.consumer.messages.*;
+import com.capstone.geocode.ReverseGeoCode;
 import org.webjars.NotFoundException;
 import com.capstone.consumer.utils.GeoUtils;
 import org.springframework.stereotype.Component;
@@ -19,10 +24,13 @@ import com.google.common.collect.Lists;
 
 @Component
 public class LiveTrackingService {
+    private final ReverseGeoCode reverseGeoCode;
+
+    private final MessagingService messagingService;
+
     private final List<BaseNoFlyZone> noFlyZones = new ArrayList<>();
 
     private final List<FlightInformation> flights = new ArrayList<>();
-    private final MessagingService messagingService;
 
     public List<FlightInformation> getAllActiveFlight() {
         return flights;
@@ -32,7 +40,8 @@ public class LiveTrackingService {
         return noFlyZones;
     }
 
-    public LiveTrackingService(MessagingService messagingService) {
+    public LiveTrackingService(ReverseGeoCode reverseGeoCode, MessagingService messagingService) {
+        this.reverseGeoCode = reverseGeoCode;
         this.messagingService = messagingService;
     }
 
@@ -75,8 +84,9 @@ public class LiveTrackingService {
      *
      * @param flightInformationDto information about the new flight that has been created
      */
-    public void createInternalFlight(FlightInformationKafkaDto flightInformationDto) {
-        GeographicCoordinates3D location = flightInformationDto.getLocation();
+    private void createInternalFlight(FlightInformationKafkaDto flightInformationDto) {
+        var location = flightInformationDto.getLocation();
+
         var newFlightInformation = new FlightInformation()
                 .setSource(flightInformationDto.getSource())
                 .setHeading(flightInformationDto.getHeading())
@@ -91,8 +101,19 @@ public class LiveTrackingService {
                 .setRealFlightPath(Lists.newArrayList(new GeographicCoordinates3D()
                         .setAltitude(location.getAltitude())
                         .setLatitude(location.getLatitude())
-                        .setLongitude(location.getLongitude()))
-                );
+                        .setLongitude(location.getLongitude())
+                ));
+
+        var locationName = reverseGeoCode.nearestPlace(
+                newFlightInformation.getLocation().getLatitude(),
+                newFlightInformation.getLocation().getLongitude()
+        );
+
+        newFlightInformation.setFlightLocationName(new FlightLocationName()
+                .setName(locationName.getName())
+                .setCountry(locationName.getCountry())
+                .setDate(Date.from(Instant.now()))
+        );
 
         this.flights.add(newFlightInformation);
 
@@ -103,7 +124,13 @@ public class LiveTrackingService {
         verityFlightIsInNoFlyZone(newFlightInformation);
     }
 
-    public void updateFlight(FlightInformationKafkaDto flightInformationKafkaDto) {
+    /**
+     * Update flight information within the live tracker. Performs relevant post-processing such flight location updates
+     * or no-fly zone intersection checks
+     *
+     * @param flightInformationKafkaDto dto containing possible partial information about the new flight
+     */
+    private void updateFlight(FlightInformationKafkaDto flightInformationKafkaDto) {
 
         var targetFlight = flights.stream()
                 .filter(x -> x.getFlightId().equals(flightInformationKafkaDto.getFlightId()))
@@ -131,6 +158,7 @@ public class LiveTrackingService {
 
             messagingService.sendMessage(new FlightLocationUpdatedMessage(targetFlight.get()));
 
+            updateFlightLocationName(targetFlight.get());
             verityFlightIsInNoFlyZone(targetFlight.get());
         }
 
@@ -139,7 +167,13 @@ public class LiveTrackingService {
         }
     }
 
-    public void verityFlightIsInNoFlyZone(FlightInformation flightInformation) {
+    /**
+     * Verifies is a flight is within one of the currently tracked no-fly-zones and adds the intersection information to the
+     * intersection and path intersection parameters contained within the flight
+     *
+     * @param flightInformation flight information that must be checked for intersection with no-fly-zone
+     */
+    private void verityFlightIsInNoFlyZone(FlightInformation flightInformation) {
         flightInformation.setFlightCollisions(new ArrayList<>());
 
         for (var noFlyZone : noFlyZones) {
@@ -148,6 +182,26 @@ public class LiveTrackingService {
             }
 
             handleFlightEnteredNoFlyZone(flightInformation, noFlyZone);
+        }
+    }
+
+    /**
+     * Update the flight location information if it is necessary. That is if the update delay threshold has past
+     *
+     * @param flightInformation flight information whose location information must be updated
+     */
+    private void updateFlightLocationName(FlightInformation flightInformation) {
+        var difference = flightInformation.getFlightLocationName().getDate().toInstant().until(Instant.now(), ChronoUnit.SECONDS);
+
+        if (difference > 5) {
+            var locationName = reverseGeoCode.nearestPlace(
+                    flightInformation.getLocation().getLatitude(),
+                    flightInformation.getLocation().getLongitude()
+            );
+
+            flightInformation.getFlightLocationName().setName(locationName.getName());
+            flightInformation.getFlightLocationName().setCountry(locationName.getCountry());
+            flightInformation.getFlightLocationName().setDate(Date.from(Instant.now()));
         }
     }
 
