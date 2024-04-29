@@ -9,7 +9,6 @@ import com.capstone.consumer.messages.FlightCreatedMessage;
 import com.capstone.consumer.messages.FlightEnteredNoFlyZoneMessage;
 import com.capstone.consumer.messages.NoFlyZoneCreatedMessage;
 import com.capstone.consumer.servicehandler.LiveTrackingService;
-import com.capstone.shared.bindings.CircularNoFlyZone;
 import com.capstone.shared.bindings.PolygonNoFlyZone;
 import com.corundumstudio.socketio.SingleRoomBroadcastOperations;
 import com.corundumstudio.socketio.SocketIOServer;

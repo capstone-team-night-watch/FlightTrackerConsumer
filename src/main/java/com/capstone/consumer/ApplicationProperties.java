@@ -15,4 +15,7 @@ public class ApplicationProperties {
 
     @Value("${socketio.port}")
     private int socketIoPort;
+
+    @Value("${geoname.path}")
+    private String geonamePath;
 }

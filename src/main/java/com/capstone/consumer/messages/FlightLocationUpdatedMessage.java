@@ -1,5 +1,6 @@
 package com.capstone.consumer.messages;
 
+import com.capstone.consumer.bindings.FlightLocationName;
 import com.capstone.consumer.utils.StringUtils;
 import com.capstone.shared.bindings.GeographicCoordinates3D;
 import lombok.Getter;
@@ -13,6 +14,9 @@ public class FlightLocationUpdatedMessage implements SocketMessageInterface {
     private final GeographicCoordinates3D newLocation;
 
     @Getter
+    private final FlightLocationName flightLocationName;
+
+    @Getter
     private final float heading;
 
     @Getter
@@ -23,6 +27,7 @@ public class FlightLocationUpdatedMessage implements SocketMessageInterface {
         this.flightId = flightInformation.getFlightId();
         this.newLocation = flightInformation.getLocation();
         this.groundSpeed = flightInformation.getGroundSpeed();
+        this.flightLocationName = flightInformation.getFlightLocationName();
     }
 
     @Override
