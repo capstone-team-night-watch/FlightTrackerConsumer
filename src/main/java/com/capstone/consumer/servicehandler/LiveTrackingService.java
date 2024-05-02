@@ -217,27 +217,26 @@ public class LiveTrackingService {
         for (var noFlyZone : noFlyZones) {
             var intersection = GeoUtils.getFlightIntersectionWithNoFlyZone(flightInformation, noFlyZone);
 
-            flightInformation.getFlightPathCollisions().add(
-                    new FlightPathCollision()
-                            .setNoFlyZone(noFlyZone.getId())
-                            .setFlightId(flightInformation.getFlightId())
-                            .setLocation("Unknown")
-            );
-
             if (intersection.isEmpty()) {
                 continue;
             }
 
-            if (!intersection.isEmpty()) {
-                handleFlightPathCollision(flightInformation, noFlyZone);
-            }
+            handleFlightPathCollision(flightInformation, noFlyZone);
         }
     }
 
     private void handleFlightPathCollision(FlightInformation flightInformation, BaseNoFlyZone noFlyZone) {
+        flightInformation.getFlightPathCollisions().add(
+                new FlightPathCollision()
+                        .setNoFlyZone(noFlyZone.getId())
+                        .setFlightId(flightInformation.getFlightId())
+                        .setLocation("Unknown")
+        );
+
         var message = new FlightPathIntersectWithNoFlyZoneMessage(flightInformation, noFlyZone);
         messagingService.sendMessage(message);
     }
+
 
     private void handleFlightEnteredNoFlyZone(FlightInformation flightInformation, BaseNoFlyZone noFlyZone) {
         var message = new FlightEnteredNoFlyZoneMessage(flightInformation, noFlyZone);
