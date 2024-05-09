@@ -17,11 +17,19 @@ public class AviationEntities {
         this.liveTrackingService = liveTrackingService;
     }
 
+    /**
+     * Retrieves all active flights
+     * @return a list of all active flights
+     */
     @GetMapping("/Flight")
     public SuccessResponse<List<FlightInformation>> getFlightInformation() {
         return new SuccessResponse<>(liveTrackingService.getAllActiveFlight());
     }
 
+    /**
+     * Retrieves all no-fly-zones
+     * @return a list of all no-fly-zones
+     */
     @GetMapping("/NoFlyZone")
     public SuccessResponse<List<BaseNoFlyZone>> getNoFlyZone() {
         return new SuccessResponse<>(liveTrackingService.getAllNoFlyZones());
