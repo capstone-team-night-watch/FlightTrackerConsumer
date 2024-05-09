@@ -5,6 +5,10 @@ import jakarta.validation.constraints.NotNull;
 
 import java.util.List;
 
+
+/**
+ * Represents the flight information that is sent to the Kafka topic
+ */
 @Data
 public class FlightInformationKafkaDto {
     /**

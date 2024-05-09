@@ -8,6 +8,9 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.util.Optional;
 
+/**
+ * Helper class for JSON serialization and deserialization
+ */
 @Slf4j
 public class JsonHelper {
     private static final Validator validator;
@@ -24,6 +27,12 @@ public class JsonHelper {
     private JsonHelper() {
     }
 
+    /**
+     * Serializes an object to JSON
+     *
+     * @param obj object to serialized
+     * @return JSON string of the object
+     */
     public static Optional<String> toJson(Object obj) {
         try {
             var value = objectMapper.writeValueAsString(obj);
@@ -33,6 +42,14 @@ public class JsonHelper {
         }
     }
 
+    /**
+     * Deserializes a JSON string to an object
+     *
+     * @param json  JSON string to deserialize
+     * @param clazz class of the object to deserialize to
+     * @param <T>   type of the object to deserialize to
+     * @return Optional of the deserialized object
+     */
     public static <T> Optional<T> fromJson(String json, Class<T> clazz) {
         try {
             var value = objectMapper.readValue(json, clazz);
