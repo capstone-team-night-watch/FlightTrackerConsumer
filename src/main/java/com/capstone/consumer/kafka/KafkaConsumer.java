@@ -32,6 +32,10 @@ public class KafkaConsumer {
         this.collisionListenerService = collisionListenerService;
     }
 
+    /**
+     * Handles a circular no-fly-zone message from Kafka.
+     * @param message the message from Kafka
+     */
     @KafkaListener(groupId = CONSUMER_ID, topicPartitions =
                         { @TopicPartition(topic = "CircularNoFlyZone",
                             partitions = "0",
@@ -52,6 +56,11 @@ public class KafkaConsumer {
         collisionListenerService.trackNewNoFlyZone(noFlyZone);
     }
 
+
+    /**
+     * Handles a polygon no-fly-zone message from Kafka.
+     * @param message the message from Kafka
+     */
     @KafkaListener(groupId = CONSUMER_ID, topicPartitions =
                         { @TopicPartition(topic = "PolygonNoFlyZone",
                             partitions = "0",
@@ -73,6 +82,10 @@ public class KafkaConsumer {
         collisionListenerService.trackNewNoFlyZone(noFlyZone);
     }
 
+    /**
+     * Handles a flight update message from Kafka.
+     * @param message the message from Kafka
+     */
     @KafkaListener(groupId = CONSUMER_ID, topicPartitions =
                         { @TopicPartition(topic = "FlightLocationData",
                             partitions = "0",

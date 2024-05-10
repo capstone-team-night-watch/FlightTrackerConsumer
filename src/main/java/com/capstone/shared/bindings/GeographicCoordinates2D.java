@@ -2,6 +2,9 @@ package com.capstone.shared.bindings;
 
 import lombok.Data;
 
+/**
+ * Represents a geographic coordinate in 2D space
+ */
 @Data
 public class GeographicCoordinates2D {
     private double latitude;

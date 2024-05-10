@@ -22,6 +22,9 @@ import com.capstone.shared.bindings.GeographicCoordinates3D;
 import com.google.common.collect.Lists;
 
 
+/**
+ * Service to track live flight information and no-fly-zones
+ */
 @Component
 public class LiveTrackingService {
     private final ReverseGeoCode reverseGeoCode;
@@ -45,6 +48,11 @@ public class LiveTrackingService {
         this.messagingService = messagingService;
     }
 
+    /**
+     * Track a new no-fly-zone
+     *
+     * @param noFlyZone no-fly-zone to track
+     */
     public void trackNewNoFlyZone(BaseNoFlyZone noFlyZone) {
         noFlyZones.add(noFlyZone);
         messagingService.sendMessage(new NoFlyZoneCreatedMessage(noFlyZone));
@@ -66,6 +74,11 @@ public class LiveTrackingService {
         }
     }
 
+    /**
+     * Update the flight information if exists, otherwise create a new flight
+     *
+     * @param newFlightLocation updated no-fly-zone information
+     */
     public void upsertFlightInformation(FlightInformationKafkaDto newFlightLocation) {
         var existingFlightLocation = flights.stream()
                 .filter(flightLocation -> flightLocation.getFlightId().equals(newFlightLocation.getFlightId()))

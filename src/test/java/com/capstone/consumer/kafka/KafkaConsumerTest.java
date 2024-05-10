@@ -3,7 +3,6 @@ package com.capstone.consumer.kafka;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.capstone.consumer.bindings.FlightInformation;
-import com.capstone.consumer.enums.Messages;
 import com.capstone.consumer.enums.Rooms;
 import com.capstone.consumer.messages.FlightCreatedMessage;
 import com.capstone.consumer.messages.FlightEnteredNoFlyZoneMessage;
@@ -120,7 +119,7 @@ public class KafkaConsumerTest {
         var room = stringCaptor.getValue();
         var noFlyZone = noFlyZoneCaptor.getValue().getNoFlyZone();
 
-        assertEquals(Messages.NO_FLY_ZONE_CREATED, room);
+        assertEquals("no-fly-zone-created", room);
         assertTrue(noFlyZone instanceof PolygonNoFlyZone);
 
         verify(socketIOServer, atLeastOnce()).getRoomOperations(stringCaptor.capture());

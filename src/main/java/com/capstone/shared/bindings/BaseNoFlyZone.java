@@ -9,6 +9,9 @@ import org.locationtech.jts.geom.Geometry;
 import java.util.Date;
 
 @Data
+/**
+ * Represents the base class for all no-fly-zones
+ */
 public abstract class BaseNoFlyZone {
     protected float altitude;
 
