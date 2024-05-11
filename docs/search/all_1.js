@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['capstoneconsumer_0',['CapstoneConsumer',['../md_README.html',1,'']]],
-  ['configuremessagebroker_1',['configureMessageBroker',['../classcom_1_1capstone_1_1consumer_1_1config_1_1WebSocketConfig.html#a280c03ea222bd7552ca13023f1026aac',1,'com::capstone::consumer::config::WebSocketConfig']]],
-  ['corsconfigurer_2',['corsConfigurer',['../classcom_1_1capstone_1_1consumer_1_1Application.html#ac39354af4f54a70c606317c47aa6dd0d',1,'com::capstone::consumer::Application']]]
+  ['basenoflyzone_0',['BaseNoFlyZone',['../classcom_1_1capstone_1_1shared_1_1bindings_1_1_base_no_fly_zone.html',1,'com::capstone::shared::bindings']]],
+  ['basenoflyzone_2ejava_1',['BaseNoFlyZone.java',['../_base_no_fly_zone_8java.html',1,'']]]
 ];

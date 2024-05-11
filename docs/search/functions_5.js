@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['listen_0',['listen',['../classcom_1_1capstone_1_1consumer_1_1kafka_1_1KafkaConsumer.html#a9167e2f53971443e31a2111d9b0eba4f',1,'com::capstone::consumer::kafka::KafkaConsumer']]]
+  ['initializationexception_0',['InitializationException',['../classcom_1_1capstone_1_1consumer_1_1utils_1_1_initialization_exception.html#a1de13048a1092df5639e68778bed53be',1,'com::capstone::consumer::utils::InitializationException']]]
 ];

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['requestinvalidexception_0',['RequestInvalidException',['../classcom_1_1capstone_1_1producer_1_1exceptions_1_1RequestInvalidException.html',1,'com::capstone::producer::exceptions']]]
+  ['livetrackingservice_0',['LiveTrackingService',['../classcom_1_1capstone_1_1consumer_1_1servicehandler_1_1_live_tracking_service.html',1,'com::capstone::consumer::servicehandler']]]
 ];
