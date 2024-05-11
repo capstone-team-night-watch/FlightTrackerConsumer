@@ -7,11 +7,6 @@ The kafka broker is running on one of our Ubuntu AWS instance.
 
 ## Release Notes
 
-Milestone 2: Consumer sends flight and no-fly-zone data to the frontend for display. Supports no-fly-zone data from FAA NOTAM messages and flight checkpoint/waypoint data. Collision detection between flights and no-fly-zones is currently in development. Consumer application can be run using its associated docker container:  
-https://hub.docker.com/r/ewagner2802/flighttrackerconsumer
-
-## Milestones
-
 Milestone 1:
 Environment set up.
 Milestone 2:
